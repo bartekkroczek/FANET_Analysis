@@ -5,14 +5,14 @@ We wszystkich polach od TRS (włącznie) w dół uwzględniamy tylko itemy, dla 
 itemów o LAT&lt;10 było dosłownie kilka). Czerwonym zaznaczyłem nowe pola. Część pól (np. RFRF)
 wylatuje - ale nie zaznaczałem ich specjalnie (po prostu nie ma ich na liście).
 
-* PART_ID
-* SEX - plec
-* AGE – wiek
-* GF – czynnik gf
-* WMC – czynnik wmc
-* ACC – średnia poprawność w całym zadaniu
-* ACC_EASY – dawne MEAN_COR_EASY itd.
-* ACC_MED
+*PART_ID
+*SEX - plec
+*AGE – wiek
+*GF – czynnik gf
+*WMC – czynnik wmc
+*ACC – średnia poprawność w całym zadaniu
+*ACC_EASY – dawne MEAN_COR_EASY itd.
+*ACC_MED
 * ACC_HARD
 * PERC_SE_MED – proporcje błędów tylko dla warunku MEDIUM
 * PERC_BE_MED
