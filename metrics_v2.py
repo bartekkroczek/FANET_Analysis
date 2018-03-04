@@ -17,7 +17,14 @@ class LEVEL(object):
     HARD = '[1, 2, 2, 3, 3, 6]'
 
 
-# %% ROI's definitions
+LAB_TO_LEV = {'TRAINING': '[1, 2, 3, 4, 5, 6]',
+              'EASY': '[1, 4, 4, 5, 5, 6]',
+              'MEDIUM': '[1, 3, 3, 4, 4, 6]',
+              'HARD': '[1, 2, 2, 3, 3, 6]'}
+
+LEV_TO_LAB = {v: k for k, v in LAB_TO_LEV.items()}
+
+# ROI's definitions
 
 ROIS = {
     'P1': [(-15, 280), (235, 30)],
@@ -139,7 +146,7 @@ with tqdm(total=len(sacc_files)) as pbar:
         ers = list()  # error
         for idx in beh_data.index:  # iterate over index, because some items are missed, due to choosed_option == -1
             choosed_option = beh_data['choosed_option'][idx]
-            problem = problems[idx-3]['matrix_info']
+            problem = problems[idx - 3]['matrix_info']
             err = not beh_data['corr'][idx]
 
             denom = np.sum([len(x['elements_changed']) for x in problem[1]['parameters']])
@@ -266,16 +273,68 @@ with tqdm(total=len(sacc_files)) as pbar:
         part_result["NT_PR_HARD"] = toggles['nt'][LEVEL.HARD]
 
         # NT_COR_EASY – no of toggles on correct option NT_COR_MED  NT_COR_HARD
-
+        # NT_ERR_EASY – no of toggles on incorrect options NT_ERR_MED, NT_ERR_HARD
+        nt_cor = {'EASY': 0, 'MEDIUM': 0, 'HARD': 0}
+        nt_err = {'EASY': 0, 'MEDIUM': 0, 'HARD': 0}
+        nt_med = {'SE': 0, 'BE': 0, 'CON': 0}
         for idx, problem in enumerate(problems, 4):  # start wht 4, due to training in 1-3
             sacc_item = sacc_data[sacc_data.block == idx]
-            # CORR == D1
-            roi = ROIS_ORDER[where_in_list(problem['matrix_info'], 'D1')[0]]
-            sacc_end_in_corr = sacc_item[in_roi(sacc_item[['exp', 'eyp']], ROIS[roi])]
-            start_sacc = sacc_data[sacc_start_in_pr & (sacc_data.block == idx)]
-            toggled_between_pr_and_corr = pd.concat([start_sacc, sacc_end_in_corr], axis=1).all(axis=1)
 
-            print(toggled_between_pr_and_corr.shape)
+            # CORR == D1
+            cor_roi = ROIS_ORDER[where_in_list(problem['matrix_info'], 'D1')[0]]
+            err_roi = [where_in_list(problem['matrix_info'], x) for x in ['D2', 'D3', 'D4', 'D5', 'D6']]
+            err_roi = [ROIS_ORDER[item] for sublist in err_roi for item in sublist]
+
+            sacc_ends_in_corr = in_roi(sacc_item[['exp', 'eyp']], ROIS[cor_roi])
+            sacc_ends_in_err = pd.concat([in_roi(sacc_item[['exp', 'eyp']], ROIS[x]) for x in err_roi], axis=1).any(
+                axis=1)
+
+            sacc_data['in_pr'] = sacc_start_in_pr
+            start_sacc = sacc_data[sacc_data.block == idx]['in_pr']
+
+            toggled_between_pr_and_corr = pd.concat([start_sacc, sacc_ends_in_corr], axis=1).all(axis=1)
+            toggled_between_pr_and_err = pd.concat([start_sacc, sacc_ends_in_err], axis=1).all(axis=1)
+
+            level = LEV_TO_LAB[str(problem['answers'])]
+
+            nt_cor[level] += toggled_between_pr_and_corr.sum()
+            nt_err[level] += toggled_between_pr_and_err.sum()
+            if level == 'MEDIUM':
+                # NT_SE_MED – liczba toggli na opcję „small error” ale tylko w warunku MEDIUM
+                # NT_BE_MED – liczba toggli na opcję „big error” ale tylko w warunku MEDIUM
+                # NT_CON_MED – liczba toggli na opcję „control” ale tylko w warunku MEDIUM
+                se_roi = ROIS_ORDER[where_in_list(problem['matrix_info'], 'D3')[0]]
+                sacc_ends_in_se = in_roi(sacc_item[['exp', 'eyp']], ROIS[se_roi])
+
+                be_roi = ROIS_ORDER[where_in_list(problem['matrix_info'], 'D4')[0]]
+                sacc_ends_in_be = in_roi(sacc_item[['exp', 'eyp']], ROIS[be_roi])
+
+                con_roi = ROIS_ORDER[where_in_list(problem['matrix_info'], 'D6')[0]]
+                sacc_ends_in_con = in_roi(sacc_item[['exp', 'eyp']], ROIS[con_roi])
+
+                toggled_between_pr_and_se = pd.concat([start_sacc, sacc_ends_in_se], axis=1).all(axis=1)
+                toggled_between_pr_and_be = pd.concat([start_sacc, sacc_ends_in_be], axis=1).all(axis=1)
+                toggled_between_pr_and_con = pd.concat([start_sacc, sacc_ends_in_con], axis=1).all(axis=1)
+
+                nt_med['SE'] += toggled_between_pr_and_se.sum()
+                nt_med['BE'] += toggled_between_pr_and_be.sum()
+                nt_med['CON'] += toggled_between_pr_and_con.sum()
+                print("{},{}.{},{}".format())
+
+        part_result['NT_COR_EASY'] = nt_cor['EASY']
+        part_result['NT_COR_MED'] = nt_cor['MEDIUM']
+        part_result['NT_COR_HARD'] = nt_cor['HARD']
+
+        part_result['NT_ERR_EASY'] = nt_err['EASY']
+        part_result['NT_ERR_MED'] = nt_err['MEDIUM']
+        part_result['NT_ERR_HARD'] = nt_err['HARD']
+
+        part_result['NT_SE_MED'] = nt_med['SE']
+        part_result['NT_BE_MED'] = nt_med['BE']
+        part_result['NT_CON_MED'] = nt_med['CON']
+        print(nt_cor)
+        print(nt_err)
+        print(nt_med)
 
         # %% # relative time on matrix (RTM)
         # summed duration of all fixations within the matrix area (time on matrix) divided by total response time. 
