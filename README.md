@@ -5,7 +5,7 @@ We wszystkich polach od TRS (włącznie) w dół uwzględniamy tylko itemy, dla 
 itemów o LAT&lt;10 było dosłownie kilka). Czerwonym zaznaczyłem nowe pola. Część pól (np. RFRF)
 wylatuje - ale nie zaznaczałem ich specjalnie (po prostu nie ma ich na liście).
 
-* ~~PART_ID
+* PART_ID
 * SEX - plec
 * AGE – wiek
 * GF – czynnik gf
@@ -33,6 +33,18 @@ wylatuje - ale nie zaznaczałem ich specjalnie (po prostu nie ma ich na liście)
 * NT_EASY
 * NT_MED
 * NT_HARD
+* NT_PR_EASY – liczba toggli na problem (analogię, czyli to po lewej) itd.
+* NT_PR_MED
+* NT_PR_HARD
+* NT_COR_EASY – liczba toggli na poprawną opcję
+* NT_COR_MED
+* NT_COR_HARD
+* NT_ERR_EASY – liczba toggli na niepoprawne opcje
+* NT_ERR_MED
+* NT_ERR_HARD
+* NT_SE_MED – liczba toggli na opcję „small error” ale tylko w warunku MEDIUM
+* NT_BE_MED – liczba toggli na opcję „big error” ale tylko w warunku MEDIUM
+* NT_CON_MED – liczba toggli na opcję „control” ale tylko w warunku MEDIUM
 * RT_PR_EASY – dawne RTM, czyli proporcja czasu fiksacji na problemie itd.
 * RT_PR_MED
 * RT_PR_HARD
@@ -41,7 +53,7 @@ wylatuje - ale nie zaznaczałem ich specjalnie (po prostu nie ma ich na liście)
 * RT_OP_HARD
 * RT_COR_EASY – proporcja czasu fiksacji na poprawnej opcji
 * RT_COR_MED
-* RT_COR_HARD~~
+* RT_COR_HARD
 * RT_ERR_EASY – proporcja czasu fiksacji na błędnych opcjach
 * RT_ERR_MED
 * RT_ERR_HARD
@@ -70,15 +82,3 @@ wylatuje - ale nie zaznaczałem ich specjalnie (po prostu nie ma ich na liście)
 * FIX_SE_MED – sumaryczny czas fiksacji na opcjach „small error” ale tylko w warunku MEDIUM
 * FIX_BE_MED – sumaryczny czas fiksacji na opcjach „big error” ale tylko w warunku MEDIUM
 * FIX_CON_MED – sumaryczny czas fiksacji na opcjach „control” ale tylko w warunku MEDIUM
-* NT_PR_EASY – liczba toggli na problem (analogię, czyli to po lewej) itd.
-* NT_PR_MED
-* NT_PR_HARD
-* NT_COR_EASY – liczba toggli na poprawną opcję
-* NT_COR_MED
-* NT_COR_HARD
-* NT_ERR_EASY – liczba toggli na niepoprawne opcje
-* NT_ERR_MED
-* NT_ERR_HARD
-* NT_SE_MED – liczba toggli na opcję „small error” ale tylko w warunku MEDIUM
-* NT_BE_MED – liczba toggli na opcję „big error” ale tylko w warunku MEDIUM
-* NT_CON_MED – liczba toggli na opcję „control” ale tylko w warunku MEDIUM
