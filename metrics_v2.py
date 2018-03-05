@@ -8,6 +8,9 @@ from collections import OrderedDict, defaultdict
 import numpy as np
 from tqdm import tqdm
 import random
+import cgitb
+
+cgitb.enable(format='text')
 
 
 class LEVEL(object):
@@ -142,6 +145,11 @@ with tqdm(total=len(sacc_files)) as pbar:
 
         # Relational metric, now called TRS
         beh_data = beh_data[beh_data['choosed_option'] != '-1']  # removed unchoosed trials
+        beh_data = beh_data[beh_data['rt'] > 10.0]  # remove reactions faster than 10 secs
+
+        corr_beh = beh_data[beh_data['corr'] == 1]
+        err_beh = beh_data[beh_data['corr'] == 0]
+
         trs = list()  # total
         ers = list()  # error
         for idx in beh_data.index:  # iterate over index, because some items are missed, due to choosed_option == -1
@@ -165,23 +173,20 @@ with tqdm(total=len(sacc_files)) as pbar:
         part_result['TRS'] = np.mean(trs)
         part_result['ERS'] = np.mean(ers)
 
-        # %% LAT_COR, LAT_ERR
-        part_result['LAT_COR'] = beh_data[beh_data['corr'] == 1]['rt'].mean()
-        part_result['LAT_ERR'] = beh_data[beh_data['corr'] == 0]['rt'].mean()
+        part_result['LAT_P'] = corr_beh['rt'].mean()
+        part_result['LAT_N'] = err_beh['rt'].mean()
 
-        # %% LAT_COR_EASY – previously MEAN_RT_EASY itd. (only for correct)
+        lat_p = corr_beh.groupby('answers').rt.mean()
+        lat_n = err_beh.groupby('answers').rt.mean()
 
-        lat_cor = beh_data[beh_data['corr'] == 1].groupby('answers').rt.mean()
-        lat_err = beh_data[beh_data['corr'] == 0].groupby('answers').rt.mean()
-
-        part_result["LAT_COR_EASY"] = lat_cor[LEVEL.EASY]
-        part_result["LAT_COR_MED"] = lat_cor[LEVEL.MEDIUM]
-        part_result["LAT_COR_HARD"] = lat_cor[LEVEL.HARD]
+        part_result["LAT_EASY_P"] = lat_p[LEVEL.EASY]
+        part_result["LAT_MED_P"] = lat_p[LEVEL.MEDIUM]
+        part_result["LAT_HARD_P"] = lat_p[LEVEL.HARD]
 
         # LAT_ERR_EASY – latency for incorrect, LAT_ERR_MED, LAT_ERR_HARD
-        part_result["LAT_ERR_EASY"] = lat_err[LEVEL.EASY]
-        part_result["LAT_ERR_MED"] = lat_err[LEVEL.MEDIUM]
-        part_result["LAT_ERR_HARD"] = lat_err[LEVEL.HARD]
+        part_result["LAT_EASY_N"] = lat_n[LEVEL.EASY]
+        part_result["LAT_MED_N"] = lat_n[LEVEL.MEDIUM]
+        part_result["LAT_HARD_N"] = lat_n[LEVEL.HARD]
 
         # %%  Pupil size
         avg_pupil_size = raw_data.groupby('block').ps.mean()
@@ -198,14 +203,16 @@ with tqdm(total=len(sacc_files)) as pbar:
         part_result['PUP_SIZE_MED'] = pup_size[LEVEL.MEDIUM]
         part_result['PUP_SIZE_HARD'] = pup_size[LEVEL.HARD]
 
-        # %% toggle rate (NT)
-        # based on the number of saccades running either way between the matrix
-        # area and the response area (number of toggles) divided by total response 
-        # time in seconds (i.e., toggles per second). 
+        pup_size = beh_data.groupby(['answers', 'corr']).mean()['avg_pupil_size']
+        P, N = 1, 0
+        part_result['PUP_SIZE_EASY_P'] = pup_size[LEVEL.EASY][P]
+        part_result['PUP_SIZE_MED_P'] = pup_size[LEVEL.MEDIUM][P]
+        part_result['PUP_SIZE_HARD_P'] = pup_size[LEVEL.HARD][P]
 
-        sacc_start_in_pr = pd.concat([in_roi(sacc_data[['sxp', 'syp']], ROIS['P1']),
-                                      in_roi(sacc_data[['sxp', 'syp']], ROIS['P2']),
-                                      in_roi(sacc_data[['sxp', 'syp']], ROIS['P3'])], axis=1).any(axis=1)
+        part_result['PUP_SIZE_EASY_N'] = pup_size[LEVEL.EASY][N]
+        part_result['PUP_SIZE_MED_N'] = pup_size[LEVEL.MEDIUM][N]
+        part_result['PUP_SIZE_HARD_N'] = pup_size[LEVEL.HARD][N]
+        # %% toggle rate (NT)
 
         sacc_ends_in_op = pd.concat([in_roi(sacc_data[['exp', 'eyp']], ROIS['A']),
                                      in_roi(sacc_data[['exp', 'eyp']], ROIS['B']),
@@ -214,25 +221,11 @@ with tqdm(total=len(sacc_files)) as pbar:
                                      in_roi(sacc_data[['exp', 'eyp']], ROIS['E']),
                                      in_roi(sacc_data[['exp', 'eyp']], ROIS['F'])], axis=1).any(axis=1)
 
-        sacc_starts_in_pr_and_ends_in_op = pd.concat([sacc_start_in_pr, sacc_ends_in_op], axis=1).all(axis=1)
-
-        sacc_start_in_op = pd.concat([in_roi(sacc_data[['sxp', 'syp']], ROIS['A']),
-                                      in_roi(sacc_data[['sxp', 'syp']], ROIS['B']),
-                                      in_roi(sacc_data[['sxp', 'syp']], ROIS['C']),
-                                      in_roi(sacc_data[['sxp', 'syp']], ROIS['D']),
-                                      in_roi(sacc_data[['sxp', 'syp']], ROIS['E']),
-                                      in_roi(sacc_data[['sxp', 'syp']], ROIS['F'])], axis=1).any(axis=1)
-
         sacc_ends_in_pr = pd.concat([in_roi(sacc_data[['exp', 'eyp']], ROIS['P1']),
                                      in_roi(sacc_data[['exp', 'eyp']], ROIS['P2']),
                                      in_roi(sacc_data[['exp', 'eyp']], ROIS['P3'])], axis=1).any(axis=1)
 
-        sacc_starts_in_op_and_ends_in_pr = pd.concat([sacc_start_in_op, sacc_ends_in_pr], axis=1).all(axis=1)
-
-        # NT
-        toggled_sacc = pd.concat([sacc_starts_in_op_and_ends_in_pr, sacc_starts_in_pr_and_ends_in_op], axis=1).any(
-            axis=1)
-        toggled_sacc = sacc_data[toggled_sacc]
+        toggled_sacc = sacc_data[pd.concat([sacc_ends_in_pr, sacc_ends_in_op], axis=1).any(axis=1)]
 
         # stime used just for counting how many events occurs in any particular block
         ts = toggled_sacc.groupby('block').count()['stime']
@@ -252,8 +245,18 @@ with tqdm(total=len(sacc_files)) as pbar:
         part_result["NT_MEDIUM"] = toggles['nt'][LEVEL.MEDIUM]
         part_result["NT_HARD"] = toggles['nt'][LEVEL.HARD]
 
-        # NT_PR         
-        toggled_sacc = sacc_data[sacc_starts_in_op_and_ends_in_pr]
+        toggles = beh_data.groupby(['answers', 'corr']).sum()
+
+        part_result["NT_EASY_P"] = toggles['nt'][LEVEL.EASY][P]
+        part_result["NT_MED_P"] = toggles['nt'][LEVEL.MEDIUM][P]
+        part_result["NT_HARD_P"] = toggles['nt'][LEVEL.HARD][P]
+
+        part_result["NT_EASY_N"] = toggles['nt'][LEVEL.EASY][N]
+        part_result["NT_MED_N"] = toggles['nt'][LEVEL.MEDIUM][N]
+        part_result["NT_HARD_N"] = toggles['nt'][LEVEL.HARD][N]
+
+        # NT_PR
+        toggled_sacc = sacc_data[sacc_ends_in_pr]
 
         ts = toggled_sacc.groupby('block').count()['stime']
         del toggled_sacc
@@ -272,12 +275,58 @@ with tqdm(total=len(sacc_files)) as pbar:
         part_result["NT_PR_MEDIUM"] = toggles['nt'][LEVEL.MEDIUM]
         part_result["NT_PR_HARD"] = toggles['nt'][LEVEL.HARD]
 
+        toggles = beh_data.groupby(['answers', 'corr']).sum()
+
+        part_result["NT_PR_EASY_P"] = toggles['nt'][LEVEL.EASY][P]
+        part_result["NT_PR_MEDIUM_P"] = toggles['nt'][LEVEL.MEDIUM][P]
+        part_result["NT_PR_HARD_P"] = toggles['nt'][LEVEL.HARD][P]
+
+        part_result["NT_PR_EASY_N"] = toggles['nt'][LEVEL.EASY][N]
+        part_result["NT_PR_MED_N"] = toggles['nt'][LEVEL.MEDIUM][N]
+        part_result["NT_PR_HARD_N"] = toggles['nt'][LEVEL.HARD][N]
+
+        # NT_OP
+        toggled_sacc = sacc_data[sacc_ends_in_op]
+
+        ts = toggled_sacc.groupby('block').count()['stime']
+        del toggled_sacc
+        missing_blocks = set(range(1, 46)) - set(ts.index)
+
+        for i in list(missing_blocks):
+            ts.loc[i] = 0
+        ts.sort_index(inplace=True)
+        ts = ts.reset_index()
+        beh_data['nt'] = ts['stime']
+        del ts
+
+        toggles = beh_data.groupby('answers').sum()
+
+        part_result["NT_OP_EASY"] = toggles['nt'][LEVEL.EASY]
+        part_result["NT_OP_MEDIUM"] = toggles['nt'][LEVEL.MEDIUM]
+        part_result["NT_OP_HARD"] = toggles['nt'][LEVEL.HARD]
+
+        toggles = beh_data.groupby(['answers', 'corr']).sum()
+
+        part_result["NT_OP_EASY_P"] = toggles['nt'][LEVEL.EASY][P]
+        part_result["NT_OP_MEDIUM_P"] = toggles['nt'][LEVEL.MEDIUM][P]
+        part_result["NT_OP_HARD_P"] = toggles['nt'][LEVEL.HARD][P]
+
+        part_result["NT_OP_EASY_N"] = toggles['nt'][LEVEL.EASY][N]
+        part_result["NT_OP_MED_N"] = toggles['nt'][LEVEL.MEDIUM][N]
+        part_result["NT_OP_HARD_N"] = toggles['nt'][LEVEL.HARD][N]
+
         # NT_COR_EASY – no of toggles on correct option NT_COR_MED  NT_COR_HARD
         # NT_ERR_EASY – no of toggles on incorrect options NT_ERR_MED, NT_ERR_HARD
         nt_cor = {'EASY': 0, 'MEDIUM': 0, 'HARD': 0}
+        nt_cor_p = {'EASY': 0, 'MEDIUM': 0, 'HARD': 0}
+        nt_cor_n = {'EASY': 0, 'MEDIUM': 0, 'HARD': 0}
         nt_err = {'EASY': 0, 'MEDIUM': 0, 'HARD': 0}
+        nt_err_p = {'EASY': 0, 'MEDIUM': 0, 'HARD': 0}
+        nt_err_n = {'EASY': 0, 'MEDIUM': 0, 'HARD': 0}
         nt_med = {'SE': 0, 'BE': 0, 'CON': 0}
-        for idx, problem in enumerate(problems, 4):  # start wht 4, due to training in 1-3
+
+        for idx in beh_data.index:
+            problem = problems[idx - 3]
             sacc_item = sacc_data[sacc_data.block == idx]
 
             # CORR == D1
@@ -289,37 +338,25 @@ with tqdm(total=len(sacc_files)) as pbar:
             sacc_ends_in_err = pd.concat([in_roi(sacc_item[['exp', 'eyp']], ROIS[x]) for x in err_roi], axis=1).any(
                 axis=1)
 
-            sacc_data['in_pr'] = sacc_start_in_pr
-            start_sacc = sacc_data[sacc_data.block == idx]['in_pr']
-
-            toggled_between_pr_and_corr = pd.concat([start_sacc, sacc_ends_in_corr], axis=1).all(axis=1)
-            toggled_between_pr_and_err = pd.concat([start_sacc, sacc_ends_in_err], axis=1).all(axis=1)
-
             level = LEV_TO_LAB[str(problem['answers'])]
+            nt_cor[level] += sacc_ends_in_corr.sum()
+            nt_err[level] += sacc_ends_in_err.sum()
 
-            nt_cor[level] += toggled_between_pr_and_corr.sum()
-            nt_err[level] += toggled_between_pr_and_err.sum()
             if level == 'MEDIUM':
-                # NT_SE_MED – liczba toggli na opcję „small error” ale tylko w warunku MEDIUM
-                # NT_BE_MED – liczba toggli na opcję „big error” ale tylko w warunku MEDIUM
-                # NT_CON_MED – liczba toggli na opcję „control” ale tylko w warunku MEDIUM
-                se_roi = ROIS_ORDER[where_in_list(problem['matrix_info'], 'D3')[0]]
-                sacc_ends_in_se = in_roi(sacc_item[['exp', 'eyp']], ROIS[se_roi])
+                se_roi = [ROIS_ORDER[x] for x in where_in_list(problem['matrix_info'], 'D3')]
+                sacc_ends_in_se = pd.concat([in_roi(sacc_item[['exp', 'eyp']], ROIS[x]) for x in se_roi], axis=1).any(
+                    axis=1)
 
-                be_roi = ROIS_ORDER[where_in_list(problem['matrix_info'], 'D4')[0]]
-                sacc_ends_in_be = in_roi(sacc_item[['exp', 'eyp']], ROIS[be_roi])
+                be_roi = [ROIS_ORDER[x] for x in where_in_list(problem['matrix_info'], 'D4')]
+                sacc_ends_in_be = pd.concat([in_roi(sacc_item[['exp', 'eyp']], ROIS[x]) for x in be_roi], axis=1).any(
+                    axis=1)
 
                 con_roi = ROIS_ORDER[where_in_list(problem['matrix_info'], 'D6')[0]]
                 sacc_ends_in_con = in_roi(sacc_item[['exp', 'eyp']], ROIS[con_roi])
 
-                toggled_between_pr_and_se = pd.concat([start_sacc, sacc_ends_in_se], axis=1).all(axis=1)
-                toggled_between_pr_and_be = pd.concat([start_sacc, sacc_ends_in_be], axis=1).all(axis=1)
-                toggled_between_pr_and_con = pd.concat([start_sacc, sacc_ends_in_con], axis=1).all(axis=1)
-
-                nt_med['SE'] += toggled_between_pr_and_se.sum()
-                nt_med['BE'] += toggled_between_pr_and_be.sum()
-                nt_med['CON'] += toggled_between_pr_and_con.sum()
-                print("{},{}.{},{}".format())
+                nt_med['SE'] += sacc_ends_in_se.sum()
+                nt_med['BE'] += sacc_ends_in_be.sum()
+                nt_med['CON'] += sacc_ends_in_con.sum()
 
         part_result['NT_COR_EASY'] = nt_cor['EASY']
         part_result['NT_COR_MED'] = nt_cor['MEDIUM']
@@ -332,46 +369,182 @@ with tqdm(total=len(sacc_files)) as pbar:
         part_result['NT_SE_MED'] = nt_med['SE']
         part_result['NT_BE_MED'] = nt_med['BE']
         part_result['NT_CON_MED'] = nt_med['CON']
-        print(nt_cor)
-        print(nt_err)
-        print(nt_med)
 
-        # %% # relative time on matrix (RTM)
-        # summed duration of all fixations within the matrix area (time on matrix) divided by total response time. 
-        # RT_PR_EASY – dawne RTM, czyli proporcja czasu fiksacji na problemie itd.
-        # RT_PR_MED
-        # RT_PR_HARD
-        # RT_OP_EASY – proporcja czasu fiksacji na wszystkich opcjach
-        # RT_OP_MED
-        # RT_OP_HARD
-        # RT_COR_EASY – proporcja czasu fiksacji na poprawnej opcji
-        # RT_COR_MED
-        # RT_COR_HARD
-        # RT_ERR_EASY – proporcja czasu fiksacji na błędnych opcjach
-        # RT_ERR_MED
-        # RT_ERR_HARD
+        for idx in corr_beh.index:
+            problem = problems[idx - 3]
+            sacc_item = sacc_data[sacc_data.block == idx]
 
-#         fix_in_pr = pd.concat([in_roi(fix_data[['axp', 'ayp']], ROIS['P1']),
-#                                in_roi(fix_data[['axp', 'ayp']], ROIS['P2']),
-#                                in_roi(fix_data[['axp', 'ayp']], ROIS['P3'])], axis=1).any(axis=1)
-#
-#         fix_in_pr_dur = fix_data[fix_in_pr].groupby('block').sum()['dur']
-#
-#         missing_blocks = set(range(1, 46)) - set(fix_in_pr_dur.index)
-#         for i in list(missing_blocks):
-#             fix_in_pr_dur.loc[i] = 0
-#         fix_in_pr_dur.sort_index(inplace=True)
-#         fix_in_pr_dur = fix_in_pr_dur.reset_index()
-#
-#         beh_data['fix_in_pr_dur'] = fix_in_pr_dur['dur']
-#
-#         gb = beh_data.groupby('answers').sum()
-#         rtp = (gb['fix_in_pr_dur'] / (gb['rt'] * 1000.0))
-#
-#         part_result["RT_PR_EASY"] = rtp[LEVEL.EASY]
-#         part_result["RT_PR_MEDIUM"] = rtp[LEVEL.MEDIUM]
-#         part_result["RT_PR_HARD"] = rtp[LEVEL.HARD]
-#
+            # CORR == D1
+            cor_roi = ROIS_ORDER[where_in_list(problem['matrix_info'], 'D1')[0]]
+            err_roi = [where_in_list(problem['matrix_info'], x) for x in ['D2', 'D3', 'D4', 'D5', 'D6']]
+            err_roi = [ROIS_ORDER[item] for sublist in err_roi for item in sublist]
+
+            sacc_ends_in_corr = in_roi(sacc_item[['exp', 'eyp']], ROIS[cor_roi])
+            sacc_ends_in_err = pd.concat([in_roi(sacc_item[['exp', 'eyp']], ROIS[x]) for x in err_roi], axis=1).any(
+                axis=1)
+
+            level = LEV_TO_LAB[str(problem['answers'])]
+            nt_cor_p[level] += sacc_ends_in_corr.sum()
+            nt_err_p[level] += sacc_ends_in_err.sum()
+
+        part_result['NT_COR_EASY_P'] = nt_cor_p['EASY']
+        part_result['NT_COR_MED_P'] = nt_cor_p['MEDIUM']
+        part_result['NT_COR_HARD_P'] = nt_cor_p['HARD']
+
+        part_result['NT_ERR_EASY_P'] = nt_err_p['EASY']
+        part_result['NT_ERR_MED_P'] = nt_err_p['MEDIUM']
+        part_result['NT_ERR_HARD_P'] = nt_err_p['HARD']
+
+        for idx in err_beh.index:
+            problem = problems[idx - 3]
+            sacc_item = sacc_data[sacc_data.block == idx]
+
+            # CORR == D1
+            cor_roi = ROIS_ORDER[where_in_list(problem['matrix_info'], 'D1')[0]]
+            err_roi = [where_in_list(problem['matrix_info'], x) for x in ['D2', 'D3', 'D4', 'D5', 'D6']]
+            err_roi = [ROIS_ORDER[item] for sublist in err_roi for item in sublist]
+
+            sacc_ends_in_corr = in_roi(sacc_item[['exp', 'eyp']], ROIS[cor_roi])
+            sacc_ends_in_err = pd.concat([in_roi(sacc_item[['exp', 'eyp']], ROIS[x]) for x in err_roi], axis=1).any(
+                axis=1)
+
+            level = LEV_TO_LAB[str(problem['answers'])]
+            nt_cor_n[level] += sacc_ends_in_corr.sum()
+            nt_err_n[level] += sacc_ends_in_err.sum()
+
+        part_result['NT_COR_EASY_N'] = nt_cor_n['EASY']
+        part_result['NT_COR_MED_N'] = nt_cor_n['MEDIUM']
+        part_result['NT_COR_HARD_N'] = nt_cor_n['HARD']
+
+        part_result['NT_ERR_EASY_N'] = nt_err_n['EASY']
+        part_result['NT_ERR_MED_N'] = nt_err_n['MEDIUM']
+        part_result['NT_ERR_HARD_N'] = nt_err_n['HARD']
+
+        # relative time (RT)
+
+        fix_in_pr = pd.concat([in_roi(fix_data[['axp', 'ayp']], ROIS[x]) for x in ['P1', 'P2', 'P3']], axis=1).any(
+            axis=1)
+
+        fix_in_pr_dur = fix_data[fix_in_pr].groupby('block').sum()['dur']
+
+        missing_blocks = set(range(1, 46)) - set(fix_in_pr_dur.index)
+        for i in list(missing_blocks):
+            fix_in_pr_dur.loc[i] = 0
+        fix_in_pr_dur.sort_index(inplace=True)
+        fix_in_pr_dur = fix_in_pr_dur.reset_index()
+
+        beh_data['fix_in_pr_dur'] = fix_in_pr_dur['dur']
+
+        gb = beh_data.groupby('answers').sum()
+        rt_pr = (gb['fix_in_pr_dur'] / (gb['rt'] * 1000.0))
+
+        part_result["RT_PR_EASY"] = rt_pr[LEVEL.EASY]
+        part_result["RT_PR_MEDIUM"] = rt_pr[LEVEL.MEDIUM]
+        part_result["RT_PR_HARD"] = rt_pr[LEVEL.HARD]
+
+        # RT_SE/BE/CON_MED
+        rt_med = {'SE': 0, 'BE': 0, 'CON': 0}
+        for idx in beh_data.index:
+            beh_item = beh_data.ix[idx]
+            problem = problems[idx - 3]
+            fix_item = fix_data[fix_data.block == idx]
+            level = LEV_TO_LAB[str(problem['answers'])]
+            if level != 'MEDIUM':
+                continue
+
+            se_roi = [ROIS_ORDER[x] for x in where_in_list(problem['matrix_info'], 'D3')]
+            fix_in_se = pd.concat([in_roi(fix_item[['axp', 'ayp']], ROIS[x]) for x in se_roi], axis=1).any(axis=1)
+            rt_med['SE'] += fix_item[fix_in_se]['dur'].sum() / (beh_item['rt'] * 1000.0)
+
+            be_roi = [ROIS_ORDER[x] for x in where_in_list(problem['matrix_info'], 'D4')]
+            fix_in_be = pd.concat([in_roi(fix_item[['axp', 'ayp']], ROIS[x]) for x in be_roi], axis=1).any(axis=1)
+            rt_med['BE'] += fix_item[fix_in_be]['dur'].sum() / (beh_item['rt'] * 1000.0)
+
+            con_roi = ROIS_ORDER[where_in_list(problem['matrix_info'], 'D6')[0]]
+            fix_in_con = in_roi(fix_item[['axp', 'ayp']], ROIS[con_roi])
+            rt_med['CON'] += fix_item[fix_in_con]['dur'].sum() / (beh_item['rt'] * 1000.0)
+
+        part_result["RT_SE_MED"] = rt_med['SE']
+        part_result["RT_BE_MED"] = rt_med['BE']
+        part_result["RT_CON_MED"] = rt_med['CON']
+
+        # relative time (RT_PR_P/N)
+
+        gb = beh_data.groupby(['answers', 'corr']).sum()
+        rt_pr = (gb['fix_in_pr_dur'] / (gb['rt'] * 1000.0))
+
+        part_result["RT_PR_EASY_P"] = rt_pr[LEVEL.EASY][P]
+        part_result["RT_PR_MED_P"] = rt_pr[LEVEL.MEDIUM][P]
+        part_result["RT_PR_HARD_P"] = rt_pr[LEVEL.HARD][P]
+
+        part_result["RT_PR_EASY_N"] = rt_pr[LEVEL.EASY][N]
+        part_result["RT_PR_MED_N"] = rt_pr[LEVEL.MEDIUM][N]
+        part_result["RT_PR_HARD_N"] = rt_pr[LEVEL.HARD][N]
+
+
+        # relative time (RT_OP)
+
+        fix_in_op = pd.concat([in_roi(fix_data[['axp', 'ayp']], ROIS[x]) for x in 'ABCDEF'], axis=1).any(axis=1)
+
+        fix_in_op_dur = fix_data[fix_in_op].groupby('block').sum()['dur']
+
+        missing_blocks = set(range(1, 46)) - set(fix_in_op_dur.index)
+        for i in list(missing_blocks):
+            fix_in_op_dur.loc[i] = 0
+        fix_in_op_dur.sort_index(inplace=True)
+        fix_in_op_dur = fix_in_op_dur.reset_index()
+
+        beh_data['fix_in_op_dur'] = fix_in_op_dur['dur']
+
+        gb = beh_data.groupby('answers').sum()
+        rt_op = (gb['fix_in_op_dur'] / (gb['rt'] * 1000.0))
+
+        part_result["RT_OP_EASY"] = rt_op[LEVEL.EASY]
+        part_result["RT_OP_MEDIUM"] = rt_op[LEVEL.MEDIUM]
+        part_result["RT_OP_HARD"] = rt_op[LEVEL.HARD]
+
+        # relative time (RT_OP_P/N)
+
+        gb = beh_data.groupby(['answers', 'corr']).sum()
+        rt_op = (gb['fix_in_op_dur'] / (gb['rt'] * 1000.0))
+
+        part_result["RT_OP_EASY_P"] = rt_op[LEVEL.EASY][P]
+        part_result["RT_OP_MED_P"] = rt_op[LEVEL.MEDIUM][P]
+        part_result["RT_OP_HARD_P"] = rt_op[LEVEL.HARD][P]
+
+        part_result["RT_OP_EASY_N"] = rt_op[LEVEL.EASY][N]
+        part_result["RT_OP_MED_N"] = rt_op[LEVEL.MEDIUM][N]
+        part_result["RT_OP_HARD_N"] = rt_op[LEVEL.HARD][N]
+
+        # relative time (RT_COR_EASY)
+        # TUTAJ SKOŃCZYŁEM PRACĘ
+        rt_cor = {'SE': 0, 'BE': 0, 'CON': 0}
+        for idx in beh_data.index:
+            beh_item = beh_data.ix[idx]
+            problem = problems[idx - 3]
+            fix_item = fix_data[fix_data.block == idx]
+            level = LEV_TO_LAB[str(problem['answers'])]
+
+            cor_roi = [ROIS_ORDER[x] for x in where_in_list(problem['matrix_info'], 'D1')][0]
+
+            fix_in_cor = pd.concat([in_roi(fix_item[['axp', 'ayp']], ROIS[x]) for x in se_roi], axis=1).any(axis=1)
+            rt_med['SE'] += fix_item[fix_in_se]['dur'].sum() / (beh_item['rt'] * 1000.0)
+
+            be_roi = [ROIS_ORDER[x] for x in where_in_list(problem['matrix_info'], 'D4')]
+            fix_in_be = pd.concat([in_roi(fix_item[['axp', 'ayp']], ROIS[x]) for x in be_roi], axis=1).any(axis=1)
+            rt_med['BE'] += fix_item[fix_in_be]['dur'].sum() / (beh_item['rt'] * 1000.0)
+
+            con_roi = ROIS_ORDER[where_in_list(problem['matrix_info'], 'D6')[0]]
+            fix_in_con = in_roi(fix_item[['axp', 'ayp']], ROIS[con_roi])
+            rt_med['CON'] += fix_item[fix_in_con]['dur'].sum() / (beh_item['rt'] * 1000.0)
+
+        part_result["RT_SE_MED"] = rt_med['SE']
+        part_result["RT_BE_MED"] = rt_med['BE']
+        part_result["RT_CON_MED"] = rt_med['CON']
+
+
+
+
 #         # # 3. relative first response fixation (RFRF)
 #         # timestamp of the first fixation within the response area (time before first response fixation) divided by total response time.
 #
