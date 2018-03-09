@@ -114,11 +114,6 @@ ch itemów)
 * RT_OP_EASY_N
 * RT_OP_MED_N
 * RT_OP_HARD_N
-
-
-
-
-
 * RT_COR_EASY – proporcja czasu fiksacji na poprawnej opcji
 * RT_COR_MED
 * RT_COR_HARD
@@ -128,7 +123,6 @@ ch itemów)
 * RT_COR_EASY_N
 * RT_COR_MED_N
 * RT_COR_HARD_N
-
 * RT_ERR_EASY – proporcja czasu fiksacji na błędnych opcjach
 * RT_ERR_MED
 * RT_ERR_HARD
@@ -138,7 +132,8 @@ ch itemów)
 * RT_ERR_EASY_N
 * RT_ERR_MED_N
 * RT_ERR_HARD_N
-* 
+
+
 * DUR_PR_EASY – średni czas fiksacji na problemie (analogii, czyli tym po lewej) itd.
 * DUR_PR_MED
 * DUR_PR_HARD
