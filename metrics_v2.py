@@ -93,7 +93,7 @@ fix_files = os.listdir(FIX_FOLDER)
 raw_files = os.listdir(RAW_FOLDER)
 yaml_files = os.listdir(YAML_FOLDER)
 
-sacc_files = [random.choice(sacc_files)]
+# sacc_files = [random.choice(sacc_files)]
 
 with tqdm(total=len(sacc_files)) as pbar:
     for part_id in sacc_files:
@@ -181,9 +181,12 @@ with tqdm(total=len(sacc_files)) as pbar:
 
         part_result["LAT_EASY_P"] = lat_p[LEVEL.EASY]
         part_result["LAT_MED_P"] = lat_p[LEVEL.MEDIUM]
-        part_result["LAT_HARD_P"] = lat_p[LEVEL.HARD]
+        try:
+            part_result["LAT_HARD_P"] = lat_p[LEVEL.HARD]
+        except KeyError:
+            part_result["LAT_HARD_P"] = 0.0
 
-        # LAT_ERR_EASY – latency for incorrect, LAT_ERR_MED, LAT_ERR_HARD
+            # LAT_ERR_EASY – latency for incorrect, LAT_ERR_MED, LAT_ERR_HARD
         part_result["LAT_EASY_N"] = lat_n.get(LEVEL.EASY, 0.0)
         part_result["LAT_MED_N"] = lat_n.get(LEVEL.MEDIUM, 0.0)
         part_result["LAT_HARD_N"] = lat_n.get(LEVEL.HARD, 0.0)
@@ -207,7 +210,10 @@ with tqdm(total=len(sacc_files)) as pbar:
         P, N = 1, 0
         part_result['PUP_SIZE_EASY_P'] = pup_size[LEVEL.EASY][P]
         part_result['PUP_SIZE_MED_P'] = pup_size[LEVEL.MEDIUM][P]
-        part_result['PUP_SIZE_HARD_P'] = pup_size[LEVEL.HARD][P]
+        try:
+            part_result['PUP_SIZE_HARD_P'] = pup_size[LEVEL.HARD][P]
+        except:
+            part_result['PUP_SIZE_HARD_P'] = 0.0
 
         part_result['PUP_SIZE_EASY_N'] = pup_size[LEVEL.EASY].get(N, 0.0)
         part_result['PUP_SIZE_MED_N'] = pup_size[LEVEL.MEDIUM].get(N, 0.0)
@@ -249,7 +255,10 @@ with tqdm(total=len(sacc_files)) as pbar:
 
         part_result["NT_EASY_P"] = toggles['nt'][LEVEL.EASY][P]
         part_result["NT_MED_P"] = toggles['nt'][LEVEL.MEDIUM][P]
-        part_result["NT_HARD_P"] = toggles['nt'][LEVEL.HARD][P]
+        try:
+            part_result["NT_HARD_P"] = toggles['nt'][LEVEL.HARD][P]
+        except KeyError:
+            part_result["NT_HARD_P"] = 0.0
 
         part_result["NT_EASY_N"] = toggles['nt'][LEVEL.EASY].get(N, 0.0)
         part_result["NT_MED_N"] = toggles['nt'][LEVEL.MEDIUM].get(N, 0.0)
@@ -277,9 +286,18 @@ with tqdm(total=len(sacc_files)) as pbar:
 
         toggles = beh_data.groupby(['answers', 'corr']).sum()
 
-        part_result["NT_PR_EASY_P"] = toggles['nt'][LEVEL.EASY][P]
-        part_result["NT_PR_MEDIUM_P"] = toggles['nt'][LEVEL.MEDIUM][P]
-        part_result["NT_PR_HARD_P"] = toggles['nt'][LEVEL.HARD][P]
+        try:
+            part_result["NT_PR_EASY_P"] = toggles['nt'][LEVEL.EASY][P]
+        except KeyError:
+            part_result["NT_PR_EASY_P"] = 0.0
+        try:
+            part_result["NT_PR_MEDIUM_P"] = toggles['nt'][LEVEL.MEDIUM][P]
+        except KeyError:
+            part_result["NT_PR_MEDIUM_P"] = 0.0
+        try:
+            part_result["NT_PR_HARD_P"] = toggles['nt'][LEVEL.HARD][P]
+        except KeyError:
+            part_result["NT_PR_HARD_P"] = 0.0
 
         part_result["NT_PR_EASY_N"] = toggles['nt'][LEVEL.EASY].get(N, 0.0)
         part_result["NT_PR_MED_N"] = toggles['nt'][LEVEL.MEDIUM].get(N, 0.0)
@@ -307,9 +325,18 @@ with tqdm(total=len(sacc_files)) as pbar:
 
         toggles = beh_data.groupby(['answers', 'corr']).sum()
 
-        part_result["NT_OP_EASY_P"] = toggles['nt'][LEVEL.EASY][P]
-        part_result["NT_OP_MEDIUM_P"] = toggles['nt'][LEVEL.MEDIUM][P]
-        part_result["NT_OP_HARD_P"] = toggles['nt'][LEVEL.HARD][P]
+        try:
+            part_result["NT_OP_EASY_P"] = toggles['nt'][LEVEL.EASY][P]
+        except KeyError:
+            part_result["NT_OP_EASY_P"] = 0.0
+        try:
+            part_result["NT_OP_MEDIUM_P"] = toggles['nt'][LEVEL.MEDIUM][P]
+        except KeyError:
+            part_result["NT_OP_MEDIUM_P"] = 0.0
+        try:
+            part_result["NT_OP_HARD_P"] = toggles['nt'][LEVEL.HARD][P]
+        except KeyError:
+            part_result["NT_OP_HARD_P"] = 0.0
 
         part_result["NT_OP_EASY_N"] = toggles['nt'][LEVEL.EASY].get(N, 0.0)
         part_result["NT_OP_MED_N"] = toggles['nt'][LEVEL.MEDIUM].get(N, 0.0)
@@ -473,9 +500,18 @@ with tqdm(total=len(sacc_files)) as pbar:
         gb = beh_data.groupby(['answers', 'corr']).sum()
         rt_pr = (gb['fix_in_pr_dur'] / (gb['rt'] * 1000.0))
 
-        part_result["RT_PR_EASY_P"] = rt_pr[LEVEL.EASY][P]
-        part_result["RT_PR_MED_P"] = rt_pr[LEVEL.MEDIUM][P]
-        part_result["RT_PR_HARD_P"] = rt_pr[LEVEL.HARD][P]
+        try:
+            part_result["RT_PR_EASY_P"] = rt_pr[LEVEL.EASY][P]
+        except KeyError:
+            part_result["RT_PR_EASY_P"] = 0.0
+        try:
+            part_result["RT_PR_MED_P"] = rt_pr[LEVEL.MEDIUM][P]
+        except KeyError:
+            part_result["RT_PR_MED_P"] = 0.0
+        try:
+            part_result["RT_PR_HARD_P"] = rt_pr[LEVEL.HARD][P]
+        except KeyError:
+            part_result["RT_PR_HARD_P"] = 0.0
 
         part_result["RT_PR_EASY_N"] = rt_pr[LEVEL.EASY].get(N, 0.0)
         part_result["RT_PR_MED_N"] = rt_pr[LEVEL.MEDIUM].get(N, 0.0)
@@ -507,9 +543,18 @@ with tqdm(total=len(sacc_files)) as pbar:
         gb = beh_data.groupby(['answers', 'corr']).sum()
         rt_op = (gb['fix_in_op_dur'] / (gb['rt'] * 1000.0))
 
-        part_result["RT_OP_EASY_P"] = rt_op[LEVEL.EASY][P]
-        part_result["RT_OP_MED_P"] = rt_op[LEVEL.MEDIUM][P]
-        part_result["RT_OP_HARD_P"] = rt_op[LEVEL.HARD][P]
+        try:
+            part_result["RT_OP_EASY_P"] = rt_op[LEVEL.EASY][P]
+        except KeyError:
+            part_result["RT_OP_EASY_P"] = 0.0
+        try:
+            part_result["RT_OP_MED_P"] = rt_op[LEVEL.MEDIUM][P]
+        except KeyError:
+            part_result["RT_OP_MED_P"] = 0.0
+        try:
+            part_result["RT_OP_HARD_P"] = rt_op[LEVEL.HARD][P]
+        except:
+            part_result["RT_OP_HARD_P"] = 0.0
 
         part_result["RT_OP_EASY_N"] = rt_op[LEVEL.EASY].get(N, 0.0)
         part_result["RT_OP_MED_N"] = rt_op[LEVEL.MEDIUM].get(N, 0.0)
@@ -543,13 +588,31 @@ with tqdm(total=len(sacc_files)) as pbar:
         part_result["RT_COR_MED"] = rt_cor['MEDIUM'] / gb_full[LEVEL.MEDIUM]
         part_result["RT_COR_HARD"] = rt_cor['HARD'] / gb_full[LEVEL.HARD]
 
-        part_result["RT_COR_EASY_P"] = rt_cor_p['EASY'] / gb_p[LEVEL.EASY]
-        part_result["RT_COR_MED_P"] = rt_cor_p['MEDIUM'] / gb_p[LEVEL.MEDIUM]
-        part_result["RT_COR_HARD_P"] = rt_cor_p['HARD'] / gb_p[LEVEL.HARD]
+        try:
+            part_result["RT_COR_EASY_P"] = rt_cor_p['EASY'] / gb_p[LEVEL.EASY]
+        except KeyError:
+            part_result["RT_COR_EASY_P"] = 0.0
+        try:
+            part_result["RT_COR_MED_P"] = rt_cor_p['MEDIUM'] / gb_p[LEVEL.MEDIUM]
+        except KeyError:
+            part_result["RT_COR_MED_P"] = 0.0
+        try:
+            part_result["RT_COR_HARD_P"] = rt_cor_p['HARD'] / gb_p[LEVEL.HARD]
+        except:
+            part_result["RT_COR_HARD_P"] = 0.0
 
-        part_result["RT_COR_EASY_N"] = rt_cor_n['EASY'] / gb_n[LEVEL.EASY]
-        part_result["RT_COR_MED_N"] = rt_cor_n['MEDIUM'] / gb_n[LEVEL.MEDIUM]
-        part_result["RT_COR_HARD_N"] = rt_cor_n['HARD'] / gb_n[LEVEL.HARD]
+        try:
+            part_result["RT_COR_EASY_N"] = rt_cor_n['EASY'] / gb_n.get(LEVEL.EASY, 0.0)
+        except ZeroDivisionError:
+            part_result['RT_COR_EASY_N'] = 0.0
+        try:
+            part_result["RT_COR_MED_N"] = rt_cor_n['MEDIUM'] / gb_n.get(LEVEL.MEDIUM, 0.0)
+        except ZeroDivisionError:
+            part_result["RT_COR_MED_N"] = 0.0
+        try:
+            part_result["RT_COR_HARD_N"] = rt_cor_n['HARD'] / gb_n.get(LEVEL.HARD, 0.0)
+        except ZeroDivisionError:
+            part_result["RT_COR_HARD_N"] = 0.0
 
         # relative time (RT_ERR_EASY)
 
@@ -564,7 +627,7 @@ with tqdm(total=len(sacc_files)) as pbar:
 
             err_roi = [where_in_list(problem['matrix_info'], x) for x in ['D2', 'D3', 'D4', 'D5', 'D6']]
             err_roi = [ROIS_ORDER[item] for sublist in err_roi for item in sublist]
-            fix_in_err = pd.concat([in_roi(fix_item[['axp', 'ayp']], ROIS[x]) for x in err_roi], axis=1).any( axis=1)
+            fix_in_err = pd.concat([in_roi(fix_item[['axp', 'ayp']], ROIS[x]) for x in err_roi], axis=1).any(axis=1)
             item_dur_sum = fix_item[fix_in_err]['dur'].sum()
             rt_err[level] += item_dur_sum
 
@@ -581,38 +644,53 @@ with tqdm(total=len(sacc_files)) as pbar:
         part_result["RT_ERR_MED"] = rt_err['MEDIUM'] / gb_full[LEVEL.MEDIUM]
         part_result["RT_ERR_HARD"] = rt_err['HARD'] / gb_full[LEVEL.HARD]
 
-        part_result["RT_ERR_EASY_P"] = rt_err_p['EASY'] / gb_p[LEVEL.EASY]
-        part_result["RT_ERR_MED_P"] = rt_err_p['MEDIUM'] / gb_p[LEVEL.MEDIUM]
-        part_result["RT_ERR_HARD_P"] = rt_err_p['HARD'] / gb_p[LEVEL.HARD]
+        try:
+            part_result["RT_ERR_EASY_P"] = rt_err_p['EASY'] / gb_p[LEVEL.EASY]
+        except KeyError:
+            part_result["RT_ERR_EASY_P"] = 0.0
+        try:
+            part_result["RT_ERR_MED_P"] = rt_err_p['MEDIUM'] / gb_p[LEVEL.MEDIUM]
+        except KeyError:
+            part_result["RT_ERR_MED_P"] = 0.0
+        try:
+            part_result["RT_ERR_HARD_P"] = rt_err_p['HARD'] / gb_p[LEVEL.HARD]
+        except KeyError:
+            part_result["RT_ERR_HARD_P"] = 0.0
 
-        part_result["RT_ERR_EASY_N"] = rt_err_n['EASY'] / gb_n[LEVEL.EASY]
-        part_result["RT_ERR_MED_N"] = rt_err_n['MEDIUM'] / gb_n[LEVEL.MEDIUM]
-        part_result["RT_ERR_HARD_N"] = rt_err_n['HARD'] / gb_n[LEVEL.HARD]
+        try:
+            part_result["RT_ERR_EASY_N"] = rt_err_n['EASY'] / gb_n.get(LEVEL.EASY, 0.0)
+        except ZeroDivisionError:
+            part_result["RT_ERR_EASY_N"] = 0.0
+        try:
+            part_result["RT_ERR_MED_N"] = rt_err_n['MEDIUM'] / gb_n.get(LEVEL.MEDIUM, 0.0)
+        except ZeroDivisionError:
+            part_result["RT_ERR_MED_N"] = 0.0
+        try:
+            part_result["RT_ERR_HARD_N"] = rt_err_n['HARD'] / gb_n.get(LEVEL.HARD, 0.0)
+        except ZeroDivisionError:
+            part_result["RT_ERR_HARD_N"] = 0.0
 
-
-        # mean time (DUR)
+            # mean time (DUR)
 
         fix_in_pr = pd.concat([in_roi(fix_data[['axp', 'ayp']], ROIS[x]) for x in ['P1', 'P2', 'P3']], axis=1).any(
             axis=1)
-
-        fix_in_pr_dur = fix_data[fix_in_pr].groupby('block').sum()['dur']
+        fix_in_pr_dur = fix_data[fix_in_pr].groupby('block')['dur'].apply(list)
 
         missing_blocks = set(range(1, 46)) - set(fix_in_pr_dur.index)
         for i in list(missing_blocks):
-            fix_in_pr_dur.loc[i] = 0
+            fix_in_pr_dur.loc[i] = []
         fix_in_pr_dur.sort_index(inplace=True)
         fix_in_pr_dur = fix_in_pr_dur.reset_index()
 
         beh_data['fix_in_pr_dur'] = fix_in_pr_dur['dur']
 
-        rt_pr = beh_data.groupby('answers').mean()['fix_in_pr_dur']
-
-        part_result["DUR_PR_EASY"] = rt_pr[LEVEL.EASY]
-        part_result["DUR_PR_MEDIUM"] = rt_pr[LEVEL.MEDIUM]
-        part_result["DUR_PR_HARD"] = rt_pr[LEVEL.HARD]
+        rt_pr = beh_data.groupby('answers')['fix_in_pr_dur'].apply(list)
+        part_result["DUR_PR_EASY"] = np.mean([item for sublist in rt_pr[LEVEL.EASY] for item in sublist])
+        part_result["DUR_PR_MEDIUM"] = np.mean([item for sublist in rt_pr[LEVEL.MEDIUM] for item in sublist])
+        part_result["DUR_PR_HARD"] = np.mean([item for sublist in rt_pr[LEVEL.HARD] for item in sublist])
 
         # DUR_SE/BE/CON_MED
-        rt_med = {'SE': [], 'BE': [], 'CON': []}
+        dur_med = {'SE': [], 'BE': [], 'CON': []}
         for idx in beh_data.index:
             beh_item = beh_data.ix[idx]
             problem = problems[idx - 3]
@@ -623,71 +701,103 @@ with tqdm(total=len(sacc_files)) as pbar:
 
             se_roi = [ROIS_ORDER[x] for x in where_in_list(problem['matrix_info'], 'D3')]
             fix_in_se = pd.concat([in_roi(fix_item[['axp', 'ayp']], ROIS[x]) for x in se_roi], axis=1).any(axis=1)
-            rt_med['SE'].extend(fix_item[fix_in_se]['dur'])
+            dur_med['SE'].extend(fix_item[fix_in_se]['dur'])
 
             be_roi = [ROIS_ORDER[x] for x in where_in_list(problem['matrix_info'], 'D4')]
             fix_in_be = pd.concat([in_roi(fix_item[['axp', 'ayp']], ROIS[x]) for x in be_roi], axis=1).any(axis=1)
-            rt_med['BE'].extend(fix_item[fix_in_be]['dur'])
+            dur_med['BE'].extend(fix_item[fix_in_be]['dur'])
 
             con_roi = ROIS_ORDER[where_in_list(problem['matrix_info'], 'D6')[0]]
             fix_in_con = in_roi(fix_item[['axp', 'ayp']], ROIS[con_roi])
-            rt_med['CON'].extend(fix_item[fix_in_con]['dur'])
+            dur_med['CON'].extend(fix_item[fix_in_con]['dur'])
 
-        part_result["DUR_SE_MED"] = np.mean(rt_med['SE'])
-        part_result["DUR_BE_MED"] = np.mean(rt_med['BE'])
-        part_result["DUR_CON_MED"] = np.mean(rt_med['CON'])
+        part_result["DUR_SE_MED"] = np.mean(dur_med['SE'])
+        part_result["DUR_BE_MED"] = np.mean(dur_med['BE'])
+        part_result["DUR_CON_MED"] = np.mean(dur_med['CON'])
 
         # dur time (DUR_PR_P/N)
 
-        rt_pr = beh_data.groupby(['answers', 'corr']).mean()['fix_in_pr_dur']
+        rt_pr = beh_data.groupby(['answers', 'corr'])['fix_in_pr_dur'].apply(list)
 
-        part_result["DUR_PR_EASY_P"] = rt_pr[LEVEL.EASY][P]
-        part_result["DUR_PR_MED_P"] = rt_pr[LEVEL.MEDIUM][P]
-        part_result["DUR_PR_HARD_P"] = rt_pr[LEVEL.HARD][P]
+        try:
+            part_result["DUR_PR_EASY_P"] = np.mean([item for sublist in rt_pr[LEVEL.EASY][P] for item in sublist])
+        except KeyError:
+            part_result["DUR_PR_EASY_P"] = 0.0
+        try:
+            part_result["DUR_PR_MED_P"] = np.mean([item for sublist in rt_pr[LEVEL.MEDIUM][P] for item in sublist])
+        except KeyError:
+            part_result["DUR_PR_MED_P"] = 0.0
+        try:
+            part_result["DUR_PR_HARD_P"] = np.mean([item for sublist in rt_pr[LEVEL.HARD][P] for item in sublist])
+        except KeyError:
+            part_result["DUR_PR_HARD_P"] = 0.0
 
-        part_result["DUR_PR_EASY_N"] = rt_pr[LEVEL.EASY].get(N, 0.0)
-        part_result["DUR_PR_MED_N"] = rt_pr[LEVEL.MEDIUM].get(N, 0.0)
-        part_result["DUR_PR_HARD_N"] = rt_pr[LEVEL.HARD].get(N, 0.0)
-
-        # relative time (RT_OP)
-# tutaj skończyłem, jest probmem z uśrednianiem, tropem wydaje sie
-        # beh_data.groupby('answers').get_group(LEVEL.EASY).index
+        try:
+            part_result["DUR_PR_EASY_N"] = np.mean([item for sublist in rt_pr[LEVEL.EASY][N] for item in sublist])
+        except KeyError:
+            part_result["DUR_PR_EASY_N"] = 0.0
+        try:
+            part_result["DUR_PR_MED_N"] = np.mean([item for sublist in rt_pr[LEVEL.MEDIUM][N] for item in sublist])
+        except KeyError:
+            part_result["DUR_PR_MED_N"] = 0.0
+        try:
+            part_result["DUR_PR_HARD_N"] = np.mean([item for sublist in rt_pr[LEVEL.HARD][N] for item in sublist])
+        except KeyError:
+            part_result["DUR_PR_HARD_N"] = 0.0
+            # relative time (DUR_OP)
         fix_in_op = pd.concat([in_roi(fix_data[['axp', 'ayp']], ROIS[x]) for x in 'ABCDEF'], axis=1).any(axis=1)
 
-        fix_in_op_dur = fix_data[fix_in_op].groupby('block').mean()['dur']
+        beh_data['fix_in_op_dur'] = fix_data[fix_in_op].groupby('block')['dur'].apply(list)
+        gb = beh_data.groupby('answers')['fix_in_op_dur'].apply(list)
 
-        missing_blocks = set(range(1, 46)) - set(fix_in_op_dur.index)
-        for i in list(missing_blocks):
-            fix_in_op_dur.loc[i] = 0
-        fix_in_op_dur.sort_index(inplace=True)
-        fix_in_op_dur = fix_in_op_dur.reset_index()
+        part_result["DUR_OP_EASY"] = np.mean(
+            [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.EASY])) for item in sublist])
+        part_result["DUR_OP_MEDIUM"] = np.mean(
+            [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.MEDIUM])) for item in sublist])
+        part_result["DUR_OP_HARD"] = np.mean(
+            [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.HARD])) for item in sublist])
 
-        beh_data['fix_in_op_dur'] = fix_in_op_dur['dur']
+        # dur time (DUR_OP)
 
-        gb = beh_data.groupby('answers').sum()
-        rt_op = (gb['fix_in_op_dur'] / (gb['rt'] * 1000.0))
+        gb = beh_data.groupby(['answers', 'corr'])['fix_in_op_dur'].apply(list)
 
-        part_result["RT_OP_EASY"] = rt_op[LEVEL.EASY]
-        part_result["RT_OP_MEDIUM"] = rt_op[LEVEL.MEDIUM]
-        part_result["RT_OP_HARD"] = rt_op[LEVEL.HARD]
+        try:
+            part_result["DUR_OP_EASY_P"] = np.mean(
+                [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.EASY][P])) for item in sublist])
+        except KeyError:
+            part_result["DUR_OP_EASY_P"] = 0.0
+        try:
+            part_result["DUR_OP_MED_P"] = np.mean(
+                [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.MEDIUM][P])) for item in
+                 sublist])
+        except KeyError:
+            part_result["DUR_OP_MED_P"] = 0.0
+        try:
+            part_result["DUR_OP_HARD_P"] = np.mean(
+                [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.HARD][P])) for item in sublist])
+        except KeyError:
+            part_result["DUR_OP_HARD_P"] = 0.0
 
-        # relative time (RT_OP_P/N)
-
-        gb = beh_data.groupby(['answers', 'corr']).sum()
-        rt_op = (gb['fix_in_op_dur'] / (gb['rt'] * 1000.0))
-
-        part_result["RT_OP_EASY_P"] = rt_op[LEVEL.EASY][P]
-        part_result["RT_OP_MED_P"] = rt_op[LEVEL.MEDIUM][P]
-        part_result["RT_OP_HARD_P"] = rt_op[LEVEL.HARD][P]
-
-        part_result["RT_OP_EASY_N"] = rt_op[LEVEL.EASY].get(N, 0.0)
-        part_result["RT_OP_MED_N"] = rt_op[LEVEL.MEDIUM].get(N, 0.0)
-        part_result["RT_OP_HARD_N"] = rt_op[LEVEL.HARD].get(N, 0.0)
-
-        # relative time (RT_COR_EASY)
-        rt_cor = {'EASY': 0, 'MEDIUM': 0, 'HARD': 0}
-        rt_cor_p = {'EASY': 0, 'MEDIUM': 0, 'HARD': 0}
-        rt_cor_n = {'EASY': 0, 'MEDIUM': 0, 'HARD': 0}
+        try:
+            part_result["DUR_OP_EASY_N"] = np.mean(
+                [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.EASY][N])) for item in sublist])
+        except KeyError:
+            part_result["DUR_OP_EASY_N"] = 0.0
+        try:
+            part_result["DUR_OP_MED_N"] = np.mean(
+                [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.MEDIUM][N])) for item in
+                 sublist])
+        except KeyError:
+            part_result["DUR_OP_MED_N"] = 0.0
+        try:
+            part_result["DUR_OP_HARD_N"] = np.mean(
+                [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.HARD][N])) for item in sublist])
+        except KeyError:
+            part_result["DUR_OP_HARD_N"] = 0.0
+        # dur time (DUR_COR_EASY)
+        dur_cor = {'EASY': [], 'MEDIUM': [], 'HARD': []}
+        dur_cor_p = {'EASY': [], 'MEDIUM': [], 'HARD': []}
+        dur_cor_n = {'EASY': [], 'MEDIUM': [], 'HARD': []}
         for idx in beh_data.index:
             beh_item = beh_data.ix[idx]
             problem = problems[idx - 3]
@@ -696,35 +806,31 @@ with tqdm(total=len(sacc_files)) as pbar:
 
             cor_roi = [ROIS_ORDER[x] for x in where_in_list(problem['matrix_info'], 'D1')][0]
             fix_in_cor = in_roi(fix_item[['axp', 'ayp']], ROIS[cor_roi])
-            item_dur_sum = fix_item[fix_in_cor]['dur'].sum()
-            rt_cor[level] += item_dur_sum
+            item_dur_sum = fix_item[fix_in_cor]['dur']
+            dur_cor[level].extend(item_dur_sum)
 
             if idx in corr_beh.index:
-                rt_cor_p[level] += item_dur_sum
+                dur_cor_p[level].extend(item_dur_sum)
             elif idx in err_beh.index:
-                rt_cor_n[level] += item_dur_sum
+                dur_cor_n[level].extend(item_dur_sum)
 
-        gb_full = beh_data.groupby('answers').sum()['rt'] * 1000.0
-        gb_p = corr_beh.groupby('answers').sum()['rt'] * 1000.0
-        gb_n = err_beh.groupby('answers').sum()['rt'] * 1000.0
+        part_result["DUR_COR_EASY"] = np.mean(dur_cor['EASY'])
+        part_result["DUR_COR_MED"] = np.mean(dur_cor['MEDIUM'])
+        part_result["DUR_COR_HARD"] = np.mean(dur_cor['HARD'])
 
-        part_result["RT_COR_EASY"] = rt_cor['EASY'] / gb_full[LEVEL.EASY]
-        part_result["RT_COR_MED"] = rt_cor['MEDIUM'] / gb_full[LEVEL.MEDIUM]
-        part_result["RT_COR_HARD"] = rt_cor['HARD'] / gb_full[LEVEL.HARD]
+        part_result["DUR_COR_EASY_P"] = np.mean(dur_cor_p['EASY'])
+        part_result["DUR_COR_MED_P"] = np.mean(dur_cor_p['MEDIUM'])
+        part_result["DUR_COR_HARD_P"] = np.mean(dur_cor_p['HARD'])
 
-        part_result["RT_COR_EASY_P"] = rt_cor_p['EASY'] / gb_p[LEVEL.EASY]
-        part_result["RT_COR_MED_P"] = rt_cor_p['MEDIUM'] / gb_p[LEVEL.MEDIUM]
-        part_result["RT_COR_HARD_P"] = rt_cor_p['HARD'] / gb_p[LEVEL.HARD]
+        part_result["DUR_COR_EASY_N"] = np.mean(dur_cor_n['EASY'])
+        part_result["DUR_COR_MED_N"] = np.mean(dur_cor_n['MEDIUM'])
+        part_result["DUR_COR_HARD_N"] = np.mean(dur_cor_n['HARD'])
 
-        part_result["RT_COR_EASY_N"] = rt_cor_n['EASY'] / gb_n[LEVEL.EASY]
-        part_result["RT_COR_MED_N"] = rt_cor_n['MEDIUM'] / gb_n[LEVEL.MEDIUM]
-        part_result["RT_COR_HARD_N"] = rt_cor_n['HARD'] / gb_n[LEVEL.HARD]
+        # relative time (DUR_ERR_EASY)
 
-        # relative time (RT_ERR_EASY)
-
-        rt_err = {'EASY': 0, 'MEDIUM': 0, 'HARD': 0}
-        rt_err_p = {'EASY': 0, 'MEDIUM': 0, 'HARD': 0}
-        rt_err_n = {'EASY': 0, 'MEDIUM': 0, 'HARD': 0}
+        dur_err = {'EASY': [], 'MEDIUM': [], 'HARD': []}
+        dur_err_p = {'EASY': [], 'MEDIUM': [], 'HARD': []}
+        dur_err_n = {'EASY': [], 'MEDIUM': [], 'HARD': []}
         for idx in beh_data.index:
             beh_item = beh_data.ix[idx]
             problem = problems[idx - 3]
@@ -733,33 +839,228 @@ with tqdm(total=len(sacc_files)) as pbar:
 
             err_roi = [where_in_list(problem['matrix_info'], x) for x in ['D2', 'D3', 'D4', 'D5', 'D6']]
             err_roi = [ROIS_ORDER[item] for sublist in err_roi for item in sublist]
-            fix_in_err = pd.concat([in_roi(fix_item[['axp', 'ayp']], ROIS[x]) for x in err_roi], axis=1).any( axis=1)
-            item_dur_sum = fix_item[fix_in_err]['dur'].sum()
-            rt_err[level] += item_dur_sum
+            fix_in_err = pd.concat([in_roi(fix_item[['axp', 'ayp']], ROIS[x]) for x in err_roi], axis=1).any(axis=1)
+            item_dur_sum = fix_item[fix_in_err]['dur']
+            dur_err[level].extend(item_dur_sum)
 
             if idx in corr_beh.index:
-                rt_err_p[level] += item_dur_sum
+                dur_err_p[level].extend(item_dur_sum)
             elif idx in err_beh.index:
-                rt_err_n[level] += item_dur_sum
+                dur_err_n[level].extend(item_dur_sum)
 
-        gb_full = beh_data.groupby('answers').sum()['rt'] * 1000.0
-        gb_p = corr_beh.groupby('answers').sum()['rt'] * 1000.0
-        gb_n = err_beh.groupby('answers').sum()['rt'] * 1000.0
+        part_result["DUR_ERR_EASY"] = np.mean(dur_err['EASY'])
+        part_result["DUR_ERR_MED"] = np.mean(dur_err['MEDIUM'])
+        part_result["DUR_ERR_HARD"] = np.mean(dur_err['HARD'])
 
-        part_result["RT_ERR_EASY"] = rt_err['EASY'] / gb_full[LEVEL.EASY]
-        part_result["RT_ERR_MED"] = rt_err['MEDIUM'] / gb_full[LEVEL.MEDIUM]
-        part_result["RT_ERR_HARD"] = rt_err['HARD'] / gb_full[LEVEL.HARD]
+        part_result["DUR_ERR_EASY_P"] = np.mean(dur_err_p['EASY'])
+        part_result["DUR_ERR_MED_P"] = np.mean(dur_err_p['MEDIUM'])
+        part_result["DUR_ERR_HARD_P"] = np.mean(dur_err_p['HARD'])
 
-        part_result["RT_ERR_EASY_P"] = rt_err_p['EASY'] / gb_p[LEVEL.EASY]
-        part_result["RT_ERR_MED_P"] = rt_err_p['MEDIUM'] / gb_p[LEVEL.MEDIUM]
-        part_result["RT_ERR_HARD_P"] = rt_err_p['HARD'] / gb_p[LEVEL.HARD]
+        part_result["DUR_ERR_EASY_N"] = np.mean(dur_err_n['EASY'])
+        part_result["DUR_ERR_MED_N"] = np.mean(dur_err_n['MEDIUM'])
+        part_result["DUR_ERR_HARD_N"] = np.mean(dur_err_n['HARD'])
 
-        part_result["RT_ERR_EASY_N"] = rt_err_n['EASY'] / gb_n[LEVEL.EASY]
-        part_result["RT_ERR_MED_N"] = rt_err_n['MEDIUM'] / gb_n[LEVEL.MEDIUM]
-        part_result["RT_ERR_HARD_N"] = rt_err_n['HARD'] / gb_n[LEVEL.HARD]
-#         RESULTS.append(part_result)
-#
-# # %%Save results
-# res = pd.DataFrame(RESULTS)
-# pd.DataFrame(RESULTS).to_csv('new_result.csv')
-# pd.DataFrame(RESULTS).to_excel('new_result.xlsx')
+        # sum time (FIX)
+
+        fix_in_pr = pd.concat([in_roi(fix_data[['axp', 'ayp']], ROIS[x]) for x in ['P1', 'P2', 'P3']], axis=1).any(
+            axis=1)
+        fix_in_pr_dur = fix_data[fix_in_pr].groupby('block')['dur'].apply(list)
+
+        missing_blocks = set(range(1, 46)) - set(fix_in_pr_dur.index)
+        for i in list(missing_blocks):
+            fix_in_pr_dur.loc[i] = []
+        fix_in_pr_dur.sort_index(inplace=True)
+        fix_in_pr_dur = fix_in_pr_dur.reset_index()
+
+        beh_data['fix_in_pr_dur'] = fix_in_pr_dur['dur']
+
+        rt_pr = beh_data.groupby('answers')['fix_in_pr_dur'].apply(list)
+        part_result["FIX_PR_EASY"] = np.sum([item for sublist in rt_pr[LEVEL.EASY] for item in sublist])
+        part_result["FIX_PR_MEDIUM"] = np.sum([item for sublist in rt_pr[LEVEL.MEDIUM] for item in sublist])
+        part_result["FIX_PR_HARD"] = np.sum([item for sublist in rt_pr[LEVEL.HARD] for item in sublist])
+
+        # DUR_SE/BE/CON_MED
+        dur_med = {'SE': [], 'BE': [], 'CON': []}
+        for idx in beh_data.index:
+            beh_item = beh_data.ix[idx]
+            problem = problems[idx - 3]
+            fix_item = fix_data[fix_data.block == idx]
+            level = LEV_TO_LAB[str(problem['answers'])]
+            if level != 'MEDIUM':
+                continue
+
+            se_roi = [ROIS_ORDER[x] for x in where_in_list(problem['matrix_info'], 'D3')]
+            fix_in_se = pd.concat([in_roi(fix_item[['axp', 'ayp']], ROIS[x]) for x in se_roi], axis=1).any(axis=1)
+            dur_med['SE'].extend(fix_item[fix_in_se]['dur'])
+
+            be_roi = [ROIS_ORDER[x] for x in where_in_list(problem['matrix_info'], 'D4')]
+            fix_in_be = pd.concat([in_roi(fix_item[['axp', 'ayp']], ROIS[x]) for x in be_roi], axis=1).any(axis=1)
+            dur_med['BE'].extend(fix_item[fix_in_be]['dur'])
+
+            con_roi = ROIS_ORDER[where_in_list(problem['matrix_info'], 'D6')[0]]
+            fix_in_con = in_roi(fix_item[['axp', 'ayp']], ROIS[con_roi])
+            dur_med['CON'].extend(fix_item[fix_in_con]['dur'])
+
+        part_result["FIX_SE_MED"] = np.sum(dur_med['SE'])
+        part_result["FIX_BE_MED"] = np.sum(dur_med['BE'])
+        part_result["FIX_CON_MED"] = np.sum(dur_med['CON'])
+
+        # dur time (DUR_PR_P/N)
+
+        rt_pr = beh_data.groupby(['answers', 'corr'])['fix_in_pr_dur'].apply(list)
+
+        try:
+            part_result["FIX_PR_EASY_P"] = np.sum([item for sublist in rt_pr[LEVEL.EASY][P] for item in sublist])
+        except KeyError:
+            part_result["FIX_PR_EASY_P"] = 0.0
+        try:
+            part_result["FIX_PR_MED_P"] = np.sum([item for sublist in rt_pr[LEVEL.MEDIUM][P] for item in sublist])
+        except KeyError:
+            part_result["FIX_PR_MED_P"] = 0.0
+        try:
+            part_result["FIX_PR_HARD_P"] = np.sum([item for sublist in rt_pr[LEVEL.HARD][P] for item in sublist])
+        except KeyError:
+            part_result["FIX_PR_HARD_P"] = 0.0
+
+        try:
+            part_result["FIX_PR_EASY_N"] = np.sum([item for sublist in rt_pr[LEVEL.EASY][N] for item in sublist])
+        except KeyError:
+            part_result["FIX_PR_EASY_N"] = 0.0
+        try:
+            part_result["FIX_PR_MED_N"] = np.sum([item for sublist in rt_pr[LEVEL.MEDIUM][N] for item in sublist])
+        except KeyError:
+            part_result["FIX_PR_MED_N"] = 0.0
+        try:
+            part_result["FIX_PR_HARD_N"] = np.sum([item for sublist in rt_pr[LEVEL.HARD][N] for item in sublist])
+        except KeyError:
+            part_result["FIX_PR_HARD_N"] = 0.0
+            # relative time (DUR_OP)
+        fix_in_op = pd.concat([in_roi(fix_data[['axp', 'ayp']], ROIS[x]) for x in 'ABCDEF'], axis=1).any(axis=1)
+
+        beh_data['fix_in_op_dur'] = fix_data[fix_in_op].groupby('block')['dur'].apply(list)
+
+        gb = beh_data.groupby('answers')['fix_in_op_dur'].apply(list)
+
+        try:
+            part_result["FIX_OP_EASY"] = np.sum(
+                [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.EASY])) for item in sublist])
+        except KeyError:
+            part_result["FIX_OP_EASY"] = 0.0
+        try:
+            part_result["FIX_OP_MEDIUM"] = np.sum(
+                [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.MEDIUM])) for item in sublist])
+        except KeyError:
+            part_result["FIX_OP_MEDIUM"] = 0.0
+        try:
+            part_result["FIX_OP_HARD"] = np.sum(
+                [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.HARD])) for item in sublist])
+        except KeyError:
+            part_result["FIX_OP_HARD"] = 0.0
+            # dur time (DUR_OP)
+
+        gb = beh_data.groupby(['answers', 'corr'])['fix_in_op_dur'].apply(list)
+
+        try:
+            part_result["FIX_OP_EASY_P"] = np.sum(
+                [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.EASY][P])) for item in sublist])
+        except KeyError:
+            part_result["FIX_OP_EASY_P"] = 0.0
+        try:
+            part_result["FIX_OP_MED_P"] = np.sum(
+                [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.MEDIUM][P])) for item in sublist])
+        except KeyError:
+            part_result["FIX_OP_MED_P"] = 0.0
+        try:
+            part_result["FIX_OP_HARD_P"] = np.sum(
+                [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.HARD][P])) for item in sublist])
+        except KeyError:
+            part_result["FIX_OP_HARD_P"] = 0.0
+
+        try:
+            part_result["FIX_OP_EASY_N"] = np.sum(
+                [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.EASY][N])) for item in sublist])
+        except KeyError:
+            part_result["FIX_OP_EASY_N"] = 0.0
+        try:
+            part_result["FIX_OP_MED_N"] = np.sum(
+                [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.MEDIUM][N])) for item in
+                 sublist])
+        except KeyError:
+            part_result["FIX_OP_MED_N"] = 0.0
+        try:
+            part_result["FIX_OP_HARD_N"] = np.sum(
+                [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.HARD][N])) for item in sublist])
+        except KeyError:
+            part_result["FIX_OP_HARD_N"] = 0.0
+            # dur time (DUR_COR_EASY)
+        dur_cor = {'EASY': [], 'MEDIUM': [], 'HARD': []}
+        dur_cor_p = {'EASY': [], 'MEDIUM': [], 'HARD': []}
+        dur_cor_n = {'EASY': [], 'MEDIUM': [], 'HARD': []}
+        for idx in beh_data.index:
+            beh_item = beh_data.ix[idx]
+            problem = problems[idx - 3]
+            fix_item = fix_data[fix_data.block == idx]
+            level = LEV_TO_LAB[str(problem['answers'])]
+
+            cor_roi = [ROIS_ORDER[x] for x in where_in_list(problem['matrix_info'], 'D1')][0]
+            fix_in_cor = in_roi(fix_item[['axp', 'ayp']], ROIS[cor_roi])
+            item_dur_sum = fix_item[fix_in_cor]['dur']
+            dur_cor[level].extend(item_dur_sum)
+
+            if idx in corr_beh.index:
+                dur_cor_p[level].extend(item_dur_sum)
+            elif idx in err_beh.index:
+                dur_cor_n[level].extend(item_dur_sum)
+
+        part_result["FIX_COR_EASY"] = np.sum(dur_cor['EASY'])
+        part_result["FIX_COR_MED"] = np.sum(dur_cor['MEDIUM'])
+        part_result["FIX_COR_HARD"] = np.sum(dur_cor['HARD'])
+
+        part_result["FIX_COR_EASY_P"] = np.sum(dur_cor_p['EASY'])
+        part_result["FIX_COR_MED_P"] = np.sum(dur_cor_p['MEDIUM'])
+        part_result["FIX_COR_HARD_P"] = np.sum(dur_cor_p['HARD'])
+
+        part_result["FIX_COR_EASY_N"] = np.sum(dur_cor_n['EASY'])
+        part_result["FIX_COR_MED_N"] = np.sum(dur_cor_n['MEDIUM'])
+        part_result["FIX_COR_HARD_N"] = np.sum(dur_cor_n['HARD'])
+
+        # relative time (DUR_ERR_EASY)
+
+        dur_err = {'EASY': [], 'MEDIUM': [], 'HARD': []}
+        dur_err_p = {'EASY': [], 'MEDIUM': [], 'HARD': []}
+        dur_err_n = {'EASY': [], 'MEDIUM': [], 'HARD': []}
+        for idx in beh_data.index:
+            beh_item = beh_data.ix[idx]
+            problem = problems[idx - 3]
+            fix_item = fix_data[fix_data.block == idx]
+            level = LEV_TO_LAB[str(problem['answers'])]
+
+            err_roi = [where_in_list(problem['matrix_info'], x) for x in ['D2', 'D3', 'D4', 'D5', 'D6']]
+            err_roi = [ROIS_ORDER[item] for sublist in err_roi for item in sublist]
+            fix_in_err = pd.concat([in_roi(fix_item[['axp', 'ayp']], ROIS[x]) for x in err_roi], axis=1).any(axis=1)
+            item_dur_sum = fix_item[fix_in_err]['dur']
+            dur_err[level].extend(item_dur_sum)
+
+            if idx in corr_beh.index:
+                dur_err_p[level].extend(item_dur_sum)
+            elif idx in err_beh.index:
+                dur_err_n[level].extend(item_dur_sum)
+
+        part_result["FIX_ERR_EASY"] = np.sum(dur_err['EASY'])
+        part_result["FIX_ERR_MED"] = np.sum(dur_err['MEDIUM'])
+        part_result["FIX_ERR_HARD"] = np.sum(dur_err['HARD'])
+
+        part_result["FIX_ERR_EASY_P"] = np.sum(dur_err_p['EASY'])
+        part_result["FIX_ERR_MED_P"] = np.sum(dur_err_p['MEDIUM'])
+        part_result["FIX_ERR_HARD_P"] = np.sum(dur_err_p['HARD'])
+
+        part_result["FIX_ERR_EASY_N"] = np.sum(dur_err_n['EASY'])
+        part_result["FIX_ERR_MED_N"] = np.sum(dur_err_n['MEDIUM'])
+        part_result["FIX_ERR_HARD_N"] = np.sum(dur_err_n['HARD'])
+
+        RESULTS.append(part_result)
+
+# Save results
+res = pd.DataFrame(RESULTS)
+pd.DataFrame(RESULTS).to_csv('new_result.csv')
+pd.DataFrame(RESULTS).to_excel('new_result.xlsx')
