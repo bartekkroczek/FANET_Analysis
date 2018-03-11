@@ -4,10 +4,9 @@ import pandas as pd
 import os
 from os.path import join
 import yaml
-from collections import OrderedDict, defaultdict
+from collections import OrderedDict
 import numpy as np
 from tqdm import tqdm
-import random
 import cgitb
 
 cgitb.enable(format='text')
@@ -1062,5 +1061,5 @@ with tqdm(total=len(sacc_files)) as pbar:
 
 # Save results
 res = pd.DataFrame(RESULTS)
-pd.DataFrame(RESULTS).to_csv('new_result.csv')
-pd.DataFrame(RESULTS).to_excel('new_result.xlsx')
+pd.DataFrame(RESULTS).to_csv('new_result.csv', na_rep=0.0)
+pd.DataFrame(RESULTS).to_excel('new_result.xlsx', na_rep= 0.0)
