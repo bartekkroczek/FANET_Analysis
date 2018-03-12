@@ -24,28 +24,34 @@ data$csp <- (data$CS_LET_4 + data$CS_LET_6 + data$CS_LET_8) / 3
 data$arr <- (data$ARR_LET_5 + data$ARR_LET_7 + data$ARR_LET_9) / 3
 
 # data$EASY_DUR_1 <- ((data$RV_AVG_DUR_EASY_CORR_3 + data$RV_AVG_DUR_EASY_CORR_4) / 2) / ((data$RV_AVG_DUR_EASY_CONTROL_3 + data$RV_AVG_DUR_EASY_CONTROL_4) / 2)
-data$EASY_DUR_2 <- ((data$RV_AVG_DUR_EASY_CORR_3 + data$RV_AVG_DUR_EASY_CORR_4) / 2) / ((data$RV_AVG_DUR_EASY_CONTROL_3 + data$RV_AVG_DUR_EASY_CONTROL_4) / 2)
+#data$EASY_DUR_2 <- ((data$RV_AVG_DUR_EASY_CORR_3 + data$RV_AVG_DUR_EASY_CORR_4) / 2) / ((data$RV_AVG_DUR_EASY_CONTROL_3 + data$RV_AVG_DUR_EASY_CONTROL_4) / 2)
 # data$MED_DUR_1 <- ((data$RV_AVG_DUR_MEDIUM_CORR_3 + data$RV_AVG_DUR_MEDIUM_CORR_4) / 2) / ((data$RV_AVG_DUR_MEDIUM_CONTROL_3 + data$RV_AVG_DUR_MEDIUM_CONTROL_4) / 2)
-data$MED_DUR_2 <- (((data$RV_AVG_DUR_MEDIUM_CORR_3 + data$RV_AVG_DUR_MEDIUM_CORR_4) / 2 + (data$RV_AVG_DUR_MEDIUM_SMALL_ERROR_3 + data$RV_AVG_DUR_MEDIUM_SMALL_ERROR_4) / 2) / 2) / ((data$RV_AVG_DUR_MEDIUM_CONTROL_3 + data$RV_AVG_DUR_MEDIUM_CONTROL_4) / 2)
+#data$MED_DUR_2 <- (((data$RV_AVG_DUR_MEDIUM_CORR_3 + data$RV_AVG_DUR_MEDIUM_CORR_4) / 2 + (data$RV_AVG_DUR_MEDIUM_SMALL_ERROR_3 + data$RV_AVG_DUR_MEDIUM_SMALL_ERROR_4) / 2) / 2) / ((data$RV_AVG_DUR_MEDIUM_CONTROL_3 + data$RV_AVG_DUR_MEDIUM_CONTROL_4) / 2)
 #data$HARD_DUR_1 <- ((data$RV_AVG_DUR_HARD_CORR_3 + data$RV_AVG_DUR_HARD_CORR_4) / 2) / ((data$RV_AVG_DUR_HARD_CONTROL_3 + data$RV_AVG_DUR_HARD_CONTROL_4) / 2)
-data$HARD_DUR_2 <- (data$RV_AVG_DUR_HARD_BIG_ERROR_3 + data$RV_AVG_DUR_HARD_BIG_ERROR_4 + data$RV_AVG_DUR_HARD_CONTROL_3 + data$RV_AVG_DUR_HARD_CONTROL_4 + data$RV_AVG_DUR_HARD_CORR_3 + data$RV_AVG_DUR_HARD_CORR_4 + data$RV_AVG_DUR_HARD_SMALL_ERROR_3 + data$RV_AVG_DUR_HARD_SMALL_ERROR_4) / (data$RV_AVG_DUR_HARD_CONTROL_3 + data$RV_AVG_DUR_HARD_CONTROL_4)
+#data$HARD_DUR_2 <- (data$RV_AVG_DUR_HARD_BIG_ERROR_3 + data$RV_AVG_DUR_HARD_BIG_ERROR_4 + data$RV_AVG_DUR_HARD_CONTROL_3 + data$RV_AVG_DUR_HARD_CONTROL_4 + data$RV_AVG_DUR_HARD_CORR_3 + data$RV_AVG_DUR_HARD_CORR_4 + data$RV_AVG_DUR_HARD_SMALL_ERROR_3 + data$RV_AVG_DUR_HARD_SMALL_ERROR_4) / (data$RV_AVG_DUR_HARD_CONTROL_3 + data$RV_AVG_DUR_HARD_CONTROL_4)
 #data$EASY_FIX_1 <- (data$RV_SUM_FIX_EASY_CORR_3 + data$RV_SUM_FIX_EASY_CORR_4) / (data$RV_SUM_FIX_EASY_BIG_ERROR_3 + data$RV_SUM_FIX_EASY_BIG_ERROR_4 + data$RV_SUM_FIX_EASY_CONTROL_3 + data$RV_SUM_FIX_EASY_CONTROL_4 + data$RV_SUM_FIX_EASY_CORR_3 + data$RV_SUM_FIX_EASY_CORR_4 + data$RV_SUM_FIX_EASY_SMALL_ERROR_3 + data$RV_SUM_FIX_EASY_SMALL_ERROR_4)
-data$EASY_FIX_2 <- (data$RV_SUM_FIX_EASY_CORR_3 + data$RV_SUM_FIX_EASY_CORR_4) / (data$RV_SUM_FIX_EASY_BIG_ERROR_3 + data$RV_SUM_FIX_EASY_BIG_ERROR_4 + data$RV_SUM_FIX_EASY_CONTROL_3 + data$RV_SUM_FIX_EASY_CONTROL_4 + data$RV_SUM_FIX_EASY_CORR_3 + data$RV_SUM_FIX_EASY_CORR_4 + data$RV_SUM_FIX_EASY_SMALL_ERROR_3 + data$RV_SUM_FIX_EASY_SMALL_ERROR_4)
+#data$EASY_FIX_2 <- (data$RV_SUM_FIX_EASY_CORR_3 + data$RV_SUM_FIX_EASY_CORR_4) / (data$RV_SUM_FIX_EASY_BIG_ERROR_3 + data$RV_SUM_FIX_EASY_BIG_ERROR_4 + data$RV_SUM_FIX_EASY_CONTROL_3 + data$RV_SUM_FIX_EASY_CONTROL_4 + data$RV_SUM_FIX_EASY_CORR_3 + data$RV_SUM_FIX_EASY_CORR_4 + data$RV_SUM_FIX_EASY_SMALL_ERROR_3 + data$RV_SUM_FIX_EASY_SMALL_ERROR_4)
 #data$MED_FIX_1 <- (data$RV_SUM_FIX_MEDIUM_CORR_3 + data$RV_SUM_FIX_MEDIUM_CORR_4) / (data$RV_SUM_FIX_MEDIUM_BIG_ERROR_3 + data$RV_SUM_FIX_MEDIUM_BIG_ERROR_4 + data$RV_SUM_FIX_MEDIUM_CONTROL_3 + data$RV_SUM_FIX_MEDIUM_CONTROL_4 + data$RV_SUM_FIX_MEDIUM_CORR_3 + data$RV_SUM_FIX_MEDIUM_CORR_4 + data$RV_SUM_FIX_MEDIUM_SMALL_ERROR_3 + data$RV_SUM_FIX_MEDIUM_SMALL_ERROR_4)
-data$MED_FIX_2 <- (data$RV_SUM_FIX_MEDIUM_CORR_3 + data$RV_SUM_FIX_MEDIUM_CORR_4 + data$RV_SUM_FIX_MEDIUM_SMALL_ERROR_3 + data$RV_SUM_FIX_MEDIUM_SMALL_ERROR_4) / (data$RV_SUM_FIX_MEDIUM_BIG_ERROR_3 + data$RV_SUM_FIX_MEDIUM_BIG_ERROR_4 + data$RV_SUM_FIX_MEDIUM_CONTROL_3 + data$RV_SUM_FIX_MEDIUM_CONTROL_4 + data$RV_SUM_FIX_MEDIUM_CORR_3 + data$RV_SUM_FIX_MEDIUM_CORR_4 + data$RV_SUM_FIX_MEDIUM_SMALL_ERROR_3 + data$RV_SUM_FIX_MEDIUM_SMALL_ERROR_4)
+#data$MED_FIX_2 <- (data$RV_SUM_FIX_MEDIUM_CORR_3 + data$RV_SUM_FIX_MEDIUM_CORR_4 + data$RV_SUM_FIX_MEDIUM_SMALL_ERROR_3 + data$RV_SUM_FIX_MEDIUM_SMALL_ERROR_4) / (data$RV_SUM_FIX_MEDIUM_BIG_ERROR_3 + data$RV_SUM_FIX_MEDIUM_BIG_ERROR_4 + data$RV_SUM_FIX_MEDIUM_CONTROL_3 + data$RV_SUM_FIX_MEDIUM_CONTROL_4 + data$RV_SUM_FIX_MEDIUM_CORR_3 + data$RV_SUM_FIX_MEDIUM_CORR_4 + data$RV_SUM_FIX_MEDIUM_SMALL_ERROR_3 + data$RV_SUM_FIX_MEDIUM_SMALL_ERROR_4)
 # data$HARD_FIX_1 <- (data$RV_SUM_FIX_HARD_CORR_3 + data$RV_SUM_FIX_HARD_CORR_4) / (data$RV_SUM_FIX_HARD_BIG_ERROR_3 + data$RV_SUM_FIX_HARD_BIG_ERROR_4 + data$RV_SUM_FIX_HARD_CONTROL_3 + data$RV_SUM_FIX_HARD_CONTROL_4 + data$RV_SUM_FIX_HARD_CORR_3 + data$RV_SUM_FIX_HARD_CORR_4 + data$RV_SUM_FIX_HARD_SMALL_ERROR_3 + data$RV_SUM_FIX_HARD_SMALL_ERROR_4)
-data$HARD_FIX_2 <- (data$RV_SUM_FIX_HARD_BIG_ERROR_3 + data$RV_SUM_FIX_HARD_BIG_ERROR_4+data$RV_SUM_FIX_HARD_CORR_3 + data$RV_SUM_FIX_HARD_CORR_4 + data$RV_SUM_FIX_HARD_SMALL_ERROR_3 + data$RV_SUM_FIX_HARD_SMALL_ERROR_4) / (data$RV_SUM_FIX_HARD_BIG_ERROR_3 + data$RV_SUM_FIX_HARD_BIG_ERROR_4 + data$RV_SUM_FIX_HARD_CONTROL_3 + data$RV_SUM_FIX_HARD_CONTROL_4 + data$RV_SUM_FIX_HARD_CORR_3 + data$RV_SUM_FIX_HARD_CORR_4 + data$RV_SUM_FIX_HARD_SMALL_ERROR_3 + data$RV_SUM_FIX_HARD_SMALL_ERROR_4)
+#data$HARD_FIX_2 <- (data$RV_SUM_FIX_HARD_BIG_ERROR_3 + data$RV_SUM_FIX_HARD_BIG_ERROR_4+data$RV_SUM_FIX_HARD_CORR_3 + data$RV_SUM_FIX_HARD_CORR_4 + data$RV_SUM_FIX_HARD_SMALL_ERROR_3 + data$RV_SUM_FIX_HARD_SMALL_ERROR_4) / (data$RV_SUM_FIX_HARD_BIG_ERROR_3 + data$RV_SUM_FIX_HARD_BIG_ERROR_4 + data$RV_SUM_FIX_HARD_CONTROL_3 + data$RV_SUM_FIX_HARD_CONTROL_4 + data$RV_SUM_FIX_HARD_CORR_3 + data$RV_SUM_FIX_HARD_CORR_4 + data$RV_SUM_FIX_HARD_SMALL_ERROR_3 + data$RV_SUM_FIX_HARD_SMALL_ERROR_4)
 
 
-data$ALLOC_EASY <- (scale(data$EASY_DUR_2) + scale(data$EASY_FIX_2)) / 2 
-data$ALLOC_MED <- (scale(data$MED_DUR_2) + scale(data$MED_FIX_2)) / 2 
-data$ALLOC_HARD <- (scale(data$HARD_DUR_2) + scale(data$HARD_FIX_2)) / 2 
+#data$ALLOC_EASY <- (scale(data$EASY_DUR_2) + scale(data$EASY_FIX_2)) / 2 
+#data$ALLOC_MED <- (scale(data$MED_DUR_2) + scale(data$MED_FIX_2)) / 2 
+#data$ALLOC_HARD <- (scale(data$HARD_DUR_2) + scale(data$HARD_FIX_2)) / 2 
 
 data$X <- NULL
 
-x <- data[gf_factors]
-x.fact <- factanal(x=data[gf_factors], factors = 1, rotation = 'varimax', scores = 'regression')
-data$gf <- x.fact$scores
+gf_factors <- c('RAV', 'TAO', 'FIG')
+gf <- data[gf_factors]
+gf.fact <- factanal(x=data[gf_factors], factors = 1, rotation = 'varimax', scores = 'regression')
+data$gf <- gf.fact$scores
+
+
+wmc_factors <- c('MC_4', 'MC_123', 'CS_LET_4', 'CS_LET_6', 'CS_LET_8', 'ARR_LET_5', 'ARR_LET_7', 'ARR_LET_9')
+
+
 
 write.csv(data, file='FAN_ET_aggr.csv', sep=',')
 #rcorr(as.matrix(data[c('NT_EASY', 'RTM_EASY')]), type="pearson")
@@ -59,8 +65,7 @@ write.csv(data, file='FAN_ET_aggr.csv', sep=',')
 # entering raw data and extracting PCs 
 # from the correlation matrix 
 
-# wmc_factors <- c('MC_4', 'MC_123', 'CS_LET_4', 'CS_LET_6', 'CS_LET_8', 'ARR_LET_5', 'ARR_LET_7', 'ARR_LET_9', 'TREL_P1', 'TREL_P2', 'TREL_L1', 'TREL_L2')
-gf_factors <- c('RAV', 'TAO', 'FIG')
+# 
 fit <- princomp(data[gf_factors], cor=TRUE)
 summary(fit) # print variance accounted for 
 loadings(fit) # pc loadings 

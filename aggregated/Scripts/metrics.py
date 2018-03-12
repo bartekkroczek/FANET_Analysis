@@ -9,7 +9,8 @@ import numpy as np
 from tqdm import tqdm
 import cgitb
 
-os.chdir(join("~", 'Dropbox'))
+os.chdir(join('..', '..', '..', '..', 'Dropbox' , 'Data', 'FAN_ET', 'Badanie P', '2017-05-06_Badanie_P', 'BadanieP_FAN_ET', 'Scripts'))
+
 cgitb.enable(format='text')
 
 
@@ -138,13 +139,14 @@ with tqdm(total=len(sacc_files)) as pbar:
         part_result["ACC_MEDIUM"] = w['corr'][LEVEL.MEDIUM]
         part_result["ACC_HARD"] = w['corr'][LEVEL.HARD]
 
-        medium_err = beh_data[(beh_data.answers == LEVEL.MEDIUM) & (beh_data['corr'] == 0)]
-        part_result['PERC_SE_MED'] = (medium_err.choosed_option == 'D3').mean()
-        part_result['PERC_BE_MED'] = (medium_err.choosed_option == 'D4').mean()
-        part_result['PERC_CON_MED'] = (medium_err.choosed_option == 'D6').mean()
+        beh_data = beh_data[beh_data['choosed_option'] != '-1']  # removed unchoosed trials
+
+        beh_medium = beh_data[beh_data.answers == LEVEL.MEDIUM]
+        part_result['PERC_SE_MED'] = (beh_medium.choosed_option == 'D3').mean()
+        part_result['PERC_BE_MED'] = (beh_medium.choosed_option == 'D4').mean()
+        part_result['PERC_CON_MED'] = (beh_medium.choosed_option == 'D6').mean()
 
         # Relational metric, now called TRS
-        beh_data = beh_data[beh_data['choosed_option'] != '-1']  # removed unchoosed trials
         beh_data = beh_data[beh_data['rt'] > 10.0]  # remove reactions faster than 10 secs
 
         corr_beh = beh_data[beh_data['corr'] == 1]
@@ -184,12 +186,12 @@ with tqdm(total=len(sacc_files)) as pbar:
         try:
             part_result["LAT_HARD_P"] = lat_p[LEVEL.HARD]
         except KeyError:
-            part_result["LAT_HARD_P"] = 0.0
+            part_result["LAT_HARD_P"] = np.nan
 
             # LAT_ERR_EASY – latency for incorrect, LAT_ERR_MED, LAT_ERR_HARD
-        part_result["LAT_EASY_N"] = lat_n.get(LEVEL.EASY, 0.0)
-        part_result["LAT_MED_N"] = lat_n.get(LEVEL.MEDIUM, 0.0)
-        part_result["LAT_HARD_N"] = lat_n.get(LEVEL.HARD, 0.0)
+        part_result["LAT_EASY_N"] = lat_n.get(LEVEL.EASY, np.nan)
+        part_result["LAT_MED_N"] = lat_n.get(LEVEL.MEDIUM, np.nan)
+        part_result["LAT_HARD_N"] = lat_n.get(LEVEL.HARD, )
 
         # %%  Pupil size
         avg_pupil_size = raw_data.groupby('block').ps.mean()
@@ -213,11 +215,11 @@ with tqdm(total=len(sacc_files)) as pbar:
         try:
             part_result['PUP_SIZE_HARD_P'] = pup_size[LEVEL.HARD][P]
         except:
-            part_result['PUP_SIZE_HARD_P'] = 0.0
+            part_result['PUP_SIZE_HARD_P'] = np.nan
 
-        part_result['PUP_SIZE_EASY_N'] = pup_size[LEVEL.EASY].get(N, 0.0)
-        part_result['PUP_SIZE_MED_N'] = pup_size[LEVEL.MEDIUM].get(N, 0.0)
-        part_result['PUP_SIZE_HARD_N'] = pup_size[LEVEL.HARD].get(N, 0.0)
+        part_result['PUP_SIZE_EASY_N'] = pup_size[LEVEL.EASY].get(N, np.nan)
+        part_result['PUP_SIZE_MED_N'] = pup_size[LEVEL.MEDIUM].get(N, np.nan)
+        part_result['PUP_SIZE_HARD_N'] = pup_size[LEVEL.HARD].get(N, np.nan)
         # %% toggle rate (NT)
 
         sacc_ends_in_op = pd.concat([in_roi(sacc_data[['exp', 'eyp']], ROIS['A']),
@@ -258,11 +260,11 @@ with tqdm(total=len(sacc_files)) as pbar:
         try:
             part_result["NT_HARD_P"] = toggles['nt'][LEVEL.HARD][P]
         except KeyError:
-            part_result["NT_HARD_P"] = 0.0
+            part_result["NT_HARD_P"] = np.nan
 
-        part_result["NT_EASY_N"] = toggles['nt'][LEVEL.EASY].get(N, 0.0)
-        part_result["NT_MED_N"] = toggles['nt'][LEVEL.MEDIUM].get(N, 0.0)
-        part_result["NT_HARD_N"] = toggles['nt'][LEVEL.HARD].get(N, 0.0)
+        part_result["NT_EASY_N"] = toggles['nt'][LEVEL.EASY].get(N, np.nan)
+        part_result["NT_MED_N"] = toggles['nt'][LEVEL.MEDIUM].get(N, np.nan)
+        part_result["NT_HARD_N"] = toggles['nt'][LEVEL.HARD].get(N, np.nan)
 
         # NT_PR
         toggled_sacc = sacc_data[sacc_ends_in_pr]
@@ -289,19 +291,19 @@ with tqdm(total=len(sacc_files)) as pbar:
         try:
             part_result["NT_PR_EASY_P"] = toggles['nt'][LEVEL.EASY][P]
         except KeyError:
-            part_result["NT_PR_EASY_P"] = 0.0
+            part_result["NT_PR_EASY_P"] = np.nan
         try:
             part_result["NT_PR_MEDIUM_P"] = toggles['nt'][LEVEL.MEDIUM][P]
         except KeyError:
-            part_result["NT_PR_MEDIUM_P"] = 0.0
+            part_result["NT_PR_MEDIUM_P"] = np.nan
         try:
             part_result["NT_PR_HARD_P"] = toggles['nt'][LEVEL.HARD][P]
         except KeyError:
-            part_result["NT_PR_HARD_P"] = 0.0
+            part_result["NT_PR_HARD_P"] = np.nan
 
-        part_result["NT_PR_EASY_N"] = toggles['nt'][LEVEL.EASY].get(N, 0.0)
-        part_result["NT_PR_MED_N"] = toggles['nt'][LEVEL.MEDIUM].get(N, 0.0)
-        part_result["NT_PR_HARD_N"] = toggles['nt'][LEVEL.HARD].get(N, 0.0)
+        part_result["NT_PR_EASY_N"] = toggles['nt'][LEVEL.EASY].get(N, np.nan)
+        part_result["NT_PR_MED_N"] = toggles['nt'][LEVEL.MEDIUM].get(N, np.nan)
+        part_result["NT_PR_HARD_N"] = toggles['nt'][LEVEL.HARD].get(N, np.nan)
 
         # NT_OP
         toggled_sacc = sacc_data[sacc_ends_in_op]
@@ -328,19 +330,19 @@ with tqdm(total=len(sacc_files)) as pbar:
         try:
             part_result["NT_OP_EASY_P"] = toggles['nt'][LEVEL.EASY][P]
         except KeyError:
-            part_result["NT_OP_EASY_P"] = 0.0
+            part_result["NT_OP_EASY_P"] = np.nan
         try:
             part_result["NT_OP_MEDIUM_P"] = toggles['nt'][LEVEL.MEDIUM][P]
         except KeyError:
-            part_result["NT_OP_MEDIUM_P"] = 0.0
+            part_result["NT_OP_MEDIUM_P"] = np.nan
         try:
             part_result["NT_OP_HARD_P"] = toggles['nt'][LEVEL.HARD][P]
         except KeyError:
-            part_result["NT_OP_HARD_P"] = 0.0
+            part_result["NT_OP_HARD_P"] = np.nan
 
-        part_result["NT_OP_EASY_N"] = toggles['nt'][LEVEL.EASY].get(N, 0.0)
-        part_result["NT_OP_MED_N"] = toggles['nt'][LEVEL.MEDIUM].get(N, 0.0)
-        part_result["NT_OP_HARD_N"] = toggles['nt'][LEVEL.HARD].get(N, 0.0)
+        part_result["NT_OP_EASY_N"] = toggles['nt'][LEVEL.EASY].get(N, np.nan)
+        part_result["NT_OP_MED_N"] = toggles['nt'][LEVEL.MEDIUM].get(N, np.nan)
+        part_result["NT_OP_HARD_N"] = toggles['nt'][LEVEL.HARD].get(N, np.nan)
 
         # NT_COR_EASY – no of toggles on correct option NT_COR_MED  NT_COR_HARD
         # NT_ERR_EASY – no of toggles on incorrect options NT_ERR_MED, NT_ERR_HARD
@@ -503,19 +505,19 @@ with tqdm(total=len(sacc_files)) as pbar:
         try:
             part_result["RT_PR_EASY_P"] = rt_pr[LEVEL.EASY][P]
         except KeyError:
-            part_result["RT_PR_EASY_P"] = 0.0
+            part_result["RT_PR_EASY_P"] = np.nan
         try:
             part_result["RT_PR_MED_P"] = rt_pr[LEVEL.MEDIUM][P]
         except KeyError:
-            part_result["RT_PR_MED_P"] = 0.0
+            part_result["RT_PR_MED_P"] = np.nan
         try:
             part_result["RT_PR_HARD_P"] = rt_pr[LEVEL.HARD][P]
         except KeyError:
-            part_result["RT_PR_HARD_P"] = 0.0
+            part_result["RT_PR_HARD_P"] = np.nan
 
-        part_result["RT_PR_EASY_N"] = rt_pr[LEVEL.EASY].get(N, 0.0)
-        part_result["RT_PR_MED_N"] = rt_pr[LEVEL.MEDIUM].get(N, 0.0)
-        part_result["RT_PR_HARD_N"] = rt_pr[LEVEL.HARD].get(N, 0.0)
+        part_result["RT_PR_EASY_N"] = rt_pr[LEVEL.EASY].get(N, np.nan)
+        part_result["RT_PR_MED_N"] = rt_pr[LEVEL.MEDIUM].get(N, np.nan)
+        part_result["RT_PR_HARD_N"] = rt_pr[LEVEL.HARD].get(N, np.nan)
 
         # relative time (RT_OP)
 
@@ -546,19 +548,19 @@ with tqdm(total=len(sacc_files)) as pbar:
         try:
             part_result["RT_OP_EASY_P"] = rt_op[LEVEL.EASY][P]
         except KeyError:
-            part_result["RT_OP_EASY_P"] = 0.0
+            part_result["RT_OP_EASY_P"] = np.nan
         try:
             part_result["RT_OP_MED_P"] = rt_op[LEVEL.MEDIUM][P]
         except KeyError:
-            part_result["RT_OP_MED_P"] = 0.0
+            part_result["RT_OP_MED_P"] = np.nan
         try:
             part_result["RT_OP_HARD_P"] = rt_op[LEVEL.HARD][P]
         except:
-            part_result["RT_OP_HARD_P"] = 0.0
+            part_result["RT_OP_HARD_P"] = np.nan
 
-        part_result["RT_OP_EASY_N"] = rt_op[LEVEL.EASY].get(N, 0.0)
-        part_result["RT_OP_MED_N"] = rt_op[LEVEL.MEDIUM].get(N, 0.0)
-        part_result["RT_OP_HARD_N"] = rt_op[LEVEL.HARD].get(N, 0.0)
+        part_result["RT_OP_EASY_N"] = rt_op[LEVEL.EASY].get(N, np.nan)
+        part_result["RT_OP_MED_N"] = rt_op[LEVEL.MEDIUM].get(N, np.nan)
+        part_result["RT_OP_HARD_N"] = rt_op[LEVEL.HARD].get(N, np.nan)
 
         # relative time (RT_COR_EASY)
         rt_cor = {'EASY': 0, 'MEDIUM': 0, 'HARD': 0}
@@ -591,28 +593,28 @@ with tqdm(total=len(sacc_files)) as pbar:
         try:
             part_result["RT_COR_EASY_P"] = rt_cor_p['EASY'] / gb_p[LEVEL.EASY]
         except KeyError:
-            part_result["RT_COR_EASY_P"] = 0.0
+            part_result["RT_COR_EASY_P"] = np.nan
         try:
             part_result["RT_COR_MED_P"] = rt_cor_p['MEDIUM'] / gb_p[LEVEL.MEDIUM]
         except KeyError:
-            part_result["RT_COR_MED_P"] = 0.0
+            part_result["RT_COR_MED_P"] = np.nan
         try:
             part_result["RT_COR_HARD_P"] = rt_cor_p['HARD'] / gb_p[LEVEL.HARD]
         except:
-            part_result["RT_COR_HARD_P"] = 0.0
+            part_result["RT_COR_HARD_P"] = np.nan
 
         try:
-            part_result["RT_COR_EASY_N"] = rt_cor_n['EASY'] / gb_n.get(LEVEL.EASY, 0.0)
+            part_result["RT_COR_EASY_N"] = rt_cor_n['EASY'] / gb_n.get(LEVEL.EASY, np.nan)
         except ZeroDivisionError:
-            part_result['RT_COR_EASY_N'] = 0.0
+            part_result['RT_COR_EASY_N'] = np.nan
         try:
-            part_result["RT_COR_MED_N"] = rt_cor_n['MEDIUM'] / gb_n.get(LEVEL.MEDIUM, 0.0)
+            part_result["RT_COR_MED_N"] = rt_cor_n['MEDIUM'] / gb_n.get(LEVEL.MEDIUM, np.nan)
         except ZeroDivisionError:
-            part_result["RT_COR_MED_N"] = 0.0
+            part_result["RT_COR_MED_N"] = np.nan
         try:
-            part_result["RT_COR_HARD_N"] = rt_cor_n['HARD'] / gb_n.get(LEVEL.HARD, 0.0)
+            part_result["RT_COR_HARD_N"] = rt_cor_n['HARD'] / gb_n.get(LEVEL.HARD, np.nan)
         except ZeroDivisionError:
-            part_result["RT_COR_HARD_N"] = 0.0
+            part_result["RT_COR_HARD_N"] = np.nan
 
         # relative time (RT_ERR_EASY)
 
@@ -647,28 +649,28 @@ with tqdm(total=len(sacc_files)) as pbar:
         try:
             part_result["RT_ERR_EASY_P"] = rt_err_p['EASY'] / gb_p[LEVEL.EASY]
         except KeyError:
-            part_result["RT_ERR_EASY_P"] = 0.0
+            part_result["RT_ERR_EASY_P"] = np.nan
         try:
             part_result["RT_ERR_MED_P"] = rt_err_p['MEDIUM'] / gb_p[LEVEL.MEDIUM]
         except KeyError:
-            part_result["RT_ERR_MED_P"] = 0.0
+            part_result["RT_ERR_MED_P"] = np.nan
         try:
             part_result["RT_ERR_HARD_P"] = rt_err_p['HARD'] / gb_p[LEVEL.HARD]
         except KeyError:
-            part_result["RT_ERR_HARD_P"] = 0.0
+            part_result["RT_ERR_HARD_P"] = np.nan
 
         try:
-            part_result["RT_ERR_EASY_N"] = rt_err_n['EASY'] / gb_n.get(LEVEL.EASY, 0.0)
+            part_result["RT_ERR_EASY_N"] = rt_err_n['EASY'] / gb_n.get(LEVEL.EASY, np.nan)
         except ZeroDivisionError:
-            part_result["RT_ERR_EASY_N"] = 0.0
+            part_result["RT_ERR_EASY_N"] = np.nan
         try:
-            part_result["RT_ERR_MED_N"] = rt_err_n['MEDIUM'] / gb_n.get(LEVEL.MEDIUM, 0.0)
+            part_result["RT_ERR_MED_N"] = rt_err_n['MEDIUM'] / gb_n.get(LEVEL.MEDIUM, np.nan)
         except ZeroDivisionError:
-            part_result["RT_ERR_MED_N"] = 0.0
+            part_result["RT_ERR_MED_N"] = np.nan
         try:
-            part_result["RT_ERR_HARD_N"] = rt_err_n['HARD'] / gb_n.get(LEVEL.HARD, 0.0)
+            part_result["RT_ERR_HARD_N"] = rt_err_n['HARD'] / gb_n.get(LEVEL.HARD, np.nan)
         except ZeroDivisionError:
-            part_result["RT_ERR_HARD_N"] = 0.0
+            part_result["RT_ERR_HARD_N"] = np.nan
 
             # mean time (DUR)
 
@@ -722,28 +724,28 @@ with tqdm(total=len(sacc_files)) as pbar:
         try:
             part_result["DUR_PR_EASY_P"] = np.mean([item for sublist in rt_pr[LEVEL.EASY][P] for item in sublist])
         except KeyError:
-            part_result["DUR_PR_EASY_P"] = 0.0
+            part_result["DUR_PR_EASY_P"] = np.nan
         try:
             part_result["DUR_PR_MED_P"] = np.mean([item for sublist in rt_pr[LEVEL.MEDIUM][P] for item in sublist])
         except KeyError:
-            part_result["DUR_PR_MED_P"] = 0.0
+            part_result["DUR_PR_MED_P"] = np.nan
         try:
             part_result["DUR_PR_HARD_P"] = np.mean([item for sublist in rt_pr[LEVEL.HARD][P] for item in sublist])
         except KeyError:
-            part_result["DUR_PR_HARD_P"] = 0.0
+            part_result["DUR_PR_HARD_P"] = np.nan
 
         try:
             part_result["DUR_PR_EASY_N"] = np.mean([item for sublist in rt_pr[LEVEL.EASY][N] for item in sublist])
         except KeyError:
-            part_result["DUR_PR_EASY_N"] = 0.0
+            part_result["DUR_PR_EASY_N"] = np.nan
         try:
             part_result["DUR_PR_MED_N"] = np.mean([item for sublist in rt_pr[LEVEL.MEDIUM][N] for item in sublist])
         except KeyError:
-            part_result["DUR_PR_MED_N"] = 0.0
+            part_result["DUR_PR_MED_N"] = np.nan
         try:
             part_result["DUR_PR_HARD_N"] = np.mean([item for sublist in rt_pr[LEVEL.HARD][N] for item in sublist])
         except KeyError:
-            part_result["DUR_PR_HARD_N"] = 0.0
+            part_result["DUR_PR_HARD_N"] = np.nan
             # relative time (DUR_OP)
         fix_in_op = pd.concat([in_roi(fix_data[['axp', 'ayp']], ROIS[x]) for x in 'ABCDEF'], axis=1).any(axis=1)
 
@@ -765,35 +767,35 @@ with tqdm(total=len(sacc_files)) as pbar:
             part_result["DUR_OP_EASY_P"] = np.mean(
                 [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.EASY][P])) for item in sublist])
         except KeyError:
-            part_result["DUR_OP_EASY_P"] = 0.0
+            part_result["DUR_OP_EASY_P"] = np.nan
         try:
             part_result["DUR_OP_MED_P"] = np.mean(
                 [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.MEDIUM][P])) for item in
                  sublist])
         except KeyError:
-            part_result["DUR_OP_MED_P"] = 0.0
+            part_result["DUR_OP_MED_P"] = np.nan
         try:
             part_result["DUR_OP_HARD_P"] = np.mean(
                 [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.HARD][P])) for item in sublist])
         except KeyError:
-            part_result["DUR_OP_HARD_P"] = 0.0
+            part_result["DUR_OP_HARD_P"] = np.nan
 
         try:
             part_result["DUR_OP_EASY_N"] = np.mean(
                 [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.EASY][N])) for item in sublist])
         except KeyError:
-            part_result["DUR_OP_EASY_N"] = 0.0
+            part_result["DUR_OP_EASY_N"] = np.nan
         try:
             part_result["DUR_OP_MED_N"] = np.mean(
                 [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.MEDIUM][N])) for item in
                  sublist])
         except KeyError:
-            part_result["DUR_OP_MED_N"] = 0.0
+            part_result["DUR_OP_MED_N"] = np.nan
         try:
             part_result["DUR_OP_HARD_N"] = np.mean(
                 [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.HARD][N])) for item in sublist])
         except KeyError:
-            part_result["DUR_OP_HARD_N"] = 0.0
+            part_result["DUR_OP_HARD_N"] = np.nan
         # dur time (DUR_COR_EASY)
         dur_cor = {'EASY': [], 'MEDIUM': [], 'HARD': []}
         dur_cor_p = {'EASY': [], 'MEDIUM': [], 'HARD': []}
@@ -912,28 +914,28 @@ with tqdm(total=len(sacc_files)) as pbar:
         try:
             part_result["FIX_PR_EASY_P"] = np.sum([item for sublist in rt_pr[LEVEL.EASY][P] for item in sublist])
         except KeyError:
-            part_result["FIX_PR_EASY_P"] = 0.0
+            part_result["FIX_PR_EASY_P"] = np.nan
         try:
             part_result["FIX_PR_MED_P"] = np.sum([item for sublist in rt_pr[LEVEL.MEDIUM][P] for item in sublist])
         except KeyError:
-            part_result["FIX_PR_MED_P"] = 0.0
+            part_result["FIX_PR_MED_P"] = np.nan
         try:
             part_result["FIX_PR_HARD_P"] = np.sum([item for sublist in rt_pr[LEVEL.HARD][P] for item in sublist])
         except KeyError:
-            part_result["FIX_PR_HARD_P"] = 0.0
+            part_result["FIX_PR_HARD_P"] = np.nan
 
         try:
             part_result["FIX_PR_EASY_N"] = np.sum([item for sublist in rt_pr[LEVEL.EASY][N] for item in sublist])
         except KeyError:
-            part_result["FIX_PR_EASY_N"] = 0.0
+            part_result["FIX_PR_EASY_N"] = np.nan
         try:
             part_result["FIX_PR_MED_N"] = np.sum([item for sublist in rt_pr[LEVEL.MEDIUM][N] for item in sublist])
         except KeyError:
-            part_result["FIX_PR_MED_N"] = 0.0
+            part_result["FIX_PR_MED_N"] = np.nan
         try:
             part_result["FIX_PR_HARD_N"] = np.sum([item for sublist in rt_pr[LEVEL.HARD][N] for item in sublist])
         except KeyError:
-            part_result["FIX_PR_HARD_N"] = 0.0
+            part_result["FIX_PR_HARD_N"] = np.nan
             # relative time (DUR_OP)
         fix_in_op = pd.concat([in_roi(fix_data[['axp', 'ayp']], ROIS[x]) for x in 'ABCDEF'], axis=1).any(axis=1)
 
@@ -945,17 +947,17 @@ with tqdm(total=len(sacc_files)) as pbar:
             part_result["FIX_OP_EASY"] = np.sum(
                 [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.EASY])) for item in sublist])
         except KeyError:
-            part_result["FIX_OP_EASY"] = 0.0
+            part_result["FIX_OP_EASY"] = np.nan
         try:
             part_result["FIX_OP_MEDIUM"] = np.sum(
                 [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.MEDIUM])) for item in sublist])
         except KeyError:
-            part_result["FIX_OP_MEDIUM"] = 0.0
+            part_result["FIX_OP_MEDIUM"] = np.nan
         try:
             part_result["FIX_OP_HARD"] = np.sum(
                 [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.HARD])) for item in sublist])
         except KeyError:
-            part_result["FIX_OP_HARD"] = 0.0
+            part_result["FIX_OP_HARD"] = np.nan
             # dur time (DUR_OP)
 
         gb = beh_data.groupby(['answers', 'corr'])['fix_in_op_dur'].apply(list)
@@ -964,34 +966,35 @@ with tqdm(total=len(sacc_files)) as pbar:
             part_result["FIX_OP_EASY_P"] = np.sum(
                 [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.EASY][P])) for item in sublist])
         except KeyError:
-            part_result["FIX_OP_EASY_P"] = 0.0
+            part_result["FIX_OP_EASY_P"] = np.nan
         try:
             part_result["FIX_OP_MED_P"] = np.sum(
-                [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.MEDIUM][P])) for item in sublist])
+                [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.MEDIUM][P])) for item in
+                 sublist])
         except KeyError:
-            part_result["FIX_OP_MED_P"] = 0.0
+            part_result["FIX_OP_MED_P"] = np.nan
         try:
             part_result["FIX_OP_HARD_P"] = np.sum(
                 [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.HARD][P])) for item in sublist])
         except KeyError:
-            part_result["FIX_OP_HARD_P"] = 0.0
+            part_result["FIX_OP_HARD_P"] = np.nan
 
         try:
             part_result["FIX_OP_EASY_N"] = np.sum(
                 [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.EASY][N])) for item in sublist])
         except KeyError:
-            part_result["FIX_OP_EASY_N"] = 0.0
+            part_result["FIX_OP_EASY_N"] = np.nan
         try:
             part_result["FIX_OP_MED_N"] = np.sum(
                 [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.MEDIUM][N])) for item in
                  sublist])
         except KeyError:
-            part_result["FIX_OP_MED_N"] = 0.0
+            part_result["FIX_OP_MED_N"] = np.nan
         try:
             part_result["FIX_OP_HARD_N"] = np.sum(
                 [item for sublist in (map(lambda x: [] if x is np.nan else x, gb[LEVEL.HARD][N])) for item in sublist])
         except KeyError:
-            part_result["FIX_OP_HARD_N"] = 0.0
+            part_result["FIX_OP_HARD_N"] = np.nan
             # dur time (DUR_COR_EASY)
         dur_cor = {'EASY': [], 'MEDIUM': [], 'HARD': []}
         dur_cor_p = {'EASY': [], 'MEDIUM': [], 'HARD': []}
@@ -1062,5 +1065,4 @@ with tqdm(total=len(sacc_files)) as pbar:
 
 # Save results
 res = pd.DataFrame(RESULTS)
-pd.DataFrame(RESULTS).to_csv('new_result.csv', na_rep=0.0)
-pd.DataFrame(RESULTS).to_excel('new_result.xlsx', na_rep= 0.0)
+pd.DataFrame(RESULTS).to_csv('new_result.csv', na_rep=np.nan)
