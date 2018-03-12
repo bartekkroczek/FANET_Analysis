@@ -9,7 +9,7 @@ import numpy as np
 from tqdm import tqdm
 import cgitb
 
-os.chdir(join('..', '..', '..', '..', 'Dropbox' , 'Data', 'FAN_ET', 'Badanie P', '2017-05-06_Badanie_P', 'BadanieP_FAN_ET', 'Scripts'))
+os.chdir(join( '..', '..', 'Dropbox', 'Data', 'FAN_ET', 'Badanie P', '2017-05-06_Badanie_P', 'BadanieP_FAN_ET', 'Scripts'))
 
 cgitb.enable(format='text')
 
@@ -1065,4 +1065,4 @@ with tqdm(total=len(sacc_files)) as pbar:
 
 # Save results
 res = pd.DataFrame(RESULTS)
-pd.DataFrame(RESULTS).to_csv('new_result.csv', na_rep=np.nan)
+pd.DataFrame(RESULTS).to_csv('metrics.csv', na_rep=np.nan)

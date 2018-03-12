@@ -1,7 +1,7 @@
 library(readxl)
 library(Hmisc)
 metrics <- read.csv("../results/metrics.csv")
-WMC <- read.csv('../results/WMC.csv', sep=';')
+# WMC <- read.csv('../results/WMC.csv', sep=';')
 aggr_beh <- read_excel("../results/aggr_beh.xlsx", col_types = c("numeric", "blank", "blank", "text", "numeric", 
                                                       "numeric", "numeric", "numeric", "numeric", 
                                                       "blank", "numeric", "numeric", "numeric", 
@@ -18,7 +18,7 @@ aggr_beh <- read_excel("../results/aggr_beh.xlsx", col_types = c("numeric", "bla
                                                        "numeric", "numeric", "numeric"))
 
 data <- merge(metrics, aggr_beh, by.x="PART_ID", by.y="KOD")
-data <- merge(data, WMC, by.x = "PART_ID", by.y="Part_id")
+# data <- merge(data, WMC, by.x = "PART_ID", by.y="Part_id")
 data$mc <- data$MC_4 - (1 - data$MC_123) / 3
 data$csp <- (data$CS_LET_4 + data$CS_LET_6 + data$CS_LET_8) / 3
 data$arr <- (data$ARR_LET_5 + data$ARR_LET_7 + data$ARR_LET_9) / 3
@@ -45,13 +45,12 @@ data$X <- NULL
 
 gf_factors <- c('RAV', 'TAO', 'FIG')
 gf <- data[gf_factors]
-gf.fact <- factanal(x=data[gf_factors], factors = 1, rotation = 'varimax', scores = 'regression')
-data$gf <- gf.fact$scores
+gf.fact <- factanal(x=gf, factors = 1, rotation = 'varimax', scores = 'regression')
+data$GF <- gf.fact$scores
 
-
-wmc_factors <- c('MC_4', 'MC_123', 'CS_LET_4', 'CS_LET_6', 'CS_LET_8', 'ARR_LET_5', 'ARR_LET_7', 'ARR_LET_9')
-
-
+wmc <- data[c('mc', 'csp', 'arr')]
+wmc.fact <- factanal(x=wmc, factors = 1, rotation = 'varimax', scores = 'regression')
+data$WMC <- wmc.fact$scores
 
 write.csv(data, file='FAN_ET_aggr.csv', sep=',')
 #rcorr(as.matrix(data[c('NT_EASY', 'RTM_EASY')]), type="pearson")
