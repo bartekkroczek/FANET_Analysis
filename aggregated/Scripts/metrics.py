@@ -9,7 +9,7 @@ import numpy as np
 from tqdm import tqdm
 import cgitb
 
-os.chdir(join( '..', '..', 'Dropbox', 'Data', 'FAN_ET', 'Badanie P', '2017-05-06_Badanie_P', 'BadanieP_FAN_ET', 'Scripts'))
+os.chdir(join('..', '..', '..', '..', 'Dropbox', 'Data', 'FAN_ET', 'Badanie P', '2017-05-06_Badanie_P', 'BadanieP_FAN_ET', 'Scripts'))
 
 cgitb.enable(format='text')
 
@@ -1015,17 +1015,17 @@ with tqdm(total=len(sacc_files)) as pbar:
             elif idx in err_beh.index:
                 dur_cor_n[level].extend(item_dur_sum)
 
-        part_result["FIX_COR_EASY"] = np.sum(dur_cor['EASY'])
-        part_result["FIX_COR_MED"] = np.sum(dur_cor['MEDIUM'])
-        part_result["FIX_COR_HARD"] = np.sum(dur_cor['HARD'])
+        part_result["FIX_COR_EASY"] = np.sum(dur_cor['EASY']) if dur_cor['EASY'] else np.nan
+        part_result["FIX_COR_MED"] = np.sum(dur_cor['MEDIUM'])if dur_cor['MEDIUM'] else np.nan
+        part_result["FIX_COR_HARD"] = np.sum(dur_cor['HARD']) if dur_cor['HARD'] else np.nan
 
-        part_result["FIX_COR_EASY_P"] = np.sum(dur_cor_p['EASY'])
-        part_result["FIX_COR_MED_P"] = np.sum(dur_cor_p['MEDIUM'])
-        part_result["FIX_COR_HARD_P"] = np.sum(dur_cor_p['HARD'])
+        part_result["FIX_COR_EASY_P"] = np.sum(dur_cor_p['EASY']) if dur_cor_p['EASY'] else np.nan
+        part_result["FIX_COR_MED_P"] = np.sum(dur_cor_p['MEDIUM']) if dur_cor_p['MEDIUM'] else np.nan
+        part_result["FIX_COR_HARD_P"] = np.sum(dur_cor_p['HARD']) if dur_cor_p['HARD'] else np.nan
 
-        part_result["FIX_COR_EASY_N"] = np.sum(dur_cor_n['EASY'])
-        part_result["FIX_COR_MED_N"] = np.sum(dur_cor_n['MEDIUM'])
-        part_result["FIX_COR_HARD_N"] = np.sum(dur_cor_n['HARD'])
+        part_result["FIX_COR_EASY_N"] = np.sum(dur_cor_n['EASY']) if dur_cor_n['EASY'] else np.nan
+        part_result["FIX_COR_MED_N"] = np.sum(dur_cor_n['MEDIUM']) if dur_cor_n['MEDIUM'] else np.nan
+        part_result["FIX_COR_HARD_N"] = np.sum(dur_cor_n['HARD']) if dur_cor_n['HARD'] else np.nan
 
         # relative time (DUR_ERR_EASY)
 
@@ -1049,17 +1049,17 @@ with tqdm(total=len(sacc_files)) as pbar:
             elif idx in err_beh.index:
                 dur_err_n[level].extend(item_dur_sum)
 
-        part_result["FIX_ERR_EASY"] = np.sum(dur_err['EASY'])
-        part_result["FIX_ERR_MED"] = np.sum(dur_err['MEDIUM'])
-        part_result["FIX_ERR_HARD"] = np.sum(dur_err['HARD'])
+        part_result["FIX_ERR_EASY"] = np.sum(dur_err['EASY']) if dur_err['EASY'] else np.nan
+        part_result["FIX_ERR_MED"] = np.sum(dur_err['MEDIUM']) if dur_err['MEDIUM'] else np.nan
+        part_result["FIX_ERR_HARD"] = np.sum(dur_err['HARD']) if dur_err['HARD'] else np.nan
 
-        part_result["FIX_ERR_EASY_P"] = np.sum(dur_err_p['EASY'])
-        part_result["FIX_ERR_MED_P"] = np.sum(dur_err_p['MEDIUM'])
-        part_result["FIX_ERR_HARD_P"] = np.sum(dur_err_p['HARD'])
+        part_result["FIX_ERR_EASY_P"] = np.sum(dur_err_p['EASY']) if dur_err_p['EASY'] else np.nan
+        part_result["FIX_ERR_MED_P"] = np.sum(dur_err_p['MEDIUM']) if dur_err_p['MEDIUM'] else np.nan
+        part_result["FIX_ERR_HARD_P"] = np.sum(dur_err_p['HARD']) if dur_err_p['HARD'] else np.nan
 
-        part_result["FIX_ERR_EASY_N"] = np.sum(dur_err_n['EASY'])
-        part_result["FIX_ERR_MED_N"] = np.sum(dur_err_n['MEDIUM'])
-        part_result["FIX_ERR_HARD_N"] = np.sum(dur_err_n['HARD'])
+        part_result["FIX_ERR_EASY_N"] = np.sum(dur_err_n['EASY']) if dur_err_n['EASY'] else np.nan
+        part_result["FIX_ERR_MED_N"] = np.sum(dur_err_n['MEDIUM']) if dur_err_n['MEDIUM'] else np.nan
+        part_result["FIX_ERR_HARD_N"] = np.sum(dur_err_n['HARD']) if dur_err_n['HARD'] else np.nan
 
         RESULTS.append(part_result)
 

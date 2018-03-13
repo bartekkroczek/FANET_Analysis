@@ -53,7 +53,7 @@ wmc.fact <- factanal(x=wmc, factors = 1, rotation = 'varimax', scores = 'regress
 data$WMC <- wmc.fact$scores
 
 write.csv(data, file='FAN_ET_aggr.csv', sep=',')
-#rcorr(as.matrix(data[c('NT_EASY', 'RTM_EASY')]), type="pearson")
+#rcor(as.matrix(data[c('NT_EASY', 'RTM_EASY')]), type="pearson")
 #library("ggpubr")
 #ggscatter(data, x = "NT_EASY", y = "RTM_EASY", 
 #          add = "reg.line", conf.int = TRUE, 
