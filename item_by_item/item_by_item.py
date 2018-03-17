@@ -8,11 +8,14 @@ Created on Thu Jan  4 14:09:38 2018
 
 import pandas as pd
 import os
+from os.path import join
 import yaml
-import collections
 import numpy as np
+import collections
 from tqdm import tqdm
 
+os.chdir(
+    join('..', '..', '..', 'Dropbox', 'Data', 'FAN_ET', 'Badanie P', '2017-05-06_Badanie_P', 'BadanieP_FAN_ET', 'Scripts'))
 # %%
 ROIS = {
     'P1': [(-  15, 280), (235, 30)],
@@ -60,11 +63,15 @@ fix_files = os.listdir(FIX_FOLDER)
 raw_files = os.listdir(RAW_FOLDER)
 yaml_files = os.listdir(YAML_FOLDER)
 
+ID_GF_WMC = pd.read_csv(join('..', 'results', 'ID_GF_WMC.csv'))
+
 with tqdm(total=len(sacc_files)) as pbar:
-    for part_id in sacc_files:
+    for part_id in sacc_files: # for each participant
         pbar.set_postfix(file=part_id)
         pbar.update(1)
+
         part_id = part_id.split('_')[0]
+
         sacc_data = pd.read_csv(os.path.join(SACC_FOLDER, part_id + '_sacc.csv')).drop('Unnamed: 0', 1)
         sacc_idx = sacc_data.block.unique()
 
@@ -84,9 +91,13 @@ with tqdm(total=len(sacc_files)) as pbar:
         problems += yaml_data['list_of_blocks'][1]['experiment_elements'][1:]
         problems += yaml_data['list_of_blocks'][2]['experiment_elements'][1:]
         part_id = part_id.split('F')[0] if 'FEMALE' in part_id else part_id.split('M')[0]
+
         index_data = pd.read_csv(os.path.join('..', 'results', 'FAN_ET_aggr.csv'))
         index_data = index_data[index_data.Part_id == int(part_id)]
-        # remove broken trials 
+
+        gf_wmc = ID_GF_WMC[ID_GF_WMC.PART_ID == int(part_id)]
+
+        # remove broken trials
         index = set(sacc_idx).intersection(fix_idx).intersection(raw_idx)
         # remove training
         index.discard(1)
@@ -95,6 +106,37 @@ with tqdm(total=len(sacc_files)) as pbar:
         index = sorted(list(index))
         index = [x for x in index if x <= 45]
         # %%
+
+        avg_corr = beh_data[beh_data.exp == 'experiment']['corr'].mean()
+
+        trs = list()  # total
+        ers = list()  # error
+        for idx in index:  # iterate over index, because some items are missed, due to choosed_option == -1
+            choosed_option = beh_data.ix[idx - 1]['choosed_option']
+            problem = problems[idx - 1]['matrix_info']
+            err = not beh_data.ix[idx - 1]['corr']
+            if choosed_option == '-1':
+                continue
+
+            denom = np.sum([len(x['elements_changed']) for x in problem[1]['parameters']])
+            counter = [x for x in problem if x['name'] == choosed_option][0]['parameters']
+            counter = np.sum([len(x['elements_changed']) for x in counter])
+
+            if choosed_option == 'D2':  # some magic
+                rs = ((counter - 1) / denom) + 0.02
+            else:
+                rs = counter / denom
+
+            trs.append(rs)
+            if err:
+                ers.append(rs)
+
+        avg_trs = np.mean(trs)
+        avg_ers = np.mean(ers)
+
+        gf = gf_wmc['GF'].values[0]
+        wmc = gf_wmc['WMC'].values[0]
+
         for idx in index:
             part_result = collections.OrderedDict()
             sacc_item = sacc_data[sacc_data.block == idx]
@@ -105,12 +147,16 @@ with tqdm(total=len(sacc_files)) as pbar:
 
             if beh_item.rt == -1:  # no ans selected
                 continue
-            part_result['Part_id'] = part_id
-            # correctness 
-            part_result['AVG_CORR'] = beh_data[beh_data.exp == 'experiment']['corr'].mean()
-            # WMC
-            part_result['WMC'] = float(index_data.WMC.tolist()[0].replace(',', '.'))
-            part_result['GF'] = index_data.gf.values[0]
+
+            # common for all items
+            part_result['ID'] = part_id
+            part_result['AVG_CORR'] = avg_corr
+            part_result['AVG_TRS'] = avg_trs
+            part_result['AVG_ERS'] = avg_ers
+            part_result['GF'] = gf
+            part_result['WMC'] = wmc
+
+            # unique for all items
             part_result['KOL'] = idx
             part_result['WAR'] = LEV_TO_LAB[beh_item.answers]
             # N
@@ -159,8 +205,8 @@ with tqdm(total=len(sacc_files)) as pbar:
                                       sacc_starts_in_question_area_and_ends_in_matrix_area], axis=1).any(axis=1)
             part_result['NT'] = toggled_sacc.sum()
             # RTPR w danym itemie (dawne RTM, czyli relative time on PRoblem)
-            # # relative time on matrix (RTM) 
-            # summed duration of all fixations within the problem area (time on matrix) divided by total response time. 
+            # # relative time on matrix (RTM)
+            # summed duration of all fixations within the problem area (time on matrix) divided by total response time.
 
             fix_in_matrix_area = pd.concat([in_roi(fix_item[['axp', 'ayp']], ROIS['P1']),
                                             in_roi(fix_item[['axp', 'ayp']], ROIS['P2']),
@@ -188,7 +234,7 @@ with tqdm(total=len(sacc_files)) as pbar:
 
             ROIS_ORDER = ['P1', 'P2', 'P3', 'A', 'B', 'C', 'D', 'E', 'F']
 
-            # CORR == D1  
+            # CORR == D1
             roi = ROIS_ORDER[where_in_list(problem['matrix_info'], 'D1')[0]]
 
             fix_cor = fix_item[in_roi(fix_item[['axp', 'ayp']], ROIS[roi])]['dur']
