@@ -126,9 +126,10 @@ with tqdm(total=len(sacc_files)) as pbar:
         ers = list()  # error
         for idx in index:  # iterate over index, because some items are missed, due to choosed_option == -1
             choosed_option = beh_data.ix[idx - 1]['choosed_option']
+            rt = beh_data.ix[idx - 1].rt
             problem = problems[idx - 1]['matrix_info']
             err = not beh_data.ix[idx - 1]['corr']
-            if choosed_option == '-1':
+            if choosed_option == '-1' or rt < 10.0:
                 continue
 
             denom = np.sum([len(x['elements_changed']) for x in problem[1]['parameters']])
@@ -177,7 +178,7 @@ with tqdm(total=len(sacc_files)) as pbar:
             choosed_option = beh_item['choosed_option']
             prob = problem['matrix_info']
 
-            if choosed_option == '-1':
+            if choosed_option == '-1' or beh_item.rt < 10.0:
                 rs = -1
             else:
                 denom = np.sum([len(x['elements_changed']) for x in prob[1]['parameters']])
