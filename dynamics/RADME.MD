@@ -12,37 +12,44 @@ Analiza dotyczy zawsze N pojednyczych triali, przy czym N musi być odpowiednio 
 I tyle. Czyli wykres ten pokazuje jak zmieniała się alokacja fiksacji pomiędzy problem a opcje oraz jak zmieniała się relacyjność opcji na których się fiksowano. 
 
 Teraz jak ta ogólna analiza miała by wyglądać w naszym artykule. W każdej z analiz bierzemy wszystkie próby, zarówno poprawne i niepoprawne, wrzucając do jednego worka.
-Analiza A - dynamika w funkcji wybranej odpowiedzi
+## Analiza A - dynamika w funkcji wybranej odpowiedzi
 1. Dzielimy triale na takie w których wybrano odpowiedź albo poprawną albo niepoprawną
 2. Dla każdego z dwóch zbiorów osobno zapuszczamy analizę dynamiki fiksacji
 3. Rysujemy każdy z dwóch wykresów pod sobą, oraz wykres dla połączonych triali.
-Analiza B - czy czas rozwiązywania triala wpływa jakoś na dynamikę?
+## Analiza B - czy czas rozwiązywania triala wpływa jakoś na dynamikę?
 1. Dzielimy triale na trwające do 40 s, 41-80 s, 81-120 s.
 2. Dla każdego z trzech zbiorów osobno zapuszczamy analizę dynamiki fiksacji
 3. Rysujemy każdy z (coraz dłuższych) wykresów kolejno pod sobą.
-Analiza C - zakładam, że czas triala nie wpływa aż tak strasznie na dynamikę, więc już go nie będziemy uwzględniać, a sprawdzimy inne zmienne.
+## Analiza C - zakładam, że czas triala nie wpływa aż tak strasznie na dynamikę, więc już go nie będziemy uwzględniać, a sprawdzimy inne zmienne.
 1. Dzielimy triale na EASY, MEDIUM, HARD
 2. Dla każdego z trzech zbiorów osobno zapuszczamy analizę dynamiki fiksacji
 3. Rysujemy każdy z (mniej więcej równej długości) wykresów kolejno pod sobą.
-Analiza D - dynamika w funkcji WMC
+## Analiza D - dynamika w funkcji WMC
 1. Dzielimy ludzi na tercyle w funkcji wartości ich czynnika WMC (low, medium, high)
 2. Dla każdej grupy ludzi osobno zapuszczamy analizę dynamiki fiksacji
 3. Rysujemy każdy z trzech (prawdopodobnie o lekko rosnącej długości) wykresów pod sobą, 
 
-II.Analiza dynamiki sakad - tu znów wracamy do COR, SE, BE, CON
+# II.Analiza dynamiki sakad - tu znów wracamy do COR, SE, BE, CON
 
 1. Dla określonego zbioru triali zliczamy w okresie od Lmin do Lmax przejścia (sakady, nieważne w którą stronę) pomiędzy każdą kombinacją pięciu kategorii: A, B, C, COR, ERR (wszystkie opcje niepoprawne) i dzielimy przez łączną liczbę znalezionych przejść. 
 2. Rysujemy trójkąt równoboczny o boku = 4, kolorami albo wielkością koła (jeszcze zobaczymy co lepiej widać) pokazując w każdej jego kratce proporcję danego typu przejść wśród wszystkich przejść. Trójkąt w takiej orientacji:
 
 A-B     
-A-C       B-C      
+
+A-C       B-C     
+ 
 A-COR  B-COR C-COR
+
 A-ERR  B-ERR  C-ERR  COR-ERR
 
-Analiza E - przejścia w funkcji albo poprawnej albo niepoprawnej odpowiedzi - rysujemy 3 trójkąty osobno dla każdej kategorii odpowiedzi oraz łącznie.
+## Analiza E
+przejścia w funkcji albo poprawnej albo niepoprawnej odpowiedzi - rysujemy 3 trójkąty osobno dla każdej kategorii odpowiedzi oraz łącznie.
 
-Analiza F - znów dzielimy triale na do 40 s, 41-80 s, 81-120 s i rysujemy trójkąt osobno dla każdego z trzech zbiorów triali (w linii po sobie).
+## Analiza F
+znów dzielimy triale na do 40 s, 41-80 s, 81-120 s i rysujemy trójkąt osobno dla każdego z trzech zbiorów triali (w linii po sobie).
 
-Analiza G - przejścia w funkcji warunku - rysujemy 3 trójkąty dla EASY, MEDIUM, HARD.
+## Analiza G
+przejścia w funkcji warunku - rysujemy 3 trójkąty dla EASY, MEDIUM, HARD.
 
-Analiza H - przejścia w funkcji WMC - rysujemy trzy trójkąty dla tercyli jak w analizie D.
+## Analiza H
+przejścia w funkcji WMC - rysujemy trzy trójkąty dla tercyli jak w analizie D.

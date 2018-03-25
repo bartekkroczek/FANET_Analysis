@@ -1,0 +1,3 @@
+1. Fiksacja w danej sekundzie, to fiksacja która ma nie puste przeciecie z tickami danej sekundy
+2. Jesli fiksacja nie jest ani na opcjach ani na problemie, to nie wliczam jej w FOx
+3. Zdarza sie, że w sekundzie nie było zandej fiksacji

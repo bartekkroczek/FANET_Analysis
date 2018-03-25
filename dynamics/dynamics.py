@@ -1,12 +1,13 @@
 import pandas as pd
+
 import os
 from os.path import join
 import yaml
 import numpy as np
-import collections
 import time
 from tqdm import tqdm
 
+item_by_item = pd.read_csv('item_wise.csv')
 os.chdir(
     join('..', '..', '..', 'Dropbox', 'Data', 'FAN_ET', 'Badanie P', '2017-05-06_Badanie_P', 'BadanieP_FAN_ET',
          'Scripts'))
@@ -38,9 +39,9 @@ def in_roi(df, roi):
         b - coordinate of lower right corner (x2, y2)
         x, y - point in space
     """
-    x, y = df.columns
+    x, y = df.axp, df.ayp
     [(x1, y1), (x2, y2)] = roi
-    return (df[x] > x1) & (df[x] < x2) & (df[y] < y1) & (df[y] > y2)
+    return (x > x1) & (x < x2) & (y < y1) & (y > y2)
 
 
 LAB_TO_LEV = {'TRAINING': '[1, 2, 3, 4, 5, 6]',
@@ -71,9 +72,15 @@ import random
 Lmin = 0
 Lmax = 120
 
-res = [list() for _ in range(Lmin, Lmax)]
+K = list()
+for l_bound in range(Lmin, Lmax):
+    K.append((item_by_item.LAT > l_bound).sum())
 
-sacc_files = [random.choice(sacc_files)]
+res = [list() for _ in range(Lmin, Lmax)]
+FOx = [list() for _ in range(Lmin, Lmax)]
+RMx = [list() for _ in range(Lmin, Lmax)]
+no_fix_in_sec = 0
+# sacc_files = [random.choice(sacc_files)]
 with tqdm(total=len(sacc_files)) as pbar:
     for part_id in sacc_files:  # for each participant
         pbar.set_postfix(file=part_id)
@@ -122,8 +129,68 @@ with tqdm(total=len(sacc_files)) as pbar:
             beh_item = beh_data.ix[idx - 1]
             problem = problems[idx - 1]
 
+            if beh_item.rt >= 120.0:
+                print('rt: {}'.format(beh_item.rt))
+                continue
             start_stamp = int(raw_item.head(1).time.values[0])
             end_stamp = int(raw_item.tail(1).time.values[0])
 
-            for start in range(start_stamp, end_stamp, 1000):
+            if ((end_stamp - start_stamp) / 1000.0) > 120.0:
+                print('stamp: {}'.format((end_stamp - start_stamp) / 1000.0))
+                continue
+
+            for idx, start in enumerate(range(start_stamp, end_stamp, 1000)):  # iterate over seconds
                 stop = start + 1000
+                sec = set(range(start, stop))
+                fix_in_sec = list()
+                cur_fix = fix_item[((start - 15000) < fix_item['stime']) & (fix_item['stime'] < (start + 15000))]
+
+                for fix in cur_fix.iterrows():
+                    if set(range(int(fix[1]['stime']), int(fix[1]['etime']))).intersection(sec):
+                        fix_in_sec.append(fix)
+                if fix_in_sec:
+                    longest_fix_in_sec = sorted(fix_in_sec, key=lambda x: -x[1].dur)[0][1]
+                    res[idx].append(longest_fix_in_sec)
+
+                    fix_in_pr = any([in_roi(longest_fix_in_sec[['axp', 'ayp']], ROIS[x]) for x in ['P1', 'P2', 'P3']])
+                    fix_in_op = any(
+                        [in_roi(longest_fix_in_sec[['axp', 'ayp']], ROIS[x]) for x in ['A', 'B', 'C', 'D', 'E', 'F']])
+
+                    if fix_in_pr:
+                        FOx[idx].append(0)
+                        RMx[idx].append(-1)
+                    if fix_in_op:
+                        FOx[idx].append(1)
+
+                        prob = problem['matrix_info']
+
+                        which_option = np.where(
+                            [in_roi(longest_fix_in_sec[['axp', 'ayp']], ROIS[x]) for x in
+                             ['A', 'B', 'C', 'D', 'E', 'F']])[
+                            0][0]
+                        which_option = [x['name'] for x in prob][3 + which_option]
+
+                        denom = np.sum([len(x['elements_changed']) for x in prob[1]['parameters']])
+                        counter = [x for x in prob if x['name'] == which_option][0]['parameters']
+                        counter = np.sum([len(x['elements_changed']) for x in counter])
+
+                        if which_option == 'D2':  # some magic
+                            rs = ((counter - 1) / denom) + 0.02
+                        else:
+                            rs = counter / denom
+                        RMx[idx].append(rs)
+                else:
+                    no_fix_in_sec += 1
+df = pd.DataFrame()
+df['Kx'] = K
+df['FOx'] = [sum(x) for x in FOx]
+df['RMx'] = [sum([a for a in x if a >= 0.0]) for x in RMx]
+df['RMk'] = [sum([1 for a in x if a >= 0.0]) for x in RMx]
+df['PROP_FOx'] = df.FOx / df.Kx
+df['AVG_RMx'] = df.RMx / df.RMk
+
+print('No fix in sec:{}'.format(no_fix_in_sec))
+
+dat = time.localtime()
+filename = '{}_{}_{}_{}:{}'.format(dat.tm_year, dat.tm_mon, dat.tm_mday, dat.tm_hour, dat.tm_min)
+df.to_csv(join('results', 'dynamics_' + filename + '.csv'))
