@@ -67,6 +67,13 @@ raw_files = os.listdir(RAW_FOLDER)
 yaml_files = os.listdir(YAML_FOLDER)
 
 ID_GF_WMC = pd.read_csv(join('..', 'results', 'ID_GF_WMC.csv'))
+
+low_wmc_band = ID_GF_WMC.WMC.quantile(1/3)
+high_wmc_band = ID_GF_WMC.WMC.quantile(2/3)
+
+low_wmc = ID_GF_WMC[(ID_GF_WMC.WMC.between(-20, low_wmc_band))].PART_ID.tolist()
+med_wmc = ID_GF_WMC[(ID_GF_WMC.WMC.between(low_wmc_band, high_wmc_band))].PART_ID.tolist()
+high_wmc = ID_GF_WMC[(ID_GF_WMC.WMC.between(high_wmc_band, 20))].PART_ID.tolist()
 import random
 
 Lmin = 0
@@ -85,7 +92,6 @@ with tqdm(total=len(sacc_files)) as pbar:
         pbar.update(1)
 
         part_id = part_id.split('_')[0]
-
         sacc_data = pd.read_csv(os.path.join(SACC_FOLDER, part_id + '_sacc.csv')).drop('Unnamed: 0', 1)
         sacc_idx = sacc_data.block.unique()
 
@@ -119,6 +125,9 @@ with tqdm(total=len(sacc_files)) as pbar:
         problems += yaml_data['list_of_blocks'][2]['experiment_elements'][1:]
         part_id = part_id.split('F')[0] if 'FEMALE' in part_id else part_id.split('M')[0]
 
+        if int(part_id) not in low_wmc:
+            continue
+
         index_data = pd.read_csv(os.path.join('..', 'results', 'FAN_ET_aggr.csv'))
         index_data = index_data[index_data.Part_id == int(part_id)]
 
@@ -148,7 +157,8 @@ with tqdm(total=len(sacc_files)) as pbar:
             a = (len(range(start_stamp, end_stamp, 1000)))
             # if (a < 80.0) or (a > 120.0):
             #     continue
-
+            # if idx not in lev_hard:
+            #     continue
 
 
 
@@ -221,4 +231,4 @@ print('No fix in sec:{}'.format(no_fix_in_sec))
 
 dat = time.localtime()
 filename = '{}_{}_{}_{}:{}'.format(dat.tm_year, dat.tm_mon, dat.tm_mday, dat.tm_hour, dat.tm_min)
-df.to_csv(join('results', 'dynamics_full_' + filename + '.csv'))
+df.to_csv(join('results', 'dynamics_wmc_low_' + filename + '.csv'))
