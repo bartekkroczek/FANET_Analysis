@@ -72,9 +72,7 @@ import random
 Lmin = 0
 Lmax = 120
 
-K = list()
-for l_bound in range(Lmin, Lmax):
-    K.append((item_by_item.LAT > l_bound).sum())
+Kx = list()
 
 res = [list() for _ in range(Lmin, Lmax)]
 FOx = [list() for _ in range(Lmin, Lmax)]
@@ -93,6 +91,18 @@ with tqdm(total=len(sacc_files)) as pbar:
 
         beh_data = pd.read_csv(os.path.join(BEH_FOLDER, part_id + '_beh.csv'))
         beh_data['corr_and_accept'] = (beh_data['corr'] & beh_data['ans_accept'] & (beh_data['rt'] > 10.0))
+
+        full_index = beh_data[beh_data['rt'] > 10.0].index
+        corr_index = beh_data[beh_data['corr_and_accept']].index
+        err_index = beh_data[(((~ beh_data['corr']) | (~beh_data['ans_accept'])) & (beh_data['rt'] > 10.0))].index
+
+        lev_easy = beh_data[(beh_data.answers.map(LEV_TO_LAB) == 'EASY') & (beh_data['rt'] > 10.0)].index
+        lev_med = beh_data[(beh_data.answers.map(LEV_TO_LAB) == 'MEDIUM') & (beh_data['rt'] > 10.0)].index
+        lev_hard = beh_data[(beh_data.answers.map(LEV_TO_LAB) == 'HARD') & (beh_data['rt'] > 10.0)].index
+
+        time_short = beh_data[beh_data.rt.between(10.0, 40.0)].index
+        time_med = beh_data[beh_data.rt.between(40.0, 80.0)].index
+        time_long = beh_data[beh_data.rt.between(80.0, 121.0)].index
 
         fix_data = pd.read_csv(os.path.join(FIX_FOLDER, part_id + '_fix.csv')).drop('Unnamed: 0', 1)
         fix_idx = fix_data.block.unique()
@@ -135,9 +145,17 @@ with tqdm(total=len(sacc_files)) as pbar:
             start_stamp = int(raw_item.head(1).time.values[0])
             end_stamp = int(raw_item.tail(1).time.values[0])
 
+            a = (len(range(start_stamp, end_stamp, 1000)))
+            # if (a < 80.0) or (a > 120.0):
+            #     continue
+
+
+
+
             if ((end_stamp - start_stamp) / 1000.0) > 120.0:
                 print('stamp: {}'.format((end_stamp - start_stamp) / 1000.0))
                 continue
+            Kx.append(beh_item.rt)
 
             for idx, start in enumerate(range(start_stamp, end_stamp, 1000)):  # iterate over seconds
                 stop = start + 1000
@@ -181,6 +199,13 @@ with tqdm(total=len(sacc_files)) as pbar:
                         RMx[idx].append(rs)
                 else:
                     no_fix_in_sec += 1
+
+
+K = list()
+Kx = pd.Series(Kx)
+for l_bound in range(Lmin, Lmax):
+    K.append((Kx >= l_bound).sum())
+
 df = pd.DataFrame()
 df['Kx'] = K
 df['FOx'] = [sum(x) for x in FOx]
@@ -191,6 +216,9 @@ df['AVG_RMx'] = df.RMx / df.RMk
 
 print('No fix in sec:{}'.format(no_fix_in_sec))
 
+
+
+
 dat = time.localtime()
 filename = '{}_{}_{}_{}:{}'.format(dat.tm_year, dat.tm_mon, dat.tm_mday, dat.tm_hour, dat.tm_min)
-df.to_csv(join('results', 'dynamics_' + filename + '.csv'))
+df.to_csv(join('results', 'dynamics_full_' + filename + '.csv'))
