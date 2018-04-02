@@ -125,8 +125,8 @@ with tqdm(total=len(sacc_files)) as pbar:
         problems += yaml_data['list_of_blocks'][2]['experiment_elements'][1:]
         part_id = part_id.split('F')[0] if 'FEMALE' in part_id else part_id.split('M')[0]
 
-        if int(part_id) not in low_wmc:
-            continue
+        # if int(part_id) not in low_wmc:
+        #     continue
 
         index_data = pd.read_csv(os.path.join('..', 'results', 'FAN_ET_aggr.csv'))
         index_data = index_data[index_data.Part_id == int(part_id)]
@@ -157,8 +157,8 @@ with tqdm(total=len(sacc_files)) as pbar:
             a = (len(range(start_stamp, end_stamp, 1000)))
             # if (a < 80.0) or (a > 120.0):
             #     continue
-            # if idx not in lev_hard:
-            #     continue
+            if idx not in err_index:
+                continue
 
 
 
@@ -219,7 +219,9 @@ for l_bound in range(Lmin, Lmax):
 df = pd.DataFrame()
 df['Kx'] = K
 df['FOx'] = [sum(x) for x in FOx]
+df['FOx_STD'] = [np.std(x) for x in FOx]
 df['RMx'] = [sum([a for a in x if a >= 0.0]) for x in RMx]
+df['RMx_STD'] = [np.std([a for a in x if a >= 0.0]) for x in RMx]
 df['RMk'] = [sum([1 for a in x if a >= 0.0]) for x in RMx]
 df['PROP_FOx'] = df.FOx / df.Kx
 df['AVG_RMx'] = df.RMx / df.RMk
@@ -228,7 +230,6 @@ print('No fix in sec:{}'.format(no_fix_in_sec))
 
 
 
-
 dat = time.localtime()
 filename = '{}_{}_{}_{}:{}'.format(dat.tm_year, dat.tm_mon, dat.tm_mday, dat.tm_hour, dat.tm_min)
-df.to_csv(join('results', 'dynamics_wmc_low_' + filename + '.csv'))
+df.to_csv(join('results', 'dynamics_err_' + filename + '.csv'))
