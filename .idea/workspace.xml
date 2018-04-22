@@ -2,12 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b32d614f-8e45-4c59-8269-d73135f2eea7" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/FANET_Analysis.iml" afterPath="$PROJECT_DIR$/.idea/FANET_Analysis.iml" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/dynamics/.ipynb_checkpoints/Analiza dynamiki fiksacji-checkpoint.ipynb" afterPath="$PROJECT_DIR$/dynamics/.ipynb_checkpoints/Analiza dynamiki fiksacji-checkpoint.ipynb" />
       <change beforePath="$PROJECT_DIR$/dynamics/Analiza dynamiki fiksacji.ipynb" afterPath="$PROJECT_DIR$/dynamics/Analiza dynamiki fiksacji.ipynb" />
       <change beforePath="$PROJECT_DIR$/dynamics/dynamics.py" afterPath="$PROJECT_DIR$/dynamics/dynamics.py" />
+      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_corr.csv" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_err.csv" afterPath="$PROJECT_DIR$/dynamics/results/dynamics_err.csv" />
+      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_full.csv" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_lev_easy.csv" afterPath="$PROJECT_DIR$/dynamics/results/dynamics_lev_easy.csv" />
+      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_lev_hard.csv" afterPath="$PROJECT_DIR$/dynamics/results/dynamics_lev_hard.csv" />
+      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_lev_med.csv" afterPath="$PROJECT_DIR$/dynamics/results/dynamics_lev_med.csv" />
+      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_time_long.csv" afterPath="$PROJECT_DIR$/dynamics/results/dynamics_time_long.csv" />
+      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_time_med.csv" afterPath="$PROJECT_DIR$/dynamics/results/dynamics_time_med.csv" />
+      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_time_short.csv" afterPath="$PROJECT_DIR$/dynamics/results/dynamics_time_short.csv" />
+      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_wmc_high.csv" afterPath="$PROJECT_DIR$/dynamics/results/dynamics_wmc_high.csv" />
+      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_wmc_low.csv" afterPath="$PROJECT_DIR$/dynamics/results/dynamics_wmc_low.csv" />
+      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_wmc_med.csv" afterPath="$PROJECT_DIR$/dynamics/results/dynamics_wmc_med.csv" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,10 +33,13 @@
       <file leaf-file-name="dynamics.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dynamics/dynamics.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="159" column="36" lean-forward="true" selection-start-line="159" selection-start-column="36" selection-end-line="159" selection-end-column="36" />
+            <state relative-caret-position="305">
+              <caret line="340" column="57" lean-forward="false" selection-start-line="340" selection-start-column="57" selection-end-line="340" selection-end-column="57" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
+                <element signature="e#7081#7132#0" expanded="false" />
+                <element signature="e#7191#7242#0" expanded="false" />
+                <element signature="e#7294#7424#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -69,9 +81,9 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="-1" />
-    <option name="width" value="1366" />
+    <option name="width" value="683" />
     <option name="height" value="749" />
   </component>
   <component name="ProjectView">
@@ -89,8 +101,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -102,12 +112,6 @@
               <item name="FANET_Analysis" type="b2602c69:ProjectViewProjectNode" />
               <item name="FANET_Analysis" type="462c0819:PsiDirectoryNode" />
               <item name="aggregated" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="FANET_Analysis" type="b2602c69:ProjectViewProjectNode" />
-              <item name="FANET_Analysis" type="462c0819:PsiDirectoryNode" />
-              <item name="aggregated" type="462c0819:PsiDirectoryNode" />
-              <item name="Scripts" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="FANET_Analysis" type="b2602c69:ProjectViewProjectNode" />
@@ -129,6 +133,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -319,24 +325,24 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-1" width="1366" height="749" extended-state="0" />
+    <frame x="0" y="-1" width="1366" height="749" extended-state="6" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="16" side_tool="true" content_ui="tabs" />
-      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="7.342144E-4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" x="0" y="0" width="431" height="899" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33690658" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32940018" sideWeight="0.5" order="17" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27469134" sideWeight="0.5" order="18" side_tool="false" content_ui="tabs" />
+      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="7.342144E-4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" x="0" y="0" width="431" height="899" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3280255" sideWeight="0.5" order="17" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46860644" sideWeight="0.5" order="18" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4303216" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32940018" sideWeight="0.5" order="19" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1585903" sideWeight="0.49445984" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20264317" sideWeight="0.49445984" order="0" side_tool="false" content_ui="combo" />
       <window_info id="R Packages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="20" side_tool="false" content_ui="tabs" />
       <window_info id="R Graphics" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4060543" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40602055" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.047916666" sideWeight="0.5055402" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -499,11 +505,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/item_by_item/results/ID_GF_WMC.csv">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="10" column="40" lean-forward="false" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
-        </state>
-      </provider>
       <provider selected="true" editor-type-id="csv-data-editor">
         <state>
           <format>
@@ -526,6 +527,11 @@
               </header>
             </csv-format>
           </format>
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="10" column="40" lean-forward="false" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
         </state>
       </provider>
     </entry>
@@ -579,10 +585,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dynamics/dynamics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="159" column="36" lean-forward="true" selection-start-line="159" selection-start-column="36" selection-end-line="159" selection-end-column="36" />
+        <state relative-caret-position="305">
+          <caret line="340" column="57" lean-forward="false" selection-start-line="340" selection-start-column="57" selection-end-line="340" selection-end-column="57" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#7081#7132#0" expanded="false" />
+            <element signature="e#7191#7242#0" expanded="false" />
+            <element signature="e#7294#7424#0" expanded="false" />
           </folding>
         </state>
       </provider>
