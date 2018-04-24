@@ -29,24 +29,7 @@ ROIS = {
 
 ROIS_ORDER = ['P1', 'P2', 'P3', 'A', 'B', 'C', 'D', 'E', 'F']
 
-
-class CONDITIONS(Enum):
-    LOW_WMC = auto()
-    MED_WMC = auto()
-    HIGH_WMC = auto()
-    FULL = auto()
-    CORR = auto()
-    ERR = auto()
-    TIME_SHORT = auto()
-    TIME_MED = auto()
-    TIME_LONG = auto()
-    LEV_EASY = auto()
-    LEV_MED = auto()
-    LEV_HARD = auto()
-
-
 DEBUG = False
-CONDITION = CONDITIONS.FULL
 
 
 def where_in_list(where, what):
@@ -120,7 +103,7 @@ no_fix_in_sec = 0
 if DEBUG:
     # sacc_files = [x for x in sacc_files if '25F' in x]
     sacc_files = [random.choice(sacc_files)]
-
+RES = dict()
 with tqdm(total=len(sacc_files)) as pbar:
     for part_id in sacc_files:  # for each participant
         pbar.set_postfix(file=part_id)
@@ -153,15 +136,6 @@ with tqdm(total=len(sacc_files)) as pbar:
         index_data = pd.read_csv(os.path.join('..', 'results', 'FAN_ET_aggr.csv'))
         index_data = index_data[index_data.Part_id == int(part_id)]
 
-        if CONDITION == CONDITIONS.LOW_WMC:
-            if int(part_id) not in low_wmc:
-                continue
-        if CONDITION == CONDITIONS.MED_WMC:
-            if int(part_id) not in med_wmc:
-                continue
-        if CONDITION == CONDITIONS.HIGH_WMC:
-            if int(part_id) not in high_wmc:
-                continue
         # remove broken trials
         index = set(sacc_idx).intersection(fix_idx).intersection(raw_idx)
         # remove training
@@ -206,10 +180,8 @@ with tqdm(total=len(sacc_files)) as pbar:
                     beh_idx = idx - 1
                 if idx >= 20:
                     beh_idx = idx - 2
-
             if idx > 45:
                 continue
-
             raw_item = raw_data[raw_data.block == idx]
             beh_item = beh_data.ix[beh_idx]
 
@@ -232,35 +204,6 @@ with tqdm(total=len(sacc_files)) as pbar:
             if ((end_stamp - start_stamp) / 1000.0) > 120.0:
                 print('stamp: {}'.format((end_stamp - start_stamp) / 1000.0))
                 continue
-
-            # Select condition
-            if CONDITION == CONDITIONS.FULL:
-                if not beh_item.ans_accept:
-                    continue
-            if CONDITION == CONDITIONS.CORR:
-                if not (beh_item['corr'] and beh_item['ans_accept']):
-                    continue
-            if CONDITION == CONDITIONS.ERR:
-                if (not beh_item['corr']) or (not beh_item['ans_accept']):
-                    continue
-            if CONDITION == CONDITIONS.LEV_EASY:
-                if LEV_TO_LAB[beh_item.answers] != 'EASY':
-                    continue
-            if CONDITION == CONDITIONS.LEV_MED:
-                if LEV_TO_LAB[beh_item.answers] != 'MEDIUM':
-                    continue
-            if CONDITION == CONDITIONS.LEV_HARD:
-                if LEV_TO_LAB[beh_item.answers] != 'HARD':
-                    continue
-            if CONDITION == CONDITIONS.TIME_SHORT:
-                if not (10.0 < beh_item.rt < 40.0):
-                    continue
-            if CONDITION == CONDITIONS.TIME_MED:
-                if not (40.0 < beh_item.rt < 80.0):
-                    continue
-            if CONDITION == CONDITIONS.TIME_LONG:
-                if not (80.0 < beh_item.rt < 120.0):
-                    continue
 
             Kx.append(beh_item.rt)
 
@@ -306,39 +249,13 @@ with tqdm(total=len(sacc_files)) as pbar:
                         RMx[idx].append(rs)
                 else:
                     no_fix_in_sec += 1
+        part_res = dict()
+        part_res['RM_corr'] = list(
+            map(lambda x: x if ~np.isnan(x) else 0, [np.mean([a for a in x if a >= 0]) for x in RMx]))
+        part_res['FO_corr'] = list(map(lambda x: x if ~np.isnan(x) else 0, [np.mean(x) for x in FOx]))
+        RES[int(part_id)] = part_res
 
-K = list()
-Kx = pd.Series(Kx)
-for l_bound in range(Lmin, Lmax):
-    K.append((Kx >= l_bound).sum())
+import pickle
 
-df = pd.DataFrame()
-df['Kx'] = K
-df['FOx'] = [sum(x) for x in FOx]
-df['FOx_STD'] = [np.std(x) for x in FOx]
-df['RMx'] = [sum([a for a in x if a >= 0.0]) for x in RMx]
-df['RMx_STD'] = [np.std([a for a in x if a >= 0.0]) for x in RMx]
-df['RMk'] = [sum([1 for a in x if a >= 0.0]) for x in RMx]
-df['PROP_FOx'] = df.FOx / df.Kx
-df['AVG_RMx'] = df.RMx / df.RMk
-
-print('No fix in sec:{}'.format(no_fix_in_sec))
-
-dat = time.localtime()
-filename = '{}_{}_{}_{}:{}'.format(dat.tm_year, dat.tm_mon, dat.tm_mday, dat.tm_hour, dat.tm_min)
-
-cond = {
-    CONDITIONS.FULL: 'full',
-    CONDITIONS.CORR: 'corr',
-    CONDITIONS.ERR: 'err',
-    CONDITIONS.LOW_WMC: 'wmc_low',
-    CONDITIONS.MED_WMC: 'wmc_med',
-    CONDITIONS.HIGH_WMC: 'wmc_high',
-    CONDITIONS.TIME_SHORT: 'time_short',
-    CONDITIONS.TIME_MED: 'time_med',
-    CONDITIONS.TIME_LONG: 'time_long',
-    CONDITIONS.LEV_EASY: 'lev_easy',
-    CONDITIONS.LEV_MED: 'lev_med',
-    CONDITIONS.LEV_HARD: 'lev_hard'
-}
-df.to_csv(join('results', 'dynamics_' + cond[CONDITION] + '_' + filename + '.csv'))
+with open('intersubject_var.pickle', 'wb') as f:
+    pickle.dump(RES, f, pickle.HIGHEST_PROTOCOL)
