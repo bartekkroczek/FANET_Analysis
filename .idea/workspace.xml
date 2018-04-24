@@ -3,20 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b32d614f-8e45-4c59-8269-d73135f2eea7" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/dynamics/Analiza dynamiki fiksacji.ipynb" afterPath="$PROJECT_DIR$/dynamics/Analiza dynamiki fiksacji.ipynb" />
       <change beforePath="$PROJECT_DIR$/dynamics/dynamics.py" afterPath="$PROJECT_DIR$/dynamics/dynamics.py" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_corr.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_err.csv" afterPath="$PROJECT_DIR$/dynamics/results/dynamics_err.csv" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_full.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_lev_easy.csv" afterPath="$PROJECT_DIR$/dynamics/results/dynamics_lev_easy.csv" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_lev_hard.csv" afterPath="$PROJECT_DIR$/dynamics/results/dynamics_lev_hard.csv" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_lev_med.csv" afterPath="$PROJECT_DIR$/dynamics/results/dynamics_lev_med.csv" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_time_long.csv" afterPath="$PROJECT_DIR$/dynamics/results/dynamics_time_long.csv" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_time_med.csv" afterPath="$PROJECT_DIR$/dynamics/results/dynamics_time_med.csv" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_time_short.csv" afterPath="$PROJECT_DIR$/dynamics/results/dynamics_time_short.csv" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_wmc_high.csv" afterPath="$PROJECT_DIR$/dynamics/results/dynamics_wmc_high.csv" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_wmc_low.csv" afterPath="$PROJECT_DIR$/dynamics/results/dynamics_wmc_low.csv" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results/dynamics_wmc_med.csv" afterPath="$PROJECT_DIR$/dynamics/results/dynamics_wmc_med.csv" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -33,13 +20,13 @@
       <file leaf-file-name="dynamics.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dynamics/dynamics.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="305">
-              <caret line="340" column="57" lean-forward="false" selection-start-line="340" selection-start-column="57" selection-end-line="340" selection-end-column="57" />
+            <state relative-caret-position="186">
+              <caret line="222" column="29" lean-forward="false" selection-start-line="222" selection-start-column="22" selection-end-line="222" selection-end-column="30" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-                <element signature="e#7081#7132#0" expanded="false" />
-                <element signature="e#7191#7242#0" expanded="false" />
-                <element signature="e#7294#7424#0" expanded="false" />
+                <element signature="e#7077#7128#0" expanded="false" />
+                <element signature="e#7187#7238#0" expanded="false" />
+                <element signature="e#7290#7420#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -321,7 +308,14 @@
       <option name="project" value="LOCAL" />
       <updated>1520957750540</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Bug fixed.">
+      <created>1524428181523</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1524428181523</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -332,7 +326,7 @@
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="7.342144E-4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" x="0" y="0" width="431" height="899" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3280255" sideWeight="0.5" order="17" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46860644" sideWeight="0.5" order="18" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4303216" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4303216" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32940018" sideWeight="0.5" order="19" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20264317" sideWeight="0.49445984" order="0" side_tool="false" content_ui="combo" />
       <window_info id="R Packages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -388,7 +382,8 @@
     <MESSAGE value="I'm to tired right now." />
     <MESSAGE value="Some progress." />
     <MESSAGE value="Small corrects." />
-    <option name="LAST_COMMIT_MESSAGE" value="Small corrects." />
+    <MESSAGE value="Bug fixed." />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug fixed." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -585,13 +580,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dynamics/dynamics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="340" column="57" lean-forward="false" selection-start-line="340" selection-start-column="57" selection-end-line="340" selection-end-column="57" />
+        <state relative-caret-position="186">
+          <caret line="222" column="29" lean-forward="false" selection-start-line="222" selection-start-column="22" selection-end-line="222" selection-end-column="30" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#7081#7132#0" expanded="false" />
-            <element signature="e#7191#7242#0" expanded="false" />
-            <element signature="e#7294#7424#0" expanded="false" />
+            <element signature="e#7077#7128#0" expanded="false" />
+            <element signature="e#7187#7238#0" expanded="false" />
+            <element signature="e#7290#7420#0" expanded="false" />
           </folding>
         </state>
       </provider>

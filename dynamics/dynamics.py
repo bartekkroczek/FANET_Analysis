@@ -46,7 +46,7 @@ class CONDITIONS(Enum):
 
 
 DEBUG = False
-CONDITION = CONDITIONS.TIME_MED
+CONDITION = CONDITIONS.FULL
 
 
 def where_in_list(where, what):
@@ -118,8 +118,8 @@ RMx = [list() for _ in range(Lmin, Lmax)]
 no_fix_in_sec = 0
 
 if DEBUG:
-    sacc_files = [x for x in sacc_files if '25F' in x]
-    # sacc_files = [random.choice(sacc_files)]
+    # sacc_files = [x for x in sacc_files if '25F' in x]
+    sacc_files = [random.choice(sacc_files)]
 
 with tqdm(total=len(sacc_files)) as pbar:
     for part_id in sacc_files:  # for each participant
