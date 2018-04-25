@@ -45,8 +45,9 @@ class CONDITIONS(Enum):
     LEV_HARD = auto()
 
 
-DEBUG = False
-CONDITION = CONDITIONS.FULL
+DEBUG = True
+VAR_CORR = True
+CONDITION = CONDITIONS.TIME_MED
 
 
 def where_in_list(where, what):
@@ -120,6 +121,11 @@ no_fix_in_sec = 0
 if DEBUG:
     # sacc_files = [x for x in sacc_files if '25F' in x]
     sacc_files = [random.choice(sacc_files)]
+
+if VAR_CORR:
+    import pickle
+
+    correction = pickle.load(open('intersubject_var.pickle', 'rb'))
 
 with tqdm(total=len(sacc_files)) as pbar:
     for part_id in sacc_files:  # for each participant
@@ -282,10 +288,17 @@ with tqdm(total=len(sacc_files)) as pbar:
                         [in_roi(longest_fix_in_sec[['axp', 'ayp']], ROIS[x]) for x in ['A', 'B', 'C', 'D', 'E', 'F']])
 
                     if fix_in_pr:
-                        FOx[idx].append(0)
-                        RMx[idx].append(-1)
+                        if VAR_CORR:
+                            FOx[idx].append(0 - correction[int(part_id)]['FO_corr'][idx])
+                            RMx[idx].append(-1 - correction[int(part_id)]['RM_corr'][idx])
+                        else:
+                            FOx[idx].append(0)
+                            RMx[idx].append(-1)
                     if fix_in_op:
-                        FOx[idx].append(1)
+                        if VAR_CORR:
+                            FOx[idx].append(1 - correction[int(part_id)]['FO_corr'][idx])
+                        else:
+                            FOx[idx].append(1)
 
                         prob = problem['matrix_info']
 
@@ -303,7 +316,10 @@ with tqdm(total=len(sacc_files)) as pbar:
                             rs = ((counter - 1) / denom) + 0.02
                         else:
                             rs = counter / denom
-                        RMx[idx].append(rs)
+                        if VAR_CORR:
+                            RMx[idx].append(rs - correction[int(part_id)]['RM_corr'][idx])
+                        else:
+                            RMx[idx].append(rs)
                 else:
                     no_fix_in_sec += 1
 
@@ -341,4 +357,6 @@ cond = {
     CONDITIONS.LEV_MED: 'lev_med',
     CONDITIONS.LEV_HARD: 'lev_hard'
 }
-df.to_csv(join('results', 'dynamics_' + cond[CONDITION] + '_' + filename + '.csv'))
+corr = 'VAR_CORR' if VAR_CORR else 'NO_CORR'
+
+df.to_csv(join('results', 'dynamics_' + cond[CONDITION] + '_' + corr + '_' + filename + '.csv'))
