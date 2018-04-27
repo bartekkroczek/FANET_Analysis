@@ -250,8 +250,7 @@ with tqdm(total=len(sacc_files)) as pbar:
                 else:
                     no_fix_in_sec += 1
         part_res = dict()
-        part_res['RM_corr'] = list(
-            map(lambda x: x if ~np.isnan(x) else 0, [np.mean([a for a in x if a >= 0]) for x in RMx]))
+        part_res['RM_corr'] = list(map(lambda x: x if ~np.isnan(x) else 0, [np.mean([a for a in x if a >= 0]) for x in RMx]))
         part_res['FO_corr'] = list(map(lambda x: x if ~np.isnan(x) else 0, [np.mean(x) for x in FOx]))
         RES[int(part_id)] = part_res
 

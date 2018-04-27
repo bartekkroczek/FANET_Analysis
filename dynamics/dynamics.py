@@ -45,9 +45,9 @@ class CONDITIONS(Enum):
     LEV_HARD = auto()
 
 
-DEBUG = True
+DEBUG = False
 VAR_CORR = True
-CONDITION = CONDITIONS.TIME_MED
+CONDITION = CONDITIONS.FULL
 
 
 def where_in_list(where, what):
