@@ -95,17 +95,19 @@ Lmax = 120
 
 Kx = list()
 
-res = [list() for _ in range(Lmin, Lmax)]
-FOx = [list() for _ in range(Lmin, Lmax)]
-RMx = [list() for _ in range(Lmin, Lmax)]
 no_fix_in_sec = 0
 
 if DEBUG:
     # sacc_files = [x for x in sacc_files if '25F' in x]
     sacc_files = [random.choice(sacc_files)]
 RES = dict()
+RAW_RM = dict()
+RAW_FO = dict()
 with tqdm(total=len(sacc_files)) as pbar:
     for part_id in sacc_files:  # for each participant
+        res = [list() for _ in range(Lmin, Lmax)]
+        FOx = [list() for _ in range(Lmin, Lmax)]
+        RMx = [list() for _ in range(Lmin, Lmax)]
         pbar.set_postfix(file=part_id)
         pbar.update(1)
 
@@ -188,10 +190,10 @@ with tqdm(total=len(sacc_files)) as pbar:
             start_stamp = int(raw_item.head(1).time.values[0])
             end_stamp = int(raw_item.tail(1).time.values[0])
 
-            # a = (len(range(start_stamp, end_stamp, 1000)))
-            # if abs(beh_item.rt - a) > 1:
+            a = (len(range(start_stamp, end_stamp, 1000)))
+            if abs(beh_item.rt - a) > 1:
             #     print('ID: {} IDX: {} BEH_IDX: {} RT: {} real: {}'.format(part_id, idx, beh_idx, beh_item.rt, a))
-            #     continue
+                continue
 
             sacc_item = sacc_data[sacc_data.block == idx]
             fix_item = fix_data[fix_data.block == idx]
@@ -253,8 +255,14 @@ with tqdm(total=len(sacc_files)) as pbar:
         part_res['RM_corr'] = list(map(lambda x: x if ~np.isnan(x) else 0, [np.mean([a for a in x if a >= 0]) for x in RMx]))
         part_res['FO_corr'] = list(map(lambda x: x if ~np.isnan(x) else 0, [np.mean(x) for x in FOx]))
         RES[int(part_id)] = part_res
+        RAW_RM[int(part_id)] = RMx
+        RAW_FO[int(part_id)] = FOx
 
 import pickle
 
 with open('intersubject_var.pickle', 'wb') as f:
     pickle.dump(RES, f, pickle.HIGHEST_PROTOCOL)
+with open('RMx.pickle', 'wb') as f:
+    pickle.dump(RAW_RM, f, pickle.HIGHEST_PROTOCOL)
+with open('FOx.pickle', 'wb') as f:
+    pickle.dump(RAW_FO, f, pickle.HIGHEST_PROTOCOL)
