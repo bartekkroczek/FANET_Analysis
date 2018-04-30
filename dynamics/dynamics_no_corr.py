@@ -51,7 +51,7 @@ class CONDITIONS(Enum):
 
 
 DEBUG = False
-VAR_CORR = True
+VAR_CORR = False
 CONDITION = {'WMC_LOW': CONDITIONS.LOW_WMC,
              'WMC_MED': CONDITIONS.MED_WMC,
              'WMC_HIGH': CONDITIONS.HIGH_WMC,
@@ -376,4 +376,4 @@ cond = {
 }
 corr = 'VAR_CORR' if VAR_CORR else 'NO_CORR'
 
-df.to_csv(join('results', 'dynamics_CLASSIC_' + cond[CONDITION] + '_' + corr + '_' + filename + '.csv'))
+df.to_csv(join('results', 'dynamics_' + cond[CONDITION] + '_' + corr + '_' + filename + '.csv'))
