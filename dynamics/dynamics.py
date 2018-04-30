@@ -9,6 +9,11 @@ import time
 import random
 from tqdm import tqdm
 
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("VAR")
+args = parser.parse_args()
+
 item_by_item = pd.read_csv('item_wise.csv')
 os.chdir(
     join('..', '..', '..', 'Dropbox', 'Data', 'FAN_ET', 'Badanie P', '2017-05-06_Badanie_P', 'BadanieP_FAN_ET',
@@ -47,7 +52,19 @@ class CONDITIONS(Enum):
 
 DEBUG = False
 VAR_CORR = True
-CONDITION = CONDITIONS.FULL
+CONDITION = {'WMC_LOW': CONDITIONS.LOW_WMC,
+             'WMC_MED': CONDITIONS.MED_WMC,
+             'WMC_HIGH': CONDITIONS.HIGH_WMC,
+             'FULL': CONDITIONS.FULL,
+             'CORR': CONDITIONS.CORR,
+             'ERR': CONDITIONS.ERR,
+             'TIME_SHORT': CONDITIONS.TIME_SHORT,
+             'TIME_MED': CONDITIONS.TIME_MED,
+             'TIME_LONG': CONDITIONS.TIME_LONG,
+             'LEV_EASY': CONDITIONS.LEV_EASY,
+             'LEV_MED': CONDITIONS.LEV_MED,
+             'LEV_HARD': CONDITIONS.LEV_HARD
+}[args.VAR]
 
 
 def where_in_list(where, what):
@@ -124,8 +141,8 @@ if DEBUG:
 
 if VAR_CORR:
     import pickle
-
-    correction = pickle.load(open('intersubject_var.pickle', 'rb'))
+    fo_corr = pickle.load(open('FO45.pickle', 'rb'))
+    rm_corr = pickle.load(open('RM45.pickle', 'rb'))
 
 with tqdm(total=len(sacc_files)) as pbar:
     for part_id in sacc_files:  # for each participant
@@ -222,10 +239,10 @@ with tqdm(total=len(sacc_files)) as pbar:
             start_stamp = int(raw_item.head(1).time.values[0])
             end_stamp = int(raw_item.tail(1).time.values[0])
 
-            # a = (len(range(start_stamp, end_stamp, 1000)))
-            # if abs(beh_item.rt - a) > 1:
+            a = (len(range(start_stamp, end_stamp, 1000)))
+            if abs(beh_item.rt - a) > 1:
             #     print('ID: {} IDX: {} BEH_IDX: {} RT: {} real: {}'.format(part_id, idx, beh_idx, beh_item.rt, a))
-            #     continue
+                continue
 
             sacc_item = sacc_data[sacc_data.block == idx]
             fix_item = fix_data[fix_data.block == idx]
@@ -289,14 +306,14 @@ with tqdm(total=len(sacc_files)) as pbar:
 
                     if fix_in_pr:
                         if VAR_CORR:
-                            FOx[idx].append(0 - correction[int(part_id)]['FO_corr'][idx])
-                            RMx[idx].append(-1 - correction[int(part_id)]['RM_corr'][idx])
+                            FOx[idx].append(0 - fo_corr[int(part_id)][idx])
+                            RMx[idx].append(-1 - rm_corr[int(part_id)][idx])
                         else:
                             FOx[idx].append(0)
                             RMx[idx].append(-1)
                     if fix_in_op:
                         if VAR_CORR:
-                            FOx[idx].append(1 - correction[int(part_id)]['FO_corr'][idx])
+                            FOx[idx].append(1 - fo_corr[int(part_id)][idx])
                         else:
                             FOx[idx].append(1)
 
@@ -317,7 +334,7 @@ with tqdm(total=len(sacc_files)) as pbar:
                         else:
                             rs = counter / denom
                         if VAR_CORR:
-                            RMx[idx].append(rs - correction[int(part_id)]['RM_corr'][idx])
+                            RMx[idx].append(rs - rm_corr[int(part_id)][idx])
                         else:
                             RMx[idx].append(rs)
                 else:
@@ -359,4 +376,4 @@ cond = {
 }
 corr = 'VAR_CORR' if VAR_CORR else 'NO_CORR'
 
-df.to_csv(join('results', 'dynamics_' + cond[CONDITION] + '_' + corr + '_' + filename + '.csv'))
+df.to_csv(join('results', 'dynamics_45_' + cond[CONDITION] + '_' + corr + '_' + filename + '.csv'))
