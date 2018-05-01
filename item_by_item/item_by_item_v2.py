@@ -90,6 +90,7 @@ with tqdm(total=len(sacc_files)) as pbar:
         beh_data = pd.read_csv(os.path.join(BEH_FOLDER, part_id + '_beh.csv'))
         beh_data['corr_and_accept'] = (beh_data['corr'] & beh_data['ans_accept'] & (beh_data['rt'] > 10.0))
 
+
         fix_data = pd.read_csv(os.path.join(FIX_FOLDER, part_id + '_fix.csv')).drop('Unnamed: 0', 1)
         fix_idx = fix_data.block.unique()
         if part_id in ['12MALE21', '14FEMALE19', '62FEMALE39', '83MALE27', '130MALE18', '142FEMALE29',
@@ -125,10 +126,35 @@ with tqdm(total=len(sacc_files)) as pbar:
         trs = list()  # total
         ers = list()  # error
         for idx in index:  # iterate over index, because some items are missed, due to choosed_option == -1
-            choosed_option = beh_data.ix[idx - 1]['choosed_option']
-            rt = beh_data.ix[idx - 1].rt
+            # Due to problems at the level of data acquisition, some indexes ar shifted.
+            beh_idx = idx
+            # Full shift
+            # if part_id in ['172', '14', '130', '86', '165', '62', '22', '68', '144']:
+            #     beh_idx = idx - 1
+            #
+            # if part_id in ['142', '83', '150']:
+            #     if idx >= 26:
+            #         beh_idx = idx - 1
+            #
+            # if part_id in ['50', '144']:
+            #     if idx >= 26:
+            #         beh_idx = idx - 2
+            #
+            # if part_id in ['52']:
+            #     if idx in range(13, 20):
+            #         beh_idx = idx - 1
+            #     if idx >= 20:
+            #         beh_idx = idx - 2
+            #
+            # if idx > 45:
+            #     continue
+
+            beh_item = beh_data.ix[beh_idx - 1]
+
+            choosed_option = beh_item['choosed_option']
+            rt = beh_item.rt
             problem = problems[idx - 1]['matrix_info']
-            err = not beh_data.ix[idx - 1]['corr']
+            err = not beh_item['corr']
             if choosed_option == '-1' or rt < 10.0:
                 continue
 
@@ -150,15 +176,48 @@ with tqdm(total=len(sacc_files)) as pbar:
 
         gf = gf_wmc['GF'].values[0]
         wmc = gf_wmc['WMC'].values[0]
-
+        beh_data.set_index(beh_data.index + 1, inplace=True)
         for idx in index:  # for each item
             part_result = collections.OrderedDict()
             sacc_item = sacc_data[sacc_data.block == idx]
             fix_item = fix_data[fix_data.block == idx]
             raw_item = raw_data[raw_data.block == idx]
-            beh_item = beh_data.ix[idx - 1]
-            problem = problems[idx - 1]
 
+            beh_idx = idx
+            # Full shift
+            if part_id in ['172', '14', '130', '86', '165', '62', '22', '68', '144']:
+                beh_idx = idx - 1
+
+            if part_id in ['142', '83', '150']:
+                if idx >= 26:
+                    beh_idx = idx - 1
+
+            if part_id in ['50', '144']:
+                if idx >= 26:
+                    beh_idx = idx - 2
+
+            if part_id in ['52']:
+                if idx in range(13, 20):
+                    beh_idx = idx - 1
+                if idx >= 20:
+                    beh_idx = idx - 2
+
+            if idx > 45:
+                continue
+
+            beh_item = beh_data.ix[beh_idx]
+
+            problem = problems[beh_idx - 1]
+
+            start_stamp = int(raw_item.head(1).time.values[0])
+            end_stamp = int(raw_item.tail(1).time.values[0])
+
+            a = (len(range(start_stamp, end_stamp, 1000)))
+            if abs(beh_item.rt - a) > 1:
+                print('ID: {} IDX: {} BEH_IDX: {} RT: {} real: {}'.format(part_id, idx, beh_idx, beh_item.rt, a))
+                continue
+            if beh_item.exp != 'experiment':
+                continue
             # common for all items
             part_result['ID'] = part_id
             part_result['AVG_CORR'] = avg_corr
@@ -253,5 +312,5 @@ res = pd.DataFrame(RESULTS)
 res = res.fillna(0)
 dat = time.localtime()
 filename = '{}_{}_{}_{}:{}'.format(dat.tm_year, dat.tm_mon, dat.tm_mday, dat.tm_hour, dat.tm_min)
-res.to_csv(join('results', 'item_wise_' + filename + '.csv'))
-res.to_excel(join('results', 'item_wise_' + filename + '.xlsx'))
+res.to_csv(join('item_wise_' + filename + '.csv'))
+res.to_excel(join('item_wise_CORRECTED_' + filename + '.xlsx'))
