@@ -8,8 +8,8 @@ import numpy as np
 import time
 import random
 from tqdm import tqdm
-
 import argparse
+
 parser = argparse.ArgumentParser()
 parser.add_argument("VAR")
 args = parser.parse_args()
@@ -42,29 +42,22 @@ class CONDITIONS(Enum):
     FULL = auto()
     CORR = auto()
     ERR = auto()
-    TIME_SHORT = auto()
-    TIME_MED = auto()
-    TIME_LONG = auto()
     LEV_EASY = auto()
     LEV_MED = auto()
     LEV_HARD = auto()
 
 
 DEBUG = False
-VAR_CORR = False
 CONDITION = {'WMC_LOW': CONDITIONS.LOW_WMC,
              'WMC_MED': CONDITIONS.MED_WMC,
              'WMC_HIGH': CONDITIONS.HIGH_WMC,
              'FULL': CONDITIONS.FULL,
              'CORR': CONDITIONS.CORR,
              'ERR': CONDITIONS.ERR,
-             'TIME_SHORT': CONDITIONS.TIME_SHORT,
-             'TIME_MED': CONDITIONS.TIME_MED,
-             'TIME_LONG': CONDITIONS.TIME_LONG,
              'LEV_EASY': CONDITIONS.LEV_EASY,
              'LEV_MED': CONDITIONS.LEV_MED,
              'LEV_HARD': CONDITIONS.LEV_HARD
-}[args.VAR]
+             }[args.VAR]
 
 
 def where_in_list(where, what):
@@ -99,6 +92,7 @@ LEV_TO_LAB = {v: k for k, v in LAB_TO_LEV.items()}
 
 RESULTS = list()
 TRENING_TRIALS = [1, 2, 3]
+WINDOW_TIME = 5
 
 # LOAD DATA
 SACC_FOLDER = os.path.join('..', 'Dane trackingowe', 'sacc')
@@ -126,7 +120,7 @@ med_wmc = ID_GF_WMC[(ID_GF_WMC.WMC.between(low_wmc_band, high_wmc_band))].PART_I
 high_wmc = ID_GF_WMC[(ID_GF_WMC.WMC.between(high_wmc_band, 20))].PART_ID.tolist()
 
 Lmin = 0
-Lmax = 120
+Lmax = 120 // WINDOW_TIME
 
 Kx = list()
 
@@ -138,11 +132,6 @@ no_fix_in_sec = 0
 if DEBUG:
     # sacc_files = [x for x in sacc_files if '25F' in x]
     sacc_files = [random.choice(sacc_files)]
-
-if VAR_CORR:
-    import pickle
-    fo_corr = pickle.load(open('FO_CLASSIC.pickle', 'rb'))
-    rm_corr = pickle.load(open('RM_CLASSIC.pickle', 'rb'))
 
 with tqdm(total=len(sacc_files)) as pbar:
     for part_id in sacc_files:  # for each participant
@@ -157,7 +146,6 @@ with tqdm(total=len(sacc_files)) as pbar:
 
         beh_data = pd.read_csv(os.path.join(BEH_FOLDER, part_id + '_beh.csv'))
         beh_data.set_index(beh_data.index + 1, inplace=True)
-        beh_data['corr_and_accept'] = (beh_data['corr'] & beh_data['ans_accept'] & (beh_data['rt'] > 10.0))
 
         fix_data = pd.read_csv(os.path.join(FIX_FOLDER, part_id + '_fix.csv')).drop('Unnamed: 0', 1)
         fix_idx = fix_data.block.unique()
@@ -193,21 +181,6 @@ with tqdm(total=len(sacc_files)) as pbar:
         index.discard(3)
         index = sorted(list(index))
 
-        # Get categories
-        # full_index = beh_data[(beh_data['rt'] > 10.0) & (beh_data['ans_accept'])].index
-        # corr_index = beh_data[beh_data['corr_and_accept']].index
-        # err_index = beh_data[(((~ beh_data['corr']) | (~beh_data['ans_accept'])) & (beh_data['rt'] > 10.0))].index
-        #
-        # lev_easy = beh_data[(beh_data.answers.map(LEV_TO_LAB) == 'EASY') & (beh_data['rt'] > 10.0)].index
-        # lev_med = beh_data[(beh_data.answers.map(LEV_TO_LAB) == 'MEDIUM') & (beh_data['rt'] > 10.0)].index
-        # lev_hard = beh_data[(beh_data.answers.map(LEV_TO_LAB) == 'HARD') & (beh_data['rt'] > 10.0)].index
-        #
-        # time_short = beh_data[beh_data.rt.between(10.0, 40.0)].index
-        # time_med = beh_data[beh_data.rt.between(40.0, 80.0)].index
-        # time_long = beh_data[beh_data.rt.between(80.0, 121.0)].index
-
-        # if int(part_id) not in low_wmc:
-        #     continue
         for idx in index:  # iterate only over correct trials
 
             # Due to problems at the level of data acquisition, some indexes ar shifted.
@@ -240,8 +213,8 @@ with tqdm(total=len(sacc_files)) as pbar:
             end_stamp = int(raw_item.tail(1).time.values[0])
 
             a = (len(range(start_stamp, end_stamp, 1000)))
-            if abs(beh_item.rt - a) > 1:
-            #     print('ID: {} IDX: {} BEH_IDX: {} RT: {} real: {}'.format(part_id, idx, beh_idx, beh_item.rt, a))
+            if abs(beh_item.rt - a) > 1:  # big difference between beh and real time => broken trial
+                #     print('ID: {} IDX: {} BEH_IDX: {} RT: {} real: {}'.format(part_id, idx, beh_idx, beh_item.rt, a))
                 continue
 
             sacc_item = sacc_data[sacc_data.block == idx]
@@ -250,9 +223,10 @@ with tqdm(total=len(sacc_files)) as pbar:
 
             # trials to remove
             if not (10.0 < beh_item.rt < 120.0):
+                print('beh rt: {}'.format(beh_item.rt))
                 continue
 
-            if ((end_stamp - start_stamp) / 1000.0) > 120.0:
+            if not (10.0 < ((end_stamp - start_stamp) / 1000.0) < 120.0):
                 print('stamp: {}'.format((end_stamp - start_stamp) / 1000.0))
                 continue
 
@@ -275,52 +249,36 @@ with tqdm(total=len(sacc_files)) as pbar:
             if CONDITION == CONDITIONS.LEV_HARD:
                 if LEV_TO_LAB[beh_item.answers] != 'HARD':
                     continue
-            if CONDITION == CONDITIONS.TIME_SHORT:
-                if not (10.0 < beh_item.rt < 40.0):
-                    continue
-            if CONDITION == CONDITIONS.TIME_MED:
-                if not (40.0 < beh_item.rt < 80.0):
-                    continue
-            if CONDITION == CONDITIONS.TIME_LONG:
-                if not (80.0 < beh_item.rt < 120.0):
-                    continue
 
             Kx.append(beh_item.rt)
 
-            for idx, start in enumerate(range(start_stamp, end_stamp, 1000)):  # iterate over seconds
-                stop = start + 1000
-                sec = set(range(start, stop))
-                fix_in_sec = list()
+            for idx, start in enumerate(range(start_stamp, end_stamp, WINDOW_TIME * 1000)):  # iterate over seconds
+                stop = start + (WINDOW_TIME * 1000)
+                window = set(range(start, stop))
+                fix_in_window = list()
                 cur_fix = fix_item[((start - 15000) < fix_item['stime']) & (fix_item['stime'] < (start + 15000))]
 
                 for fix in cur_fix.iterrows():
-                    if set(range(int(fix[1]['stime']), int(fix[1]['etime']))).intersection(sec):
-                        fix_in_sec.append(fix)
-                if fix_in_sec:
-                    longest_fix_in_sec = sorted(fix_in_sec, key=lambda x: -x[1].dur)[0][1]
-                    res[idx].append(longest_fix_in_sec)
+                    if set(range(int(fix[1]['stime']), int(fix[1]['etime']))).intersection(window):
+                        fix_in_window.append(fix)
 
-                    fix_in_pr = any([in_roi(longest_fix_in_sec[['axp', 'ayp']], ROIS[x]) for x in ['P1', 'P2', 'P3']])
-                    fix_in_op = any(
-                        [in_roi(longest_fix_in_sec[['axp', 'ayp']], ROIS[x]) for x in ['A', 'B', 'C', 'D', 'E', 'F']])
+                RS_avg_counter = 0
+                RS_avg_denom = 0
+                for fix in fix_in_window:
+                    # fix_in_pr = any([in_roi(fix[['axp', 'ayp']], ROIS[x]) for x in ['P1', 'P2', 'P3']])
+                    fix_in_op = any([in_roi(fix[1][['axp', 'ayp']], ROIS[x]) for x in ['A', 'B', 'C', 'D', 'E', 'F']])
 
-                    if fix_in_pr:
-                        if VAR_CORR:
-                            FOx[idx].append(0 - fo_corr[int(part_id)][idx])
-                            RMx[idx].append(-1 - rm_corr[int(part_id)][idx])
-                        else:
-                            FOx[idx].append(0)
-                            RMx[idx].append(-1)
+                    # if fix_in_pr:
+                    #     FOx[idx].append(0)
+                    #     RMx[idx].append(-1)
                     if fix_in_op:
-                        if VAR_CORR:
-                            FOx[idx].append(1 - fo_corr[int(part_id)][idx])
-                        else:
-                            FOx[idx].append(1)
+                        fix_dur = fix[1].dur / 1000.0
+                        FOx[idx].append(fix_dur)
 
                         prob = problem['matrix_info']
 
                         which_option = np.where(
-                            [in_roi(longest_fix_in_sec[['axp', 'ayp']], ROIS[x]) for x in
+                            [in_roi(fix[1][['axp', 'ayp']], ROIS[x]) for x in
                              ['A', 'B', 'C', 'D', 'E', 'F']])[
                             0][0]
                         which_option = [x['name'] for x in prob][3 + which_option]
@@ -333,12 +291,10 @@ with tqdm(total=len(sacc_files)) as pbar:
                             rs = ((counter - 1) / denom) + 0.02
                         else:
                             rs = counter / denom
-                        if VAR_CORR:
-                            RMx[idx].append(rs - rm_corr[int(part_id)][idx])
-                        else:
-                            RMx[idx].append(rs)
-                else:
-                    no_fix_in_sec += 1
+                        RS_avg_counter += (fix_dur * rs)
+                        RS_avg_denom += fix_dur
+                if RS_avg_denom:
+                    RMx[idx].append(RS_avg_counter / RS_avg_denom)
 
 K = list()
 Kx = pd.Series(Kx)
@@ -355,8 +311,6 @@ df['RMk'] = [sum([1 for a in x if a >= 0.0]) for x in RMx]
 df['PROP_FOx'] = df.FOx / df.Kx
 df['AVG_RMx'] = df.RMx / df.RMk
 
-print('No fix in sec:{}'.format(no_fix_in_sec))
-
 dat = time.localtime()
 filename = '{}_{}_{}_{}:{}'.format(dat.tm_year, dat.tm_mon, dat.tm_mday, dat.tm_hour, dat.tm_min)
 
@@ -367,13 +321,9 @@ cond = {
     CONDITIONS.LOW_WMC: 'wmc_low',
     CONDITIONS.MED_WMC: 'wmc_med',
     CONDITIONS.HIGH_WMC: 'wmc_high',
-    CONDITIONS.TIME_SHORT: 'time_short',
-    CONDITIONS.TIME_MED: 'time_med',
-    CONDITIONS.TIME_LONG: 'time_long',
     CONDITIONS.LEV_EASY: 'lev_easy',
     CONDITIONS.LEV_MED: 'lev_med',
     CONDITIONS.LEV_HARD: 'lev_hard'
 }
-corr = 'VAR_CORR' if VAR_CORR else 'NO_CORR'
 
-df.to_csv(join('results', 'dynamics_' + cond[CONDITION] + '_' + corr + '_' + filename + '.csv'))
+df.to_csv(join('results', 'dynamics_window_' + str(WINDOW_TIME) + cond[CONDITION] + '_' + filename + '.csv'))
