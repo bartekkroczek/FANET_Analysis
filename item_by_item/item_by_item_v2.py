@@ -271,40 +271,56 @@ with tqdm(total=len(sacc_files)) as pbar:
             con_roi = ROIS_ORDER[where_in_list(problem['matrix_info'], 'D6')[0]]
 
             # saccades
-            sacc_ends_in_pr = pd.concat([in_roi(sacc_item[['exp', 'eyp']], ROIS[roi]) for roi in ['P1', 'P2', 'P3']],
-                                        axis=1).any(axis=1)
-            sacc_ends_in_corr = in_roi(sacc_item[['exp', 'eyp']], ROIS[cor_roi])
-            sacc_ends_in_se = pd.concat([in_roi(sacc_item[['exp', 'eyp']], ROIS[roi]) for roi in se_roi], axis=1).any(
-                axis=1)
-            sacc_ends_in_be = pd.concat([in_roi(sacc_item[['exp', 'eyp']], ROIS[roi]) for roi in be_roi], axis=1).any(
-                axis=1)
-            sacc_ends_in_con = in_roi(sacc_item[['exp', 'eyp']], ROIS[con_roi])
+            # sacc_ends_in_pr = pd.concat([in_roi(sacc_item[['exp', 'eyp']], ROIS[roi]) for roi in ['P1', 'P2', 'P3']],
+            #                             axis=1).any(axis=1)
+            # sacc_ends_in_corr = in_roi(sacc_item[['exp', 'eyp']], ROIS[cor_roi])
+            # sacc_ends_in_se = pd.concat([in_roi(sacc_item[['exp', 'eyp']], ROIS[roi]) for roi in se_roi], axis=1).any(
+            #     axis=1)
+            # sacc_ends_in_be = pd.concat([in_roi(sacc_item[['exp', 'eyp']], ROIS[roi]) for roi in be_roi], axis=1).any(
+            #     axis=1)
+            # sacc_ends_in_con = in_roi(sacc_item[['exp', 'eyp']], ROIS[con_roi])
 
-            part_result['NT_PR'] = sacc_ends_in_pr.sum() / 3.0
-            part_result['NT_COR'] = sacc_ends_in_corr.sum()
-            part_result['NT_SE'] = sacc_ends_in_se.sum() / 2.0
-            part_result['NT_BE'] = sacc_ends_in_be.sum() / 2.0
-            part_result['NT_CON'] = sacc_ends_in_con.sum()
+            # part_result['NT_PR'] = sacc_ends_in_pr.sum() / 3.0
+            # part_result['NT_COR'] = sacc_ends_in_corr.sum()
+            # part_result['NT_SE'] = sacc_ends_in_se.sum() / 2.0
+            # part_result['NT_BE'] = sacc_ends_in_be.sum() / 2.0
+            # part_result['NT_CON'] = sacc_ends_in_con.sum()
 
             # fixations
             fix_in_pr = pd.concat([in_roi(fix_item[['axp', 'ayp']], ROIS[x]) for x in ['P1', 'P2', 'P3']], axis=1).any(
                 axis=1)
+
             fix_in_corr = in_roi(fix_item[['axp', 'ayp']], ROIS[cor_roi])
             fix_in_se = pd.concat([in_roi(fix_item[['axp', 'ayp']], ROIS[roi]) for roi in se_roi], axis=1).any(axis=1)
             fix_in_be = pd.concat([in_roi(fix_item[['axp', 'ayp']], ROIS[roi]) for roi in be_roi], axis=1).any(axis=1)
             fix_in_con = in_roi(fix_item[['axp', 'ayp']], ROIS[con_roi])
 
+            part_result['NT_PR'] = fix_in_pr.sum()
+            part_result['NT_OP'] = (fix_in_corr.sum() + fix_in_be.sum() + fix_in_se.sum() + fix_in_con.sum())
+            part_result['NT_COR'] = fix_in_corr.sum()
+            part_result['NT_SE'] = fix_in_se.sum() / 2.0
+            part_result['NT_BE'] = fix_in_be.sum() / 2.0
+            part_result['NT_CON'] = fix_in_con.sum()
+
             part_result['FIX_PR'] = fix_item[fix_in_pr].dur.sum() / 1000.0
+            part_result['FIX_OP'] = (fix_item[fix_in_corr].dur.sum() + fix_item[fix_in_se].dur.sum() + fix_item[fix_in_be].dur.sum() + fix_item[fix_in_con].dur.sum()) / 1000.0
             part_result['FIX_COR'] = fix_item[fix_in_corr].dur.sum() / 1000.0
-            part_result['FIX_SE'] = fix_item[fix_in_se].dur.sum() / 1000.0
-            part_result['FIX_BE'] = fix_item[fix_in_be].dur.sum() / 1000.0
+            part_result['FIX_SE'] = fix_item[fix_in_se].dur.sum() / ( 2 * 1000.0)
+            part_result['FIX_BE'] = fix_item[fix_in_be].dur.sum() / (2 * 1000.0)
             part_result['FIX_CON'] = fix_item[fix_in_con].dur.sum() / 1000.0
 
-            part_result['DUR_PR'] = fix_item[fix_in_pr].dur.mean() / 1000.0
-            part_result['DUR_COR'] = fix_item[fix_in_corr].dur.mean() / 1000.0
-            part_result['DUR_SE'] = fix_item[fix_in_se].dur.mean() / 1000.0
-            part_result['DUR_BE'] = fix_item[fix_in_be].dur.mean() / 1000.0
-            part_result['DUR_CON'] = fix_item[fix_in_con].dur.mean() / 1000.0
+            part_result['REL_PR'] = part_result['FIX_PR'] / part_result['LAT']
+            part_result['REL_OP'] = part_result['FIX_OP'] / part_result['LAT']
+            part_result['REL_COR'] = part_result['FIX_COR'] / part_result['LAT']
+            part_result['REL_SE'] = part_result['FIX_SE'] / part_result['LAT']
+            part_result['REL_BE'] = part_result['FIX_BE'] / part_result['LAT']
+            part_result['REL_CON'] = part_result['FIX_CON'] / part_result['LAT']
+
+            # part_result['DUR_PR'] = fix_item[fix_in_pr].dur.mean() / 1000.0
+            # part_result['DUR_COR'] = fix_item[fix_in_corr].dur.mean() / 1000.0
+            # part_result['DUR_SE'] = fix_item[fix_in_se].dur.mean() / 1000.0
+            # part_result['DUR_BE'] = fix_item[fix_in_be].dur.mean() / 1000.0
+            # part_result['DUR_CON'] = fix_item[fix_in_con].dur.mean() / 1000.0
 
             RESULTS.append(part_result)
 
@@ -312,5 +328,5 @@ res = pd.DataFrame(RESULTS)
 res = res.fillna(0)
 dat = time.localtime()
 filename = '{}_{}_{}_{}:{}'.format(dat.tm_year, dat.tm_mon, dat.tm_mday, dat.tm_hour, dat.tm_min)
-res.to_csv(join('item_wise_' + filename + '.csv'))
-res.to_excel(join('item_wise_CORRECTED_' + filename + '.xlsx'))
+res.to_csv(join('item_wise_REL_' + filename + '.csv'))
+res.to_excel(join('item_wise_REL_' + filename + '.xlsx'))
