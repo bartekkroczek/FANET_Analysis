@@ -2,133 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b32d614f-8e45-4c59-8269-d73135f2eea7" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/codes/dynamics.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/codes/dynamics_window.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/codes/dynamics_window_mean_for_correct,py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/codes/intersubject_variance.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/docs/conventions.txt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/notebooks/.ipynb_checkpoints/Analiza dynamiki fiksacji CLASSIC-checkpoint.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/notebooks/.ipynb_checkpoints/Analiza dynamiki fiksacji NO CORR-checkpoint.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/notebooks/.ipynb_checkpoints/Dynamika fiksacji agregowana-checkpoint.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/notebooks/.ipynb_checkpoints/Korekta wariancji-checkpoint.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/notebooks/Analiza dynamiki fiksacji 45.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/notebooks/Analiza dynamiki fiksacji CLASSIC.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/notebooks/Analiza dynamiki fiksacji NO CORR.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/notebooks/Dynamika fiksacji agregowana.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/notebooks/Korekta wariancji.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/pickles/FO45.pickle" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/pickles/FOCLASSIC.pickle" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/pickles/FO_CLASSIC.pickle" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/pickles/FOx.pickle" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/pickles/RM45.pickle" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/pickles/RMCLASSIC.pickle" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/pickles/RM_CLASSIC.pickle" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/pickles/RMx.pickle" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/pickles/intersubject_var.pickle" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_45/dynamics_corr.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_45/dynamics_err.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_45/dynamics_full.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_45/dynamics_lev_easy.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_45/dynamics_lev_hard.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_45/dynamics_lev_med.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_45/dynamics_time_long.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_45/dynamics_time_med.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_45/dynamics_time_short.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_45/dynamics_wmc_high.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_45/dynamics_wmc_low.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_45/dynamics_wmc_med.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_classic/dynamics_corr.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_classic/dynamics_err.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_classic/dynamics_full.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_classic/dynamics_lev_easy.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_classic/dynamics_lev_hard.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_classic/dynamics_lev_med.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_classic/dynamics_time_long.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_classic/dynamics_time_med.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_classic/dynamics_time_short.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_classic/dynamics_wmc_high.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_classic/dynamics_wmc_low.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_classic/dynamics_wmc_med.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_no_corr/dynamics_corr.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_no_corr/dynamics_err.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_no_corr/dynamics_full.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_no_corr/dynamics_lev_easy.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_no_corr/dynamics_lev_hard.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_no_corr/dynamics_lev_med.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_no_corr/dynamics_time_long.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_no_corr/dynamics_time_med.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_no_corr/dynamics_time_short.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_no_corr/dynamics_wmc_high.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_no_corr/dynamics_wmc_low.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_no_corr/dynamics_wmc_med.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_window_5/dynamics_corr.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_window_5/dynamics_err.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_window_5/dynamics_full.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_window_5/dynamics_lev_easy.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_window_5/dynamics_lev_med.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_window_5/dynamics_wmc_high.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_window_5/dynamics_wmc_low.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_window_5/dynamics_wmc_med.csv" />
-      <change beforePath="$PROJECT_DIR$/.idea/FANET_Analysis.iml" afterPath="$PROJECT_DIR$/.idea/FANET_Analysis.iml" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/codes/count_CI,py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/pickles/MEAN_FO.pickle" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/pickles/MEAN_RM.pickle" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/dynamics/Analiza dynamiki fiksacji 45.ipynb" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/Analiza dynamiki fiksacji CLASSIC SCALE 0.5.ipynb" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/Analiza dynamiki fiksacji CLASSIC.ipynb" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/Analiza dynamiki fiksacji NO CORR.ipynb" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/Analizy_dynamiczne.docx" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/FO45.pickle" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/FOCLASSIC.pickle" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/FO_CLASSIC.pickle" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/FOx.pickle" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/Korekta wariancji.ipynb" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/RM45.pickle" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/RMCLASSIC.pickle" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/RM_CLASSIC.picke" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/RMx.pickle" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/conventions.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/dynamics.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/dynamics_window.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/intersubject_var.pickle" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/intersubject_variance.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/item_wise.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_45/dynamics_corr.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_45/dynamics_err.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_45/dynamics_full.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_45/dynamics_lev_easy.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_45/dynamics_lev_hard.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_45/dynamics_lev_med.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_45/dynamics_time_long.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_45/dynamics_time_med.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_45/dynamics_time_short.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_45/dynamics_wmc_high.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_45/dynamics_wmc_low.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_45/dynamics_wmc_med.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_classic/dynamics_corr.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_classic/dynamics_err.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_classic/dynamics_full.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_classic/dynamics_lev_easy.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_classic/dynamics_lev_hard.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_classic/dynamics_lev_med.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_classic/dynamics_time_long.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_classic/dynamics_time_med.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_classic/dynamics_time_short.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_classic/dynamics_wmc_high.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_classic/dynamics_wmc_low.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_classic/dynamics_wmc_med.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_no_corr/dynamics_corr.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_no_corr/dynamics_err.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_no_corr/dynamics_full.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_no_corr/dynamics_lev_easy.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_no_corr/dynamics_lev_hard.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_no_corr/dynamics_lev_med.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_no_corr/dynamics_time_long.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_no_corr/dynamics_time_med.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_no_corr/dynamics_time_short.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_no_corr/dynamics_wmc_high.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_no_corr/dynamics_wmc_low.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/dynamics/results_no_corr/dynamics_wmc_med.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/item_by_item/item_by_item_v2.py" afterPath="$PROJECT_DIR$/item_by_item/item_by_item_v2.py" />
+      <change beforePath="$PROJECT_DIR$/dynamics/codes/dynamics_window_mean_for_correct,py" afterPath="$PROJECT_DIR$/dynamics/codes/dynamics_window_mean_for_correct,py" />
+      <change beforePath="$PROJECT_DIR$/dynamics/notebooks/.ipynb_checkpoints/Dynamika fiksacji agregowana-checkpoint.ipynb" afterPath="$PROJECT_DIR$/dynamics/notebooks/.ipynb_checkpoints/Dynamika fiksacji agregowana-checkpoint.ipynb" />
+      <change beforePath="$PROJECT_DIR$/dynamics/notebooks/Dynamika fiksacji agregowana.ipynb" afterPath="$PROJECT_DIR$/dynamics/notebooks/Dynamika fiksacji agregowana.ipynb" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -145,7 +25,7 @@
       <file leaf-file-name="item_by_item_v2.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/item_by_item/item_by_item_v2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="520">
+            <state relative-caret-position="0">
               <caret line="314" column="77" lean-forward="false" selection-start-line="314" selection-start-column="77" selection-end-line="314" selection-end-column="77" />
               <folding />
             </state>
@@ -155,8 +35,8 @@
       <file leaf-file-name="dynamics_window.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dynamics/codes/dynamics_window.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4315">
-              <caret line="48" column="12" lean-forward="false" selection-start-line="48" selection-start-column="12" selection-end-line="48" selection-end-column="12" />
+            <state relative-caret-position="153">
+              <caret line="283" column="0" lean-forward="false" selection-start-line="283" selection-start-column="0" selection-end-line="283" selection-end-column="0" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -167,8 +47,8 @@
       <file leaf-file-name="intersubject_variance.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dynamics/codes/intersubject_variance.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="377">
-              <caret line="264" column="9" lean-forward="true" selection-start-line="264" selection-start-column="9" selection-end-line="264" selection-end-column="9" />
+            <state relative-caret-position="758">
+              <caret line="264" column="9" lean-forward="false" selection-start-line="264" selection-start-column="9" selection-end-line="264" selection-end-column="9" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -176,11 +56,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dynamics_window_mean_for_correct,py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="dynamics_window_mean_for_correct,py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dynamics/codes/dynamics_window_mean_for_correct,py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="241" column="0" lean-forward="true" selection-start-line="241" selection-start-column="0" selection-end-line="241" selection-end-column="0" />
+            <state relative-caret-position="-2319">
+              <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="count_CI,py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/dynamics/codes/count_CI,py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1962">
+              <caret line="168" column="8" lean-forward="false" selection-start-line="168" selection-start-column="8" selection-end-line="168" selection-end-column="8" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -219,6 +111,7 @@
         <option value="$PROJECT_DIR$/dynamics/codes/dynamics_window.py" />
         <option value="$PROJECT_DIR$/dynamics/codes/intersubject_variance.py" />
         <option value="$PROJECT_DIR$/dynamics/codes/dynamics_window_mean_for_correct,py" />
+        <option value="$PROJECT_DIR$/dynamics/codes/count_CI,py" />
       </list>
     </option>
   </component>
@@ -249,6 +142,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -275,6 +169,18 @@
             <path>
               <item name="FANET_Analysis" type="b2602c69:ProjectViewProjectNode" />
               <item name="FANET_Analysis" type="462c0819:PsiDirectoryNode" />
+              <item name="dynamics" type="462c0819:PsiDirectoryNode" />
+              <item name="notebooks" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FANET_Analysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FANET_Analysis" type="462c0819:PsiDirectoryNode" />
+              <item name="dynamics" type="462c0819:PsiDirectoryNode" />
+              <item name="pickles" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FANET_Analysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FANET_Analysis" type="462c0819:PsiDirectoryNode" />
               <item name="item_by_item" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -288,7 +194,6 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -497,20 +402,27 @@
       <option name="project" value="LOCAL" />
       <updated>1525178678681</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Solid code review.">
+      <created>1525804156813</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1525804156813</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="640" y="-1" width="1920" height="1063" extended-state="6" />
+    <frame x="0" y="-1" width="1920" height="1063" extended-state="6" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="16" side_tool="true" content_ui="tabs" />
-      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20511483" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" x="0" y="0" width="431" height="899" />
+      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.06784969" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" x="0" y="0" width="431" height="899" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3280255" sideWeight="0.5" order="17" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46860644" sideWeight="0.5" order="18" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3919753" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3919753" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32940018" sideWeight="0.5" order="19" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15344468" sideWeight="0.49445984" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19363257" sideWeight="0.49445984" order="0" side_tool="false" content_ui="combo" />
       <window_info id="R Packages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="20" side_tool="false" content_ui="tabs" />
       <window_info id="R Graphics" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -566,14 +478,14 @@
     <MESSAGE value="Small corrects." />
     <MESSAGE value="Bug fixed." />
     <MESSAGE value="Intersubject correction." />
-    <option name="LAST_COMMIT_MESSAGE" value="Intersubject correction." />
+    <MESSAGE value="Solid code review." />
+    <option name="LAST_COMMIT_MESSAGE" value="Solid code review." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/metrics_v2.py" />
     <entry file="file://$PROJECT_DIR$/results/10_01_2018/FANET.csv" />
     <entry file="file://$PROJECT_DIR$/item_by_item.py" />
     <entry file="file://$PROJECT_DIR$/metrics.py" />
@@ -739,26 +651,26 @@
     <entry file="file://$PROJECT_DIR$/dynamics/intersubject_variance.py" />
     <entry file="file://$PROJECT_DIR$/item_by_item/item_by_item_v2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="520">
+        <state relative-caret-position="0">
           <caret line="314" column="77" lean-forward="false" selection-start-line="314" selection-start-column="77" selection-end-line="314" selection-end-column="77" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dynamics/codes/dynamics_window.py">
+    <entry file="file://$PROJECT_DIR$/dynamics/codes/intersubject_variance.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4315">
-          <caret line="48" column="12" lean-forward="false" selection-start-line="48" selection-start-column="12" selection-end-line="48" selection-end-column="12" />
+        <state relative-caret-position="758">
+          <caret line="264" column="9" lean-forward="false" selection-start-line="264" selection-start-column="9" selection-end-line="264" selection-end-column="9" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dynamics/codes/intersubject_variance.py">
+    <entry file="file://$PROJECT_DIR$/dynamics/codes/dynamics_window.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="264" column="9" lean-forward="true" selection-start-line="264" selection-start-column="9" selection-end-line="264" selection-end-column="9" />
+        <state relative-caret-position="153">
+          <caret line="283" column="0" lean-forward="false" selection-start-line="283" selection-start-column="0" selection-end-line="283" selection-end-column="0" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
@@ -767,8 +679,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dynamics/codes/dynamics_window_mean_for_correct,py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="241" column="0" lean-forward="true" selection-start-line="241" selection-start-column="0" selection-end-line="241" selection-end-column="0" />
+        <state relative-caret-position="-2319">
+          <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dynamics/codes/count_CI,py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1962">
+          <caret line="168" column="8" lean-forward="false" selection-start-line="168" selection-start-column="8" selection-end-line="168" selection-end-column="8" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
