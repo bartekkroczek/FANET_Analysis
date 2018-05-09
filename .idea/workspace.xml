@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b32d614f-8e45-4c59-8269-d73135f2eea7" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/codes/count_CI,py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/pickles/MEAN_FO.pickle" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/pickles/MEAN_RM.pickle" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/dynamics/codes/dynamics_window_mean_for_correct,py" afterPath="$PROJECT_DIR$/dynamics/codes/dynamics_window_mean_for_correct,py" />
-      <change beforePath="$PROJECT_DIR$/dynamics/notebooks/.ipynb_checkpoints/Dynamika fiksacji agregowana-checkpoint.ipynb" afterPath="$PROJECT_DIR$/dynamics/notebooks/.ipynb_checkpoints/Dynamika fiksacji agregowana-checkpoint.ipynb" />
-      <change beforePath="$PROJECT_DIR$/dynamics/notebooks/Dynamika fiksacji agregowana.ipynb" afterPath="$PROJECT_DIR$/dynamics/notebooks/Dynamika fiksacji agregowana.ipynb" />
+      <change beforePath="$PROJECT_DIR$/dynamics/codes/count_CI,py" afterPath="$PROJECT_DIR$/dynamics/codes/count_CI,py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -71,8 +66,8 @@
       <file leaf-file-name="count_CI,py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dynamics/codes/count_CI,py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1962">
-              <caret line="168" column="8" lean-forward="false" selection-start-line="168" selection-start-column="8" selection-end-line="168" selection-end-column="8" />
+            <state relative-caret-position="809">
+              <caret line="75" column="26" lean-forward="false" selection-start-line="75" selection-start-column="26" selection-end-line="75" selection-end-column="26" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -409,7 +404,14 @@
       <option name="project" value="LOCAL" />
       <updated>1525804156813</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Ready to raport.">
+      <created>1525884413891</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1525884413891</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -422,7 +424,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46860644" sideWeight="0.5" order="18" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3919753" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32940018" sideWeight="0.5" order="19" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19363257" sideWeight="0.49445984" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19363257" sideWeight="0.49445984" order="0" side_tool="false" content_ui="combo" />
       <window_info id="R Packages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="20" side_tool="false" content_ui="tabs" />
       <window_info id="R Graphics" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -479,7 +481,8 @@
     <MESSAGE value="Bug fixed." />
     <MESSAGE value="Intersubject correction." />
     <MESSAGE value="Solid code review." />
-    <option name="LAST_COMMIT_MESSAGE" value="Solid code review." />
+    <MESSAGE value="Ready to raport." />
+    <option name="LAST_COMMIT_MESSAGE" value="Ready to raport." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -689,8 +692,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dynamics/codes/count_CI,py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1962">
-          <caret line="168" column="8" lean-forward="false" selection-start-line="168" selection-start-column="8" selection-end-line="168" selection-end-column="8" />
+        <state relative-caret-position="809">
+          <caret line="75" column="26" lean-forward="false" selection-start-line="75" selection-start-column="26" selection-end-line="75" selection-end-column="26" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>

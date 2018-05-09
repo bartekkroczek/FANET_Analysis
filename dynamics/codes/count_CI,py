@@ -46,6 +46,22 @@ class CONDITIONS(Enum):
     LEV_MED = auto()
     LEV_HARD = auto()
 
+    CORR_LEV_EASY = auto()
+    CORR_LEV_MED = auto()
+    CORR_LEV_HARD = auto()
+    ERR_LEV_EASY = auto()
+    ERR_LEV_MED = auto()
+    ERR_LEV_HARD = auto()
+    WMC_LOW_LEV_EASY = auto()
+    WMC_LOW_LEV_MED = auto()
+    WMC_LOW_LEV_HARD = auto()
+    WMC_MED_LEV_EASY = auto()
+    WMC_MED_LEV_MED = auto()
+    WMC_MED_LEV_HARD = auto()
+    WMC_HARD_LEV_EASY = auto()
+    WMC_HARD_LEV_MED = auto()
+    WMC_HARD_LEV_HARD = auto()
+
 
 DEBUG = False
 CONDITION = {'WMC_LOW': CONDITIONS.LOW_WMC,
@@ -57,6 +73,9 @@ CONDITION = {'WMC_LOW': CONDITIONS.LOW_WMC,
              'LEV_EASY': CONDITIONS.LEV_EASY,
              'LEV_MED': CONDITIONS.LEV_MED,
              'LEV_HARD': CONDITIONS.LEV_HARD
+             # tutaj dalej
+
+
              }[args.VAR]
 
 
