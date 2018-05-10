@@ -13,9 +13,8 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("VAR")
 args = parser.parse_args()
-
 os.chdir(
-    join('..','..', '..', '..', 'Dropbox', 'Data', 'FAN_ET', 'Badanie P', '2017-05-06_Badanie_P', 'BadanieP_FAN_ET',
+    join('..', '..', '..', '..', 'Dropbox', 'Data', 'FAN_ET', 'Badanie P', '2017-05-06_Badanie_P', 'BadanieP_FAN_ET',
          'Scripts'))
 
 # Localisations of region of interest in data.
@@ -45,6 +44,22 @@ class CONDITIONS(Enum):
     LEV_MED = auto()
     LEV_HARD = auto()
 
+    CORR_LEV_EASY = auto()
+    CORR_LEV_MED = auto()
+    CORR_LEV_HARD = auto()
+    ERR_LEV_EASY = auto()
+    ERR_LEV_MED = auto()
+    ERR_LEV_HARD = auto()
+    WMC_LOW_LEV_EASY = auto()
+    WMC_LOW_LEV_MED = auto()
+    WMC_LOW_LEV_HARD = auto()
+    WMC_MED_LEV_EASY = auto()
+    WMC_MED_LEV_MED = auto()
+    WMC_MED_LEV_HARD = auto()
+    WMC_HIGH_LEV_EASY = auto()
+    WMC_HIGH_LEV_MED = auto()
+    WMC_HIGH_LEV_HARD = auto()
+
 
 DEBUG = False
 CONDITION = {'WMC_LOW': CONDITIONS.LOW_WMC,
@@ -55,7 +70,24 @@ CONDITION = {'WMC_LOW': CONDITIONS.LOW_WMC,
              'ERR': CONDITIONS.ERR,
              'LEV_EASY': CONDITIONS.LEV_EASY,
              'LEV_MED': CONDITIONS.LEV_MED,
-             'LEV_HARD': CONDITIONS.LEV_HARD
+             'LEV_HARD': CONDITIONS.LEV_HARD,
+
+             'CORR_LEV_EASY': CONDITIONS.CORR_LEV_EASY,
+             'CORR_LEV_MED': CONDITIONS.CORR_LEV_MED,
+             'CORR_LEV_HARD': CONDITIONS.CORR_LEV_HARD,
+             "ERR_LEV_EASY": CONDITIONS.ERR_LEV_EASY,
+             'ERR_LEV_MED': CONDITIONS.ERR_LEV_MED,
+             'ERR_LEV_HARD': CONDITIONS.ERR_LEV_HARD,
+
+             'WMC_LOW_LEV_EASY': CONDITIONS.WMC_LOW_LEV_EASY,
+             'WMC_LOW_LEV_MED': CONDITIONS.WMC_LOW_LEV_MED,
+             'WMC_LOW_LEV_HARD': CONDITIONS.WMC_LOW_LEV_HARD,
+             'WMC_MED_LEV_EASY': CONDITIONS.WMC_MED_LEV_EASY,
+             'WMC_MED_LEV_MED': CONDITIONS.WMC_MED_LEV_MED,
+             'WMC_MED_LEV_HARD': CONDITIONS.WMC_MED_LEV_HARD,
+             'WMC_HIGH_LEV_EASY': CONDITIONS.WMC_HIGH_LEV_EASY,
+             'WMC_HIGH_LEV_MED': CONDITIONS.WMC_HIGH_LEV_MED,
+             'WMC_HIGH_LEV_HARD': CONDITIONS.WMC_HIGH_LEV_HARD
              }[args.VAR]
 
 
@@ -163,15 +195,23 @@ with tqdm(total=len(sacc_files)) as pbar:
         index_data = pd.read_csv(os.path.join('..', 'results', 'FAN_ET_aggr.csv'))
         index_data = index_data[index_data.Part_id == int(part_id)]
 
-        if CONDITION == CONDITIONS.LOW_WMC:
+        if CONDITION in [CONDITIONS.LOW_WMC, CONDITIONS.WMC_LOW_LEV_EASY, CONDITIONS.WMC_LOW_LEV_MED, CONDITIONS.WMC_LOW_LEV_HARD]:
             if int(part_id) not in low_wmc:
                 continue
-        if CONDITION == CONDITIONS.MED_WMC:
+        if CONDITION in [CONDITIONS.MED_WMC, CONDITIONS.WMC_MED_LEV_EASY, CONDITIONS.WMC_MED_LEV_MED, CONDITIONS.WMC_MED_LEV_HARD]:
             if int(part_id) not in med_wmc:
                 continue
-        if CONDITION == CONDITIONS.HIGH_WMC:
+        if CONDITION in [CONDITIONS.HIGH_WMC, CONDITIONS.WMC_HIGH_LEV_EASY, CONDITIONS.WMC_HIGH_LEV_MED, CONDITIONS.WMC_HIGH_LEV_HARD]:
             if int(part_id) not in high_wmc:
                 continue
+
+        if int(part_id) in low_wmc:
+            print('LOW WMC')
+        if int(part_id) in med_wmc:
+            print('MED_WMC')
+        if int(part_id) in high_wmc:
+            print('HIGH_WMC')
+
         # remove broken trials
         index = set(sacc_idx).intersection(fix_idx).intersection(raw_idx)
         # remove training
@@ -239,16 +279,54 @@ with tqdm(total=len(sacc_files)) as pbar:
             if CONDITION == CONDITIONS.ERR:
                 if beh_item['corr'] and beh_item['ans_accept']:
                     continue
-            if CONDITION == CONDITIONS.LEV_EASY:
+            if CONDITION in [CONDITIONS.LEV_EASY, CONDITIONS.WMC_LOW_LEV_EASY, CONDITIONS.WMC_MED_LEV_EASY, CONDITIONS.WMC_HIGH_LEV_EASY]:
                 if LEV_TO_LAB[beh_item.answers] != 'EASY':
                     continue
-            if CONDITION == CONDITIONS.LEV_MED:
+            if CONDITION in [CONDITIONS.LEV_MED, CONDITIONS.WMC_LOW_LEV_MED, CONDITIONS.WMC_MED_LEV_MED, CONDITIONS.WMC_HIGH_LEV_MED]:
                 if LEV_TO_LAB[beh_item.answers] != 'MEDIUM':
                     continue
-            if CONDITION == CONDITIONS.LEV_HARD:
+            if CONDITION in [CONDITIONS.LEV_HARD, CONDITIONS.WMC_LOW_LEV_HARD, CONDITIONS.WMC_MED_LEV_HARD, CONDITIONS.WMC_HIGH_LEV_HARD]:
                 if LEV_TO_LAB[beh_item.answers] != 'HARD':
                     continue
 
+            if CONDITION == CONDITIONS.CORR_LEV_EASY:
+                if (not beh_item['corr']) or (not beh_item['ans_accept']):
+                    continue
+                if LEV_TO_LAB[beh_item.answers] != 'EASY':
+                    continue
+
+            if CONDITION == CONDITIONS.CORR_LEV_MED:
+                if (not beh_item['corr']) or (not beh_item['ans_accept']):
+                    continue
+                if LEV_TO_LAB[beh_item.answers] != 'MEDIUM':
+                    continue
+
+            if CONDITION == CONDITIONS.CORR_LEV_HARD:
+                if (not beh_item['corr']) or (not beh_item['ans_accept']):
+                    continue
+                if LEV_TO_LAB[beh_item.answers] != 'HARD':
+                    continue
+
+            if CONDITION == CONDITIONS.ERR_LEV_EASY:
+                if beh_item['corr'] and beh_item['ans_accept']:
+                    continue
+                if LEV_TO_LAB[beh_item.answers] != 'EASY':
+                    continue
+
+            if CONDITION == CONDITIONS.ERR_LEV_MED:
+                if beh_item['corr'] and beh_item['ans_accept']:
+                    continue
+                if LEV_TO_LAB[beh_item.answers] != 'MEDIUM':
+                    continue
+
+            if CONDITION == CONDITIONS.ERR_LEV_HARD:
+                if beh_item['corr'] and beh_item['ans_accept']:
+                    continue
+                if LEV_TO_LAB[beh_item.answers] != 'HARD':
+                    continue
+
+            print("CORR: {} ACCEPTED: {} LEVEL: {} ".format(beh_item['corr'], beh_item['ans_accept'],
+                                                            LEV_TO_LAB[beh_item.answers]))
             Kx.append(beh_item.rt)
 
             for idx, start in enumerate(range(start_stamp, end_stamp, WINDOW_TIME * 1000)):  # iterate over seconds
@@ -313,16 +391,4 @@ df['AVG_RMx'] = df.RMx / df.RMk
 dat = time.localtime()
 filename = '{}_{}_{}_{}:{}'.format(dat.tm_year, dat.tm_mon, dat.tm_mday, dat.tm_hour, dat.tm_min)
 
-cond = {
-    CONDITIONS.FULL: 'full',
-    CONDITIONS.CORR: 'corr',
-    CONDITIONS.ERR: 'err',
-    CONDITIONS.LOW_WMC: 'wmc_low',
-    CONDITIONS.MED_WMC: 'wmc_med',
-    CONDITIONS.HIGH_WMC: 'wmc_high',
-    CONDITIONS.LEV_EASY: 'lev_easy',
-    CONDITIONS.LEV_MED: 'lev_med',
-    CONDITIONS.LEV_HARD: 'lev_hard'
-}
-
-df.to_csv(join('results', 'dynamics_window_' + str(WINDOW_TIME) + cond[CONDITION] + '_' + filename + '.csv'))
+df.to_csv(join('results', 'dynamics_window_' + str(WINDOW_TIME) + '_' + args.VAR + '_' + filename + '.csv'))

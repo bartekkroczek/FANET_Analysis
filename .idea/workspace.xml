@@ -1,9 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b32d614f-8e45-4c59-8269-d73135f2eea7" name="Default" comment="">
+    <list default="true" id="b32d614f-8e45-4c59-8269-d73135f2eea7" name="Default" comment="WMC and CORRECTNESS sp">
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/notebooks/.ipynb_checkpoints/Dynamika fiksacji for paper-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/notebooks/Dynamika fiksacji for paper.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_CI_CORR_LEV_EASY.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_CI_CORR_LEV_HARD.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_CI_CORR_LEV_MED.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_CI_ERR_LEV_EASY.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_CI_ERR_LEV_HARD.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_CI_ERR_LEV_MED.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_CORR_LEV_EASY.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_CORR_LEV_HARD.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_CORR_LEV_MED.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_ERR_LEV_EASY.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_ERR_LEV_HARD.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_ERR_LEV_MED.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_WMC_HIGH_LEV_EASY.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_WMC_HIGH_LEV_HARD.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_WMC_HIGH_LEV_MED.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_WMC_LOW_LEV_EASY.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_WMC_LOW_LEV_HARD.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_WMC_LOW_LEV_MED.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_WMC_MED_LEV_EASY.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_WMC_MED_LEV_HARD.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_WMC_MED_LEV_MED.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_window_5/dynamics_CI_corr.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_window_5/dynamics_CI_err.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_window_5/dynamics_CI_full.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_window_5/dynamics_CI_lev_easy.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_window_5/dynamics_CI_lev_hard.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_window_5/dynamics_CI_lev_med.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_window_5/dynamics_lev_hard.csv" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/dynamics/codes/count_CI,py" afterPath="$PROJECT_DIR$/dynamics/codes/count_CI,py" />
+      <change beforePath="$PROJECT_DIR$/dynamics/codes/dynamics_window.py" afterPath="$PROJECT_DIR$/dynamics/codes/dynamics_window.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,33 +48,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="item_by_item_v2.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/item_by_item/item_by_item_v2.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="314" column="77" lean-forward="false" selection-start-line="314" selection-start-column="77" selection-end-line="314" selection-end-column="77" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dynamics_window.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="dynamics_window.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dynamics/codes/dynamics_window.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="283" column="0" lean-forward="false" selection-start-line="283" selection-start-column="0" selection-end-line="283" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="intersubject_variance.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dynamics/codes/intersubject_variance.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="758">
-              <caret line="264" column="9" lean-forward="false" selection-start-line="264" selection-start-column="9" selection-end-line="264" selection-end-column="9" />
+            <state relative-caret-position="195">
+              <caret line="56" column="27" lean-forward="false" selection-start-line="56" selection-start-column="27" selection-end-line="56" selection-end-column="27" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -54,7 +63,7 @@
       <file leaf-file-name="dynamics_window_mean_for_correct,py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dynamics/codes/dynamics_window_mean_for_correct,py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2319">
+            <state relative-caret-position="374">
               <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
@@ -63,11 +72,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="count_CI,py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="count_CI,py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dynamics/codes/count_CI,py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="809">
-              <caret line="75" column="26" lean-forward="false" selection-start-line="75" selection-start-column="26" selection-end-line="75" selection-end-column="26" />
+            <state relative-caret-position="1224">
+              <caret line="398" column="73" lean-forward="false" selection-start-line="398" selection-start-column="73" selection-end-line="398" selection-end-column="73" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -103,10 +112,10 @@
         <option value="$PROJECT_DIR$/dynamics/intersubject_variance.py" />
         <option value="$PROJECT_DIR$/dynamics/dynamics.py" />
         <option value="$PROJECT_DIR$/item_by_item/item_by_item_v2.py" />
-        <option value="$PROJECT_DIR$/dynamics/codes/dynamics_window.py" />
         <option value="$PROJECT_DIR$/dynamics/codes/intersubject_variance.py" />
         <option value="$PROJECT_DIR$/dynamics/codes/dynamics_window_mean_for_correct,py" />
         <option value="$PROJECT_DIR$/dynamics/codes/count_CI,py" />
+        <option value="$PROJECT_DIR$/dynamics/codes/dynamics_window.py" />
       </list>
     </option>
   </component>
@@ -137,7 +146,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -188,6 +196,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -411,11 +420,18 @@
       <option name="project" value="LOCAL" />
       <updated>1525884413891</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Need to add LEVEL split on WMC and CORR/ERR.">
+      <created>1525890792237</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1525890792237</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-1" width="1920" height="1063" extended-state="6" />
+    <frame x="640" y="-1" width="1920" height="1063" extended-state="6" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="16" side_tool="true" content_ui="tabs" />
@@ -424,7 +440,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46860644" sideWeight="0.5" order="18" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3919753" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32940018" sideWeight="0.5" order="19" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19363257" sideWeight="0.49445984" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19363257" sideWeight="0.49445984" order="0" side_tool="false" content_ui="combo" />
       <window_info id="R Packages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="20" side_tool="false" content_ui="tabs" />
       <window_info id="R Graphics" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -482,10 +498,13 @@
     <MESSAGE value="Intersubject correction." />
     <MESSAGE value="Solid code review." />
     <MESSAGE value="Ready to raport." />
-    <option name="LAST_COMMIT_MESSAGE" value="Ready to raport." />
+    <MESSAGE value="Need to add LEVEL split on WMC and CORR/ERR." />
+    <option name="LAST_COMMIT_MESSAGE" value="Need to add LEVEL split on WMC and CORR/ERR." />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
@@ -652,18 +671,38 @@
     <entry file="file://$PROJECT_DIR$/dynamics/dynamics.py" />
     <entry file="file://$PROJECT_DIR$/dynamics/dynamics_window.py" />
     <entry file="file://$PROJECT_DIR$/dynamics/intersubject_variance.py" />
+    <entry file="file://$PROJECT_DIR$/dynamics/codes/intersubject_variance.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4335">
+          <caret line="264" column="9" lean-forward="false" selection-start-line="264" selection-start-column="9" selection-end-line="264" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#19#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dynamics/codes/dynamics_window_mean_for_correct,py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/item_by_item/item_by_item_v2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="314" column="77" lean-forward="false" selection-start-line="314" selection-start-column="77" selection-end-line="314" selection-end-column="77" />
+        <state relative-caret-position="455">
+          <caret line="311" column="28" lean-forward="false" selection-start-line="311" selection-start-column="28" selection-end-line="311" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dynamics/codes/intersubject_variance.py">
+    <entry file="file://$PROJECT_DIR$/dynamics/codes/count_CI,py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="758">
-          <caret line="264" column="9" lean-forward="false" selection-start-line="264" selection-start-column="9" selection-end-line="264" selection-end-column="9" />
+        <state relative-caret-position="1224">
+          <caret line="398" column="73" lean-forward="false" selection-start-line="398" selection-start-column="73" selection-end-line="398" selection-end-column="73" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
@@ -672,28 +711,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dynamics/codes/dynamics_window.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="283" column="0" lean-forward="false" selection-start-line="283" selection-start-column="0" selection-end-line="283" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dynamics/codes/dynamics_window_mean_for_correct,py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2319">
-          <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dynamics/codes/count_CI,py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="809">
-          <caret line="75" column="26" lean-forward="false" selection-start-line="75" selection-start-column="26" selection-end-line="75" selection-end-column="26" />
+        <state relative-caret-position="195">
+          <caret line="56" column="27" lean-forward="false" selection-start-line="56" selection-start-column="27" selection-end-line="56" selection-end-column="27" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
