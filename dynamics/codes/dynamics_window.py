@@ -34,9 +34,16 @@ ROIS_ORDER = ['P1', 'P2', 'P3', 'A', 'B', 'C', 'D', 'E', 'F']
 
 
 class CONDITIONS(Enum):
-    LOW_WMC = auto()
-    MED_WMC = auto()
-    HIGH_WMC = auto()
+    LOW_WMC_FULL = auto()
+    MED_WMC_FULL = auto()
+    HIGH_WMC_FULL = auto()
+    LOW_WMC_CORR = auto()
+    LOW_WMC_ERR = auto()
+    MED_WMC_CORR = auto()
+    MED_WMC_ERR = auto()
+    HIGH_WMC_CORR = auto()
+    HIGH_WMC_ERR = auto()
+
     FULL = auto()
     CORR = auto()
     ERR = auto()
@@ -62,9 +69,16 @@ class CONDITIONS(Enum):
 
 
 DEBUG = False
-CONDITION = {'WMC_LOW': CONDITIONS.LOW_WMC,
-             'WMC_MED': CONDITIONS.MED_WMC,
-             'WMC_HIGH': CONDITIONS.HIGH_WMC,
+CONDITION = {'WMC_LOW_FULL': CONDITIONS.LOW_WMC_FULL,
+             'WMC_MED_FULL': CONDITIONS.MED_WMC_FULL,
+             'WMC_HIGH_FULL': CONDITIONS.HIGH_WMC_FULL,
+             'WMC_LOW_CORR': CONDITIONS.LOW_WMC_CORR,
+             'WMC_LOW_ERR': CONDITIONS.LOW_WMC_ERR,
+             'WMC_MED_CORR': CONDITIONS.MED_WMC_CORR,
+             'WMC_MED_ERR': CONDITIONS.MED_WMC_ERR,
+             'WMC_HIGH_CORR': CONDITIONS.HIGH_WMC_CORR,
+             'WMC_HIGH_ERR': CONDITIONS.HIGH_WMC_ERR,
+
              'FULL': CONDITIONS.FULL,
              'CORR': CONDITIONS.CORR,
              'ERR': CONDITIONS.ERR,
@@ -195,13 +209,13 @@ with tqdm(total=len(sacc_files)) as pbar:
         index_data = pd.read_csv(os.path.join('..', 'results', 'FAN_ET_aggr.csv'))
         index_data = index_data[index_data.Part_id == int(part_id)]
 
-        if CONDITION in [CONDITIONS.LOW_WMC, CONDITIONS.WMC_LOW_LEV_EASY, CONDITIONS.WMC_LOW_LEV_MED, CONDITIONS.WMC_LOW_LEV_HARD]:
+        if CONDITION in [CONDITIONS.LOW_WMC_FULL, CONDITIONS.WMC_LOW_LEV_EASY, CONDITIONS.WMC_LOW_LEV_MED, CONDITIONS.WMC_LOW_LEV_HARD, CONDITIONS.LOW_WMC_CORR, CONDITIONS.LOW_WMC_ERR]:
             if int(part_id) not in low_wmc:
                 continue
-        if CONDITION in [CONDITIONS.MED_WMC, CONDITIONS.WMC_MED_LEV_EASY, CONDITIONS.WMC_MED_LEV_MED, CONDITIONS.WMC_MED_LEV_HARD]:
+        if CONDITION in [CONDITIONS.MED_WMC_FULL, CONDITIONS.WMC_MED_LEV_EASY, CONDITIONS.WMC_MED_LEV_MED, CONDITIONS.WMC_MED_LEV_HARD, CONDITIONS.MED_WMC_CORR, CONDITIONS.MED_WMC_ERR]:
             if int(part_id) not in med_wmc:
                 continue
-        if CONDITION in [CONDITIONS.HIGH_WMC, CONDITIONS.WMC_HIGH_LEV_EASY, CONDITIONS.WMC_HIGH_LEV_MED, CONDITIONS.WMC_HIGH_LEV_HARD]:
+        if CONDITION in [CONDITIONS.HIGH_WMC_FULL, CONDITIONS.WMC_HIGH_LEV_EASY, CONDITIONS.WMC_HIGH_LEV_MED, CONDITIONS.WMC_HIGH_LEV_HARD, CONDITIONS.HIGH_WMC_CORR, CONDITIONS.HIGH_WMC_ERR]:
             if int(part_id) not in high_wmc:
                 continue
 
@@ -270,13 +284,13 @@ with tqdm(total=len(sacc_files)) as pbar:
                 continue
 
             # Select condition
-            if CONDITION == CONDITIONS.FULL:
+            if CONDITION in [CONDITIONS.FULL, CONDITIONS.LOW_WMC_FULL, CONDITIONS.MED_WMC_FULL, CONDITIONS.HIGH_WMC_FULL]:
                 if not beh_item.ans_accept:
                     continue
-            if CONDITION == CONDITIONS.CORR:
+            if CONDITION in [CONDITIONS.CORR, CONDITIONS.LOW_WMC_CORR, CONDITIONS.MED_WMC_CORR, CONDITIONS.HIGH_WMC_CORR]:
                 if (not beh_item['corr']) or (not beh_item['ans_accept']):
                     continue
-            if CONDITION == CONDITIONS.ERR:
+            if CONDITION in [CONDITIONS.ERR, CONDITIONS.LOW_WMC_ERR, CONDITIONS.MED_WMC_ERR, CONDITIONS.HIGH_WMC_ERR]:
                 if beh_item['corr'] and beh_item['ans_accept']:
                     continue
             if CONDITION in [CONDITIONS.LEV_EASY, CONDITIONS.WMC_LOW_LEV_EASY, CONDITIONS.WMC_MED_LEV_EASY, CONDITIONS.WMC_HIGH_LEV_EASY]:
