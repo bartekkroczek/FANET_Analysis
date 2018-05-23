@@ -47,16 +47,16 @@ class CONDITIONS(Enum):
     FULL = auto()
     CORR = auto()
     ERR = auto()
-    LEV_EASY = auto()
-    LEV_MED = auto()
-    LEV_HARD = auto()
+    LEV_EASY_FULL = auto()
+    LEV_MED_FULL = auto()
+    LEV_HARD_FULL = auto()
 
-    CORR_LEV_EASY = auto()
-    CORR_LEV_MED = auto()
-    CORR_LEV_HARD = auto()
-    ERR_LEV_EASY = auto()
-    ERR_LEV_MED = auto()
-    ERR_LEV_HARD = auto()
+    LEV_EASY_CORR = auto()
+    LEV_MED_CORR = auto()
+    LEV_HARD_CORR = auto()
+    LEV_EASY_ERR = auto()
+    LEV_MED_ERR = auto()
+    LEV_HARD_ERR = auto()
     WMC_LOW_LEV_EASY = auto()
     WMC_LOW_LEV_MED = auto()
     WMC_LOW_LEV_HARD = auto()
@@ -82,16 +82,16 @@ CONDITION = {'WMC_LOW_FULL': CONDITIONS.LOW_WMC_FULL,
              'FULL': CONDITIONS.FULL,
              'CORR': CONDITIONS.CORR,
              'ERR': CONDITIONS.ERR,
-             'LEV_EASY': CONDITIONS.LEV_EASY,
-             'LEV_MED': CONDITIONS.LEV_MED,
-             'LEV_HARD': CONDITIONS.LEV_HARD,
 
-             'CORR_LEV_EASY': CONDITIONS.CORR_LEV_EASY,
-             'CORR_LEV_MED': CONDITIONS.CORR_LEV_MED,
-             'CORR_LEV_HARD': CONDITIONS.CORR_LEV_HARD,
-             "ERR_LEV_EASY": CONDITIONS.ERR_LEV_EASY,
-             'ERR_LEV_MED': CONDITIONS.ERR_LEV_MED,
-             'ERR_LEV_HARD': CONDITIONS.ERR_LEV_HARD,
+             'LEV_EASY_FULL': CONDITIONS.LEV_EASY_FULL,
+             'LEV_MED_FULL': CONDITIONS.LEV_MED_FULL,
+             'LEV_HARD_FULL': CONDITIONS.LEV_HARD_FULL,
+             'LEV_EASY_CORR': CONDITIONS.LEV_EASY_CORR,
+             'LEV_MED_CORR': CONDITIONS.LEV_MED_CORR,
+             'LEV_HARD_CORR': CONDITIONS.LEV_HARD_CORR,
+             "LEV_EASY_ERR": CONDITIONS.LEV_EASY_ERR,
+             'LEV_MED_ERR': CONDITIONS.LEV_MED_ERR,
+             'LEV_HARD_ERR': CONDITIONS.LEV_HARD_ERR,
 
              'WMC_LOW_LEV_EASY': CONDITIONS.WMC_LOW_LEV_EASY,
              'WMC_LOW_LEV_MED': CONDITIONS.WMC_LOW_LEV_MED,
@@ -172,6 +172,7 @@ Kx = list()
 res = [list() for _ in range(Lmin, Lmax)]
 FOx = [list() for _ in range(Lmin, Lmax)]
 RMx = [list() for _ in range(Lmin, Lmax)]
+PUP_SIZE = [list() for _ in range(Lmin, Lmax)]
 no_fix_in_sec = 0
 
 if DEBUG:
@@ -293,47 +294,47 @@ with tqdm(total=len(sacc_files)) as pbar:
             if CONDITION in [CONDITIONS.ERR, CONDITIONS.LOW_WMC_ERR, CONDITIONS.MED_WMC_ERR, CONDITIONS.HIGH_WMC_ERR]:
                 if beh_item['corr'] and beh_item['ans_accept']:
                     continue
-            if CONDITION in [CONDITIONS.LEV_EASY, CONDITIONS.WMC_LOW_LEV_EASY, CONDITIONS.WMC_MED_LEV_EASY, CONDITIONS.WMC_HIGH_LEV_EASY]:
+            if CONDITION in [CONDITIONS.LEV_EASY_FULL, CONDITIONS.WMC_LOW_LEV_EASY, CONDITIONS.WMC_MED_LEV_EASY, CONDITIONS.WMC_HIGH_LEV_EASY]:
                 if LEV_TO_LAB[beh_item.answers] != 'EASY':
                     continue
-            if CONDITION in [CONDITIONS.LEV_MED, CONDITIONS.WMC_LOW_LEV_MED, CONDITIONS.WMC_MED_LEV_MED, CONDITIONS.WMC_HIGH_LEV_MED]:
+            if CONDITION in [CONDITIONS.LEV_MED_FULL, CONDITIONS.WMC_LOW_LEV_MED, CONDITIONS.WMC_MED_LEV_MED, CONDITIONS.WMC_HIGH_LEV_MED]:
                 if LEV_TO_LAB[beh_item.answers] != 'MEDIUM':
                     continue
-            if CONDITION in [CONDITIONS.LEV_HARD, CONDITIONS.WMC_LOW_LEV_HARD, CONDITIONS.WMC_MED_LEV_HARD, CONDITIONS.WMC_HIGH_LEV_HARD]:
+            if CONDITION in [CONDITIONS.LEV_HARD_FULL, CONDITIONS.WMC_LOW_LEV_HARD, CONDITIONS.WMC_MED_LEV_HARD, CONDITIONS.WMC_HIGH_LEV_HARD]:
                 if LEV_TO_LAB[beh_item.answers] != 'HARD':
                     continue
 
-            if CONDITION == CONDITIONS.CORR_LEV_EASY:
+            if CONDITION == CONDITIONS.LEV_EASY_CORR:
                 if (not beh_item['corr']) or (not beh_item['ans_accept']):
                     continue
                 if LEV_TO_LAB[beh_item.answers] != 'EASY':
                     continue
 
-            if CONDITION == CONDITIONS.CORR_LEV_MED:
+            if CONDITION == CONDITIONS.LEV_MED_CORR:
                 if (not beh_item['corr']) or (not beh_item['ans_accept']):
                     continue
                 if LEV_TO_LAB[beh_item.answers] != 'MEDIUM':
                     continue
 
-            if CONDITION == CONDITIONS.CORR_LEV_HARD:
+            if CONDITION == CONDITIONS.LEV_HARD_CORR:
                 if (not beh_item['corr']) or (not beh_item['ans_accept']):
                     continue
                 if LEV_TO_LAB[beh_item.answers] != 'HARD':
                     continue
 
-            if CONDITION == CONDITIONS.ERR_LEV_EASY:
+            if CONDITION == CONDITIONS.LEV_EASY_ERR:
                 if beh_item['corr'] and beh_item['ans_accept']:
                     continue
                 if LEV_TO_LAB[beh_item.answers] != 'EASY':
                     continue
 
-            if CONDITION == CONDITIONS.ERR_LEV_MED:
+            if CONDITION == CONDITIONS.LEV_MED_ERR:
                 if beh_item['corr'] and beh_item['ans_accept']:
                     continue
                 if LEV_TO_LAB[beh_item.answers] != 'MEDIUM':
                     continue
 
-            if CONDITION == CONDITIONS.ERR_LEV_HARD:
+            if CONDITION == CONDITIONS.LEV_HARD_ERR:
                 if beh_item['corr'] and beh_item['ans_accept']:
                     continue
                 if LEV_TO_LAB[beh_item.answers] != 'HARD':
@@ -364,8 +365,10 @@ with tqdm(total=len(sacc_files)) as pbar:
                     #     RMx[idx].append(-1)
                     if fix_in_op:
                         fix_dur = fix[1].dur / 1000.0
-                        FOx[idx].append(fix_dur)
+                        pup_size = fix[1].aps
 
+                        FOx[idx].append(fix_dur)
+                        PUP_SIZE[idx].append(pup_size)
                         prob = problem['matrix_info']
 
                         which_option = np.where(
@@ -396,11 +399,14 @@ df = pd.DataFrame()
 df['Kx'] = K
 df['FOx'] = [sum(x) for x in FOx]
 df['FOx_STD'] = [np.std(x) for x in FOx]
+df['PSOx'] = [sum(x) for x in PUP_SIZE]
+df['PSOx_STD'] = [np.std(x) for x in PUP_SIZE]
 df['RMx'] = [sum([a for a in x if a >= 0.0]) for x in RMx]
 df['RMx_STD'] = [np.std([a for a in x if a >= 0.0]) for x in RMx]
 df['RMk'] = [sum([1 for a in x if a >= 0.0]) for x in RMx]
 df['PROP_FOx'] = df.FOx / df.Kx
 df['AVG_RMx'] = df.RMx / df.RMk
+df['PROP_PSOx'] = df.PSOx /df.Kx
 
 dat = time.localtime()
 filename = '{}_{}_{}_{}:{}'.format(dat.tm_year, dat.tm_mon, dat.tm_mday, dat.tm_hour, dat.tm_min)

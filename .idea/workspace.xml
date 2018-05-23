@@ -2,20 +2,40 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b32d614f-8e45-4c59-8269-d73135f2eea7" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/notebooks/.ipynb_checkpoints/Dynamika WMC-checkpoint.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/notebooks/Dynamika WMC.ipynb" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_WMC_HIGH_CORR.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_WMC_HIGH_ERR.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_WMC_HIGH_FULL.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_WMC_LOW_CORR.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_WMC_LOW_ERR.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_WMC_LOW_FULL.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_WMC_MED_CORR.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_WMC_MED_ERR.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_for_paper/dynamics_WMC_MED_FULL.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/notebooks/.ipynb_checkpoints/Dynamika fiksacji pupil size-checkpoint.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/notebooks/Dynamika fiksacji pupil size.ipynb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_CORR.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_ERR.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_FULL.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_LEV_EASY_CORR.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_LEV_EASY_ERR.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_LEV_EASY_FULL.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_LEV_HARD_CORR.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_LEV_HARD_ERR.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_LEV_HARD_FULL.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_LEV_MED_CORR.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_LEV_MED_ERR.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_LEV_MED_FULL.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_WMC_HIGH_CORR.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_WMC_HIGH_ERR.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_WMC_HIGH_FULL.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_WMC_HIGH_LEV_EASY.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_WMC_HIGH_LEV_HARD.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_WMC_HIGH_LEV_MED.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_WMC_LOW_CORR.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_WMC_LOW_ERR.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_WMC_LOW_FULL.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_WMC_LOW_LEV_EASY.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_WMC_LOW_LEV_HARD.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_WMC_LOW_LEV_MED.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_WMC_MED_CORR.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_WMC_MED_ERR.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_WMC_MED_FULL.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_WMC_MED_LEV_EASY.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_WMC_MED_LEV_HARD.csv" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dynamics/results/results_pup/dynamics_WMC_MED_LEV_MED.csv" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/dynamics/codes/dynamics_window.py" afterPath="$PROJECT_DIR$/dynamics/codes/dynamics_window.py" />
-      <change beforePath="$PROJECT_DIR$/dynamics/notebooks/Dynamika fiksacji for paper.ipynb" afterPath="$PROJECT_DIR$/dynamics/notebooks/Dynamika fiksacji for paper.ipynb" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -32,8 +52,8 @@
       <file leaf-file-name="dynamics_window.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dynamics/codes/dynamics_window.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3825">
-              <caret line="225" column="35" lean-forward="false" selection-start-line="225" selection-start-column="35" selection-end-line="225" selection-end-column="35" />
+            <state relative-caret-position="17">
+              <caret line="95" column="25" lean-forward="false" selection-start-line="95" selection-start-column="25" selection-end-line="95" selection-end-column="25" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -127,7 +147,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -178,7 +198,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -422,11 +442,18 @@
       <option name="project" value="LOCAL" />
       <updated>1525964668367</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="WMC investigation.">
+      <created>1526990720108</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1526990720108</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-1" width="1920" height="1063" extended-state="6" />
+    <frame x="640" y="-1" width="1920" height="1063" extended-state="6" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="16" side_tool="true" content_ui="tabs" />
@@ -435,7 +462,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46860644" sideWeight="0.5" order="18" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3919753" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32940018" sideWeight="0.5" order="19" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19363257" sideWeight="0.49445984" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19363257" sideWeight="0.49445984" order="0" side_tool="false" content_ui="combo" />
       <window_info id="R Packages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="20" side_tool="false" content_ui="tabs" />
       <window_info id="R Graphics" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -496,7 +523,8 @@
     <MESSAGE value="Need to add LEVEL split on WMC and CORR/ERR." />
     <MESSAGE value="WMC and CORRECTNESS split on LEVEL." />
     <MESSAGE value="WMC and CORRECTNESS split on LEVEL, computed." />
-    <option name="LAST_COMMIT_MESSAGE" value="WMC and CORRECTNESS split on LEVEL, computed." />
+    <MESSAGE value="WMC investigation." />
+    <option name="LAST_COMMIT_MESSAGE" value="WMC investigation." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -704,8 +732,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dynamics/codes/dynamics_window.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3825">
-          <caret line="225" column="35" lean-forward="false" selection-start-line="225" selection-start-column="35" selection-end-line="225" selection-end-column="35" />
+        <state relative-caret-position="17">
+          <caret line="95" column="25" lean-forward="false" selection-start-line="95" selection-start-column="25" selection-end-line="95" selection-end-column="25" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
