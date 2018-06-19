@@ -12,6 +12,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument("VAR")
+parser.add_argument('INT')
 args = parser.parse_args()
 os.chdir(
     join('..', '..', '..', '..', 'Dropbox', 'Data', 'FAN_ET', 'Badanie P', '2017-05-06_Badanie_P', 'BadanieP_FAN_ET',
@@ -67,6 +68,26 @@ class CONDITIONS(Enum):
     WMC_HIGH_LEV_MED = auto()
     WMC_HIGH_LEV_HARD = auto()
 
+
+class INTERVAL(object):
+    I1 = [40, 50]
+    I2 = [50, 60]
+    I3 = [60, 70]
+    I4 = [70, 80]
+    I5 = [80, 90]
+    I6 = [90, 100]
+    I7 = [100, 110]
+
+
+inter = {
+    'I1': INTERVAL.I1,
+    'I2': INTERVAL.I2,
+    'I3': INTERVAL.I3,
+    'I4': INTERVAL.I4,
+    'I5': INTERVAL.I5,
+    'I6': INTERVAL.I6,
+    'I7': INTERVAL.I7
+}[args.INT]
 
 DEBUG = False
 CONDITION = {'WMC_LOW_FULL': CONDITIONS.LOW_WMC_FULL,
@@ -210,13 +231,16 @@ with tqdm(total=len(sacc_files)) as pbar:
         index_data = pd.read_csv(os.path.join('..', 'results', 'FAN_ET_aggr.csv'))
         index_data = index_data[index_data.Part_id == int(part_id)]
 
-        if CONDITION in [CONDITIONS.LOW_WMC_FULL, CONDITIONS.WMC_LOW_LEV_EASY, CONDITIONS.WMC_LOW_LEV_MED, CONDITIONS.WMC_LOW_LEV_HARD, CONDITIONS.LOW_WMC_CORR, CONDITIONS.LOW_WMC_ERR]:
+        if CONDITION in [CONDITIONS.LOW_WMC_FULL, CONDITIONS.WMC_LOW_LEV_EASY, CONDITIONS.WMC_LOW_LEV_MED,
+                         CONDITIONS.WMC_LOW_LEV_HARD, CONDITIONS.LOW_WMC_CORR, CONDITIONS.LOW_WMC_ERR]:
             if int(part_id) not in low_wmc:
                 continue
-        if CONDITION in [CONDITIONS.MED_WMC_FULL, CONDITIONS.WMC_MED_LEV_EASY, CONDITIONS.WMC_MED_LEV_MED, CONDITIONS.WMC_MED_LEV_HARD, CONDITIONS.MED_WMC_CORR, CONDITIONS.MED_WMC_ERR]:
+        if CONDITION in [CONDITIONS.MED_WMC_FULL, CONDITIONS.WMC_MED_LEV_EASY, CONDITIONS.WMC_MED_LEV_MED,
+                         CONDITIONS.WMC_MED_LEV_HARD, CONDITIONS.MED_WMC_CORR, CONDITIONS.MED_WMC_ERR]:
             if int(part_id) not in med_wmc:
                 continue
-        if CONDITION in [CONDITIONS.HIGH_WMC_FULL, CONDITIONS.WMC_HIGH_LEV_EASY, CONDITIONS.WMC_HIGH_LEV_MED, CONDITIONS.WMC_HIGH_LEV_HARD, CONDITIONS.HIGH_WMC_CORR, CONDITIONS.HIGH_WMC_ERR]:
+        if CONDITION in [CONDITIONS.HIGH_WMC_FULL, CONDITIONS.WMC_HIGH_LEV_EASY, CONDITIONS.WMC_HIGH_LEV_MED,
+                         CONDITIONS.WMC_HIGH_LEV_HARD, CONDITIONS.HIGH_WMC_CORR, CONDITIONS.HIGH_WMC_ERR]:
             if int(part_id) not in high_wmc:
                 continue
 
@@ -284,23 +308,30 @@ with tqdm(total=len(sacc_files)) as pbar:
                 print('stamp: {}'.format((end_stamp - start_stamp) / 1000.0))
                 continue
 
+            if not (inter[0] < beh_item.rt < inter[1]):
+                continue
             # Select condition
-            if CONDITION in [CONDITIONS.FULL, CONDITIONS.LOW_WMC_FULL, CONDITIONS.MED_WMC_FULL, CONDITIONS.HIGH_WMC_FULL]:
+            if CONDITION in [CONDITIONS.FULL, CONDITIONS.LOW_WMC_FULL, CONDITIONS.MED_WMC_FULL,
+                             CONDITIONS.HIGH_WMC_FULL]:
                 if not beh_item.ans_accept:
                     continue
-            if CONDITION in [CONDITIONS.CORR, CONDITIONS.LOW_WMC_CORR, CONDITIONS.MED_WMC_CORR, CONDITIONS.HIGH_WMC_CORR]:
+            if CONDITION in [CONDITIONS.CORR, CONDITIONS.LOW_WMC_CORR, CONDITIONS.MED_WMC_CORR,
+                             CONDITIONS.HIGH_WMC_CORR]:
                 if (not beh_item['corr']) or (not beh_item['ans_accept']):
                     continue
             if CONDITION in [CONDITIONS.ERR, CONDITIONS.LOW_WMC_ERR, CONDITIONS.MED_WMC_ERR, CONDITIONS.HIGH_WMC_ERR]:
                 if beh_item['corr'] and beh_item['ans_accept']:
                     continue
-            if CONDITION in [CONDITIONS.LEV_EASY_FULL, CONDITIONS.WMC_LOW_LEV_EASY, CONDITIONS.WMC_MED_LEV_EASY, CONDITIONS.WMC_HIGH_LEV_EASY]:
+            if CONDITION in [CONDITIONS.LEV_EASY_FULL, CONDITIONS.WMC_LOW_LEV_EASY, CONDITIONS.WMC_MED_LEV_EASY,
+                             CONDITIONS.WMC_HIGH_LEV_EASY]:
                 if LEV_TO_LAB[beh_item.answers] != 'EASY':
                     continue
-            if CONDITION in [CONDITIONS.LEV_MED_FULL, CONDITIONS.WMC_LOW_LEV_MED, CONDITIONS.WMC_MED_LEV_MED, CONDITIONS.WMC_HIGH_LEV_MED]:
+            if CONDITION in [CONDITIONS.LEV_MED_FULL, CONDITIONS.WMC_LOW_LEV_MED, CONDITIONS.WMC_MED_LEV_MED,
+                             CONDITIONS.WMC_HIGH_LEV_MED]:
                 if LEV_TO_LAB[beh_item.answers] != 'MEDIUM':
                     continue
-            if CONDITION in [CONDITIONS.LEV_HARD_FULL, CONDITIONS.WMC_LOW_LEV_HARD, CONDITIONS.WMC_MED_LEV_HARD, CONDITIONS.WMC_HIGH_LEV_HARD]:
+            if CONDITION in [CONDITIONS.LEV_HARD_FULL, CONDITIONS.WMC_LOW_LEV_HARD, CONDITIONS.WMC_MED_LEV_HARD,
+                             CONDITIONS.WMC_HIGH_LEV_HARD]:
                 if LEV_TO_LAB[beh_item.answers] != 'HARD':
                     continue
 
@@ -406,9 +437,10 @@ df['RMx_STD'] = [np.std([a for a in x if a >= 0.0]) for x in RMx]
 df['RMk'] = [sum([1 for a in x if a >= 0.0]) for x in RMx]
 df['PROP_FOx'] = df.FOx / df.Kx
 df['AVG_RMx'] = df.RMx / df.RMk
-df['PROP_PSOx'] = df.PSOx /df.Kx
+df['PROP_PSOx'] = df.PSOx / df.Kx
 
 dat = time.localtime()
 filename = '{}_{}_{}_{}:{}'.format(dat.tm_year, dat.tm_mon, dat.tm_mday, dat.tm_hour, dat.tm_min)
 
-df.to_csv(join('results', 'dynamics_window_' + str(WINDOW_TIME) + '_' + args.VAR + '_' + filename + '.csv'))
+df.to_csv(join('results', 'dynamics_window_' + str(inter[0]) + '_' + str(inter[1]) + '_' + str(
+    WINDOW_TIME) + '_' + args.VAR + '_' + filename + '.csv'))
