@@ -33,6 +33,10 @@ ROIS = {
 
 ROIS_ORDER = ['P1', 'P2', 'P3', 'A', 'B', 'C', 'D', 'E', 'F']
 
+ANS_TYPE_DICT = {'EASY': {'D6': 'CON', 'D5': 'BE', 'D4': 'SE', 'D1': 'CORR'},
+                 'MEDIUM': {'D6': 'CON', 'D4': 'BE', 'D3': 'SE', 'D1': 'CORR'},
+                 'HARD': {'D6': 'CON', 'D3': 'BE', 'D2': 'SE', 'D1': 'CORR'}}
+
 
 class CONDITIONS(Enum):
     LOW_WMC_FULL = auto()
@@ -196,6 +200,8 @@ res = [list() for _ in range(Lmin, Lmax)]
 FOx = [list() for _ in range(Lmin, Lmax)]
 RMx = [list() for _ in range(Lmin, Lmax)]
 FOx_aggregated = [list() for _ in range(Lmin, Lmax)]
+ANS_TYPE_RES = {'CORR': [list() for _ in range(Lmin, Lmax)], 'BE': [list() for _ in range(Lmin, Lmax)],
+                'SE': [list() for _ in range(Lmin, Lmax)], 'CON': [list() for _ in range(Lmin, Lmax)]}
 
 PUP_SIZE = [list() for _ in range(Lmin, Lmax)]
 no_fix_in_sec = 0
@@ -414,15 +420,14 @@ with tqdm(total=len(sacc_files)) as pbar:
                         PUP_SIZE[idx].append(pup_size)
                         prob = problem['matrix_info']
 
-                        which_option = \
-                        np.where([in_roi(fix[1][['axp', 'ayp']], ROIS[x]) for x in ['A', 'B', 'C', 'D', 'E', 'F']])[0][
-                            0]
+                        which_option = np.where([in_roi(fix[1][['axp', 'ayp']], ROIS[x]) for x in ['A', 'B', 'C', 'D', 'E', 'F']])[0][0]
                         which_option = [x['name'] for x in prob][3 + which_option]
-
                         denom = np.sum([len(x['elements_changed']) for x in prob[1]['parameters']])
                         counter = [x for x in prob if x['name'] == which_option][0]['parameters']
                         counter = np.sum([len(x['elements_changed']) for x in counter])
-
+                        op_type = ANS_TYPE_DICT.get(LEV_TO_LAB[beh_item.answers], dict()).get(which_option, None)
+                        if op_type:
+                            ANS_TYPE_RES[op_type][idx].append(fix_dur)
                         if which_option == 'D2':  # some magic
                             rs = ((counter - 1) / denom) + 0.02
                         else:
@@ -431,7 +436,7 @@ with tqdm(total=len(sacc_files)) as pbar:
                         RS_avg_denom += fix_dur
                 if RS_avg_denom:
                     RMx[idx].append(RS_avg_counter / RS_avg_denom)
-                FOx_aggregated[idx].append(sum(curr_fix_in_op)/ (WINDOW_TIME))
+                FOx_aggregated[idx].append(sum(curr_fix_in_op) / (WINDOW_TIME))
 K = list()
 Kx = pd.Series(Kx)
 for l_bound in range(Lmin, Lmax):
