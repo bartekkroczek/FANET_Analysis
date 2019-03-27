@@ -2,14 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b32d614f-8e45-4c59-8269-d73135f2eea7" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dynamics/codes/answer_type_analysis.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/FANET_Analysis.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FANET_Analysis.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/other.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/other.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dynamics/codes/dynamics_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/dynamics/codes/dynamics_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamics/codes/answer_type_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/dynamics/codes/answer_type_analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamics/notebooks/10secsmystery.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/dynamics/notebooks/10secsmystery.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamics/notebooks/Dealing with revision.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/dynamics/notebooks/Dealing with revision.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamics/notebooks/LEV_EASY_CORR_ans_type_res.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamics/notebooks/LEV_HARD_CORR_ans_type_res.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamics/notebooks/LEV_MED_CORR_ans_type_res.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dynamics/notebooks/Paper ready plots.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/dynamics/notebooks/Paper ready plots.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dynamics/notebooks/rys1mm.png" beforeDir="false" afterPath="$PROJECT_DIR$/dynamics/notebooks/rys1mm.png" afterDir="false" />
     </list>
@@ -24,11 +25,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dynamics/codes/answer_type_analysis.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="409">
-              <caret line="428" column="35" selection-start-line="428" selection-start-column="35" selection-end-line="428" selection-end-column="35" />
+            <state relative-caret-position="2001">
+              <caret line="97" column="13" selection-start-line="97" selection-start-column="13" selection-end-line="97" selection-end-column="13" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/dynamics/codes/dynamics_window.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="528">
+              <caret line="401" column="22" selection-start-line="401" selection-start-column="22" selection-end-line="401" selection-end-column="22" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -69,16 +82,14 @@
         <option value="$PROJECT_DIR$/dynamics/codes/count_CI,py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/dynamics/notebooks/Paper ready plots.ipynb" />
-        <option value="$PROJECT_DIR$/dynamics/codes/dynamics_window.py" />
         <option value="$PROJECT_DIR$/dynamics/codes/answer_type_analysis.py" />
+        <option value="$PROJECT_DIR$/dynamics/codes/dynamics_window.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="x" value="640" />
-    <option name="y" value="-1" />
-    <option name="width" value="640" />
-    <option name="height" value="1063" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="width" value="960" />
+    <option name="height" value="1080" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -260,11 +271,11 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.item_by_item_v2" />
       <item itemvalue="Python.dynamics" />
-      <item itemvalue="Python.intersubject_variance" />
       <item itemvalue="Python.dynamics_window" />
       <item itemvalue="Python.dynamics_window_mean_for_correct,py" />
+      <item itemvalue="Python.intersubject_variance" />
+      <item itemvalue="Python.item_by_item_v2" />
     </list>
     <recent_temporary>
       <list>
@@ -293,6 +304,14 @@
       <workItem from="1549549005938" duration="3106000" />
       <workItem from="1549833284809" duration="1518000" />
       <workItem from="1550494587740" duration="9542000" />
+      <workItem from="1551527438797" duration="1028000" />
+      <workItem from="1552047534529" duration="13000" />
+      <workItem from="1552047574384" duration="35000" />
+      <workItem from="1552652540493" duration="2708000" />
+      <workItem from="1552732060055" duration="1453000" />
+      <workItem from="1552740012691" duration="88000" />
+      <workItem from="1552914577257" duration="4000" />
+      <workItem from="1553683748995" duration="696000" />
     </task>
     <task id="LOCAL-00001" summary="Some progress.">
       <created>1520623375431</created>
@@ -375,12 +394,12 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42656000" />
+    <option name="totallyTimeSpent" value="48681000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-28" width="1920" height="1108" extended-state="0" />
+    <frame x="0" y="0" width="1366" height="768" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49445984" visible="true" weight="0.21077909" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49445984" visible="true" weight="0.1659091" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" sideWeight="0.5055402" side_tool="true" weight="0.047916666" />
       <window_info anchor="bottom" id="Messages" order="0" />
@@ -705,20 +724,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dynamics/codes/dynamics_window.py">
+    <entry file="file://$PROJECT_DIR$/dynamics/codes/answer_type_analysis.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="892">
-          <caret line="457" column="42" selection-start-line="457" selection-start-column="42" selection-end-line="457" selection-end-column="42" />
+        <state relative-caret-position="2001">
+          <caret line="97" column="13" selection-start-line="97" selection-start-column="13" selection-end-line="97" selection-end-column="13" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dynamics/codes/answer_type_analysis.py">
+    <entry file="file://$PROJECT_DIR$/dynamics/codes/dynamics_window.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="428" column="35" selection-start-line="428" selection-start-column="35" selection-end-line="428" selection-end-column="35" />
+        <state relative-caret-position="528">
+          <caret line="401" column="22" selection-start-line="401" selection-start-column="22" selection-end-line="401" selection-end-column="22" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>

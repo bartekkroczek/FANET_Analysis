@@ -459,6 +459,6 @@ df['PROP_PSOx'] = df.PSOx / df.Kx
 
 dat = time.localtime()
 filename = '{}_{}_{}_{}:{}'.format(dat.tm_year, dat.tm_mon, dat.tm_mday, dat.tm_hour, dat.tm_min)
-df.to_csv('mean_FOx.csv')
+# df.to_csv('mean_FOx.csv')
 df.to_csv(join('results', 'dynamics_window_' + str(inter[0]) + '_' + str(inter[1]) + '_' + str(
     WINDOW_TIME) + '_' + args.VAR + '_' + filename + '.csv'))
