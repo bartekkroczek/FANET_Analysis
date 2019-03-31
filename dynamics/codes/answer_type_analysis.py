@@ -449,6 +449,7 @@ df['FOX_aggregated'] = [np.mean([a for a in x if a > 0.0001]) for x in FOx_aggre
 df['FOx_mean'] = [np.mean(x) for x in FOx]
 df['FOx_STD'] = [np.std(x) for x in FOx]
 df['PSOx'] = [sum(x) for x in PUP_SIZE]
+df['PSOx_mean'] = [np.mean(x) for x in PUP_SIZE]
 df['PSOx_STD'] = [np.std(x) for x in PUP_SIZE]
 df['RMx'] = [sum([a for a in x if a >= 0.0]) for x in RMx]
 df['RMx_STD'] = [np.std([a for a in x if a >= 0.0]) for x in RMx]
