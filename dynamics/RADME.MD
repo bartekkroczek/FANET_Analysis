@@ -1,4 +1,6 @@
-# I. Analiza dynamiki fiksacji
+# Analiza dynamiki fiksacji
+
+Główny wątek analiz. 
 
 Analiza dotyczy zawsze N pojednyczych triali, przy czym N musi być odpowiednio duże, aby analiza miała sens. Każdy trial i ma latencję odpowiedzi Li w s (u nas od 0 do 120 s) oraz odpowiedź Oi (o wartościach - opcjach odpowiedzi od D1 do D6). W każdym trialu fiksacje są możliwe albo na PRoblemie albo na sześciu OPcjach. Każda opcja ma swoją wartość metryki relacyjnej RM, o której pisałem wcześniej (RM = stosunek liczby zmienionych poprawnie cech w danej opcji do liczby takich cech w opcji D1, dla dodatkowych cech w D2 dodajemy .02). W tej analizie dynamicznej, żeby wszystko uprościć, będziemy się posługiwać tylko RM zamiast COR, SE, BE, CON.
 

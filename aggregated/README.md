@@ -1,10 +1,12 @@
 # FANET_Analysis
 
+Efektem analizy jest olbrzymi plik ze zagegowanym szeregiem metryk dotyczących każdej osoby badanej z osobna. 
+Dane zostały użytę do dalszej analizy różnic indywidualnych miedzy uczestnikami badania. 
+ 
+
 ## Analiza zagregowana
 We wszystkich polach od TRS (włącznie) w dół uwzględniamy tylko itemy, dla których LAT &gt; 10 s (ale
-itemów o LAT&lt;10 było dosłownie kilka). Czerwonym zaznaczyłem nowe pola. Część pól (np. RFRF)
-wylatuje - ale nie zaznaczałem ich specjalnie (po prostu nie ma ich na liście).
-ch itemów)
+itemów o LAT&lt;10 było dosłownie kilka). Część pól (np. RFRF) wylatuje (po prostu nie ma ich na liście).
 
 * PART_ID
 * SEX - plec
@@ -213,4 +215,3 @@ ch itemów)
 * FIX_ERR_EASY_N
 * FIX_ERR_MED_N
 * FIX_ERR_HARD_N
-* 

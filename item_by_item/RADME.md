@@ -1,3 +1,6 @@
+# Analiza różnic pomiędzy itemami
+Po dogłebnej analizie okazała się być slepym zaułkiem. 
+
 # Pola określone dla osoby badanej (czyli dublujące się dla itemów)
 * ID
 * AVG_CORR
