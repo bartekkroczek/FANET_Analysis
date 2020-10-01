@@ -4,6 +4,7 @@ import random
 import time
 from enum import Enum, auto
 from os.path import join
+from scipy import stats
 
 import numpy as np
 import pandas as pd
@@ -19,18 +20,6 @@ os.chdir(
          'Scripts'))
 
 # Localisations of region of interest in data.
-ROIS = {
-    'P1': [(- 15, 280), (235, 30)],
-    'P2': [(- 15, 680), (235, 430)],
-    'P3': [(- 15, 1080), (235, 830)],
-    'A': [(+ 465, 520), (715, 270)],
-    'B': [(+ 955, 520), (1205, 270)],
-    'C': [(+1445, 520), (1695, 270)],
-    'D': [(+ 465, 870), (715, 630)],
-    'E': [(+ 955, 870), (1205, 630)],
-    'F': [(+1445, 870), (1695, 630)]
-}
-
 ROIS = {
     'P1': [(  20,  315), ( 320,  25)],
     'P2': [(  20,  680), ( 320, 385)],
@@ -119,7 +108,7 @@ inter = {
     'I7': INTERVAL.I7
 }[args.INT]
 
-DEBUG = True 
+DEBUG = False 
 CONDITION = {'WMC_LOW_FULL': CONDITIONS.LOW_WMC_FULL,
              'WMC_MED_FULL': CONDITIONS.MED_WMC_FULL,
              'WMC_HIGH_FULL': CONDITIONS.HIGH_WMC_FULL,
@@ -165,6 +154,32 @@ CONDITION = {'WMC_LOW_FULL': CONDITIONS.LOW_WMC_FULL,
              'CORR_WMC_HIGH_LEV_HARD': CONDITIONS.CORR_WMC_HIGH_LEV_HARD         
              }[args.VAR]
 
+
+def pearsonr_ci(x,y,alpha=0.05):
+    ''' calculate Pearson correlation along with the confidence interval using scipy and numpy
+    Parameters
+    ----------
+    x, y : iterable object such as a list or np.array
+      Input for correlation calculation
+    alpha : float
+      Significance level. 0.05 by default
+    Returns
+    -------
+    r : float
+      Pearson's correlation coefficient
+    pval : float
+      The corresponding p value
+    lo, hi : float
+      The lower and upper bound of confidence intervals
+    '''
+
+    r, p = stats.pearsonr(x,y)
+    r_z = np.arctanh(r)
+    se = 1/np.sqrt(x.size-3)
+    z = stats.norm.ppf(1-alpha/2)
+    lo_z, hi_z = r_z-z*se, r_z+z*se
+    lo, hi = np.tanh((lo_z, hi_z))
+    return r, p, lo, hi
 
 def where_in_list(where, what):
     """
@@ -254,6 +269,9 @@ if DEBUG:
     # sacc_files = [x for x in sacc_files if '25F' in x]
     sacc_files = random.sample(sacc_files, 2)
 
+RMx_all = np.zeros((len(sacc_files), Lmax))
+WMC_in_order = np.zeros(len(sacc_files))
+iterator = 0
 with tqdm(total=len(sacc_files)) as pbar:
     for part_id in sacc_files:  # for each participant
         pbar.set_postfix(file=part_id)
@@ -491,29 +509,55 @@ with tqdm(total=len(sacc_files)) as pbar:
                 if RS_avg_denom:
                     RMx[idx].append(RS_avg_counter / RS_avg_denom)
                 FOx_aggregated[idx].append(sum(curr_fix_in_op) / (WINDOW_TIME))
-K = list()
-Kx = pd.Series(Kx)
-for l_bound in range(Lmin, Lmax):
-    K.append((Kx >= (WINDOW_TIME * l_bound)).sum())
 
-df = pd.DataFrame()
-df['Kx'] = K
-df['FOx'] = [sum(x) for x in FOx]
-df['FOX_aggregated'] = [np.mean([a for a in x if a > 0.0001]) for x in FOx_aggregated]
-df['FOx_mean'] = [np.mean(x) for x in FOx]
-df['FOx_STD'] = [np.std(x) for x in FOx]
-df['PSOx'] = [sum(x) for x in PUP_SIZE]
-df['PSOx_mean'] = [np.mean(x) for x in PUP_SIZE]
-df['PSOx_STD'] = [np.std(x) for x in PUP_SIZE]
-df['RMx'] = [sum([a for a in x if a >= 0.0]) for x in RMx]
-df['RMx_STD'] = [np.std([a for a in x if a >= 0.0]) for x in RMx]
-df['RMk'] = [sum([1 for a in x if a >= 0.0]) for x in RMx]
-df['PROP_FOx'] = df.FOx / df.Kx
-df['AVG_RMx'] = df.RMx / df.RMk
-df['PROP_PSOx'] = df.PSOx / df.Kx
+        df = pd.DataFrame()
+        df['RMx'] = [sum([a for a in x if a >= 0.0]) for x in RMx]
+        df['RMk'] = [sum([1 for a in x if a >= 0.0]) for x in RMx]
+        df['AVG_RMx'] = df.RMx / df.RMk
+        RMx_all[iterator, :] = df['AVG_RMx']
+        WMC_in_order[iterator] = part_wmc
+        iterator += 1
+        RMx = [list() for _ in range(Lmin, Lmax)]
+        # df['part_wmc'] = [part_wmc] * Lmax
+        # print(df.corr())
 
-dat = time.localtime()
-filename = '{}_{}_{}_{}:{}'.format(dat.tm_year, dat.tm_mon, dat.tm_mday, dat.tm_hour, dat.tm_min)
-# df.to_csv('mean_FOx.csv')
-df.to_csv(join('results', 'dynamics_window_' + str(inter[0]) + '_' + str(inter[1]) + '_' + str(
-    WINDOW_TIME) + '_' + args.VAR + '_' + filename + '.csv'))
+        # RMx = [list() for _ in range(Lmin, Lmax)]
+                
+
+# for i in range(len(sacc_files)):
+    # print(stats.pearsonr(RMx_all[:, i], WMC_in_order))
+
+RMx_all = np.nan_to_num(RMx_all)
+WMC_rm_corr = list()
+for i in range(Lmax):
+    WMC_rm_corr.append(pearsonr_ci(RMx_all[:, i], WMC_in_order))
+
+WMC_rm_corr = pd.DataFrame(WMC_rm_corr, columns=['r', 'p', 'lo','hi'])
+WMC_rm_corr.to_csv(join('results', 'WMC_rm_corr.csv'))
+
+# K = list()
+# Kx = pd.Series(Kx)
+# for l_bound in range(Lmin, Lmax):
+#     K.append((Kx >= (WINDOW_TIME * l_bound)).sum())
+
+# df = pd.DataFrame()
+# df['Kx'] = K
+# df['FOx'] = [sum(x) for x in FOx]
+# df['FOX_aggregated'] = [np.mean([a for a in x if a > 0.0001]) for x in FOx_aggregated]
+# df['FOx_mean'] = [np.mean(x) for x in FOx]
+# df['FOx_STD'] = [np.std(x) for x in FOx]
+# df['PSOx'] = [sum(x) for x in PUP_SIZE]
+# df['PSOx_mean'] = [np.mean(x) for x in PUP_SIZE]
+# df['PSOx_STD'] = [np.std(x) for x in PUP_SIZE]
+# df['RMx'] = [sum([a for a in x if a >= 0.0]) for x in RMx]
+# df['RMx_STD'] = [np.std([a for a in x if a >= 0.0]) for x in RMx]
+# df['RMk'] = [sum([1 for a in x if a >= 0.0]) for x in RMx]
+# df['PROP_FOx'] = df.FOx / df.Kx
+# df['AVG_RMx'] = df.RMx / df.RMk
+# df['PROP_PSOx'] = df.PSOx / df.Kx
+
+# dat = time.localtime()
+# filename = '{}_{}_{}_{}:{}'.format(dat.tm_year, dat.tm_mon, dat.tm_mday, dat.tm_hour, dat.tm_min)
+# # df.to_csv('mean_FOx.csv')
+# df.to_csv(join('results', 'dynamics_window_' + str(inter[0]) + '_' + str(inter[1]) + '_' + str(
+#     WINDOW_TIME) + '_' + args.VAR + '_' + filename + '.csv'))
