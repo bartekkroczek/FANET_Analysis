@@ -15,7 +15,7 @@ parser.add_argument("VAR")
 parser.add_argument('INT')
 args = parser.parse_args()
 os.chdir(
-    join('..', '..', '..', '..', 'Dropbox', 'Data', 'FAN_ET', 'Badanie P', '2017-05-06_Badanie_P', 'BadanieP_FAN_ET',
+    join('..', '..', '..', '..', 'OneDrive', 'Data', 'FAN_ET', 'Badanie_P', '2017-05-06_Badanie_P', 'BadanieP_FAN_ET',
          'Scripts'))
 
 # Localisations of region of interest in data.
@@ -68,6 +68,26 @@ class CONDITIONS(Enum):
     WMC_HIGH_LEV_MED = auto()
     WMC_HIGH_LEV_HARD = auto()
 
+    CORR_WMC_LOW_LEV_EASY = auto()
+    CORR_WMC_LOW_LEV_MED = auto()
+    CORR_WMC_LOW_LEV_HARD = auto()
+    CORR_WMC_MED_LEV_EASY = auto()
+    CORR_WMC_MED_LEV_MED = auto()
+    CORR_WMC_MED_LEV_HARD = auto()
+    CORR_WMC_HIGH_LEV_EASY = auto()
+    CORR_WMC_HIGH_LEV_MED = auto()
+    CORR_WMC_HIGH_LEV_HARD = auto()
+
+    ERR_WMC_LOW_LEV_EASY = auto()
+    ERR_WMC_LOW_LEV_MED = auto()
+    ERR_WMC_LOW_LEV_HARD = auto()
+    ERR_WMC_MED_LEV_EASY = auto()
+    ERR_WMC_MED_LEV_MED = auto()
+    ERR_WMC_MED_LEV_HARD = auto()
+    ERR_WMC_HIGH_LEV_EASY = auto()
+    ERR_WMC_HIGH_LEV_MED = auto()
+    ERR_WMC_HIGH_LEV_HARD = auto()
+    
 
 class INTERVAL(object):
     I0 = [0, 120]
@@ -124,7 +144,27 @@ CONDITION = {'WMC_LOW_FULL': CONDITIONS.LOW_WMC_FULL,
              'WMC_MED_LEV_HARD': CONDITIONS.WMC_MED_LEV_HARD,
              'WMC_HIGH_LEV_EASY': CONDITIONS.WMC_HIGH_LEV_EASY,
              'WMC_HIGH_LEV_MED': CONDITIONS.WMC_HIGH_LEV_MED,
-             'WMC_HIGH_LEV_HARD': CONDITIONS.WMC_HIGH_LEV_HARD
+             'WMC_HIGH_LEV_HARD': CONDITIONS.WMC_HIGH_LEV_HARD,
+
+             'CORR_WMC_LOW_LEV_EASY': CONDITIONS.CORR_WMC_LOW_LEV_EASY,
+             'CORR_WMC_LOW_LEV_MED': CONDITIONS.CORR_WMC_LOW_LEV_MED,
+             'CORR_WMC_LOW_LEV_HARD': CONDITIONS.CORR_WMC_LOW_LEV_HARD,
+             'CORR_WMC_MED_LEV_EASY': CONDITIONS.CORR_WMC_MED_LEV_EASY,
+             'CORR_WMC_MED_LEV_MED': CONDITIONS.CORR_WMC_MED_LEV_MED,
+             'CORR_WMC_MED_LEV_HARD': CONDITIONS.CORR_WMC_MED_LEV_HARD,
+             'CORR_WMC_HIGH_LEV_EASY': CONDITIONS.CORR_WMC_HIGH_LEV_EASY,
+             'CORR_WMC_HIGH_LEV_MED': CONDITIONS.CORR_WMC_HIGH_LEV_MED,
+             'CORR_WMC_HIGH_LEV_HARD': CONDITIONS.CORR_WMC_HIGH_LEV_HARD,
+
+             'ERR_WMC_LOW_LEV_EASY': CONDITIONS.ERR_WMC_LOW_LEV_EASY,
+             'ERR_WMC_LOW_LEV_MED': CONDITIONS.ERR_WMC_LOW_LEV_MED,
+             'ERR_WMC_LOW_LEV_HARD': CONDITIONS.ERR_WMC_LOW_LEV_HARD,
+             'ERR_WMC_MED_LEV_EASY': CONDITIONS.ERR_WMC_MED_LEV_EASY,
+             'ERR_WMC_MED_LEV_MED': CONDITIONS.ERR_WMC_MED_LEV_MED,
+             'ERR_WMC_MED_LEV_HARD': CONDITIONS.ERR_WMC_MED_LEV_HARD,
+             'ERR_WMC_HIGH_LEV_EASY': CONDITIONS.ERR_WMC_HIGH_LEV_EASY,
+             'ERR_WMC_HIGH_LEV_MED': CONDITIONS.ERR_WMC_HIGH_LEV_MED,
+             'ERR_WMC_HIGH_LEV_HARD': CONDITIONS.ERR_WMC_HIGH_LEV_HARD
              }[args.VAR]
 
 
@@ -187,6 +227,7 @@ low_wmc = ID_GF_WMC[(ID_GF_WMC.WMC.between(-20, low_wmc_band))].PART_ID.tolist()
 med_wmc = ID_GF_WMC[(ID_GF_WMC.WMC.between(low_wmc_band, high_wmc_band))].PART_ID.tolist()
 high_wmc = ID_GF_WMC[(ID_GF_WMC.WMC.between(high_wmc_band, 20))].PART_ID.tolist()
 
+
 Lmin = 0
 Lmax = 120 // WINDOW_TIME
 
@@ -237,15 +278,21 @@ with tqdm(total=len(sacc_files)) as pbar:
         index_data = index_data[index_data.Part_id == int(part_id)]
 
         if CONDITION in [CONDITIONS.LOW_WMC_FULL, CONDITIONS.WMC_LOW_LEV_EASY, CONDITIONS.WMC_LOW_LEV_MED,
-                         CONDITIONS.WMC_LOW_LEV_HARD, CONDITIONS.LOW_WMC_CORR, CONDITIONS.LOW_WMC_ERR]:
+                         CONDITIONS.WMC_LOW_LEV_HARD, CONDITIONS.LOW_WMC_CORR, CONDITIONS.LOW_WMC_ERR,
+                         CONDITIONS.CORR_WMC_LOW_LEV_EASY, CONDITIONS.CORR_WMC_LOW_LEV_MED, CONDITIONS.CORR_WMC_LOW_LEV_HARD,
+                         CONDITIONS.ERR_WMC_LOW_LEV_EASY, CONDITIONS.ERR_WMC_LOW_LEV_MED, CONDITIONS.ERR_WMC_LOW_LEV_HARD]:
             if int(part_id) not in low_wmc:
                 continue
         if CONDITION in [CONDITIONS.MED_WMC_FULL, CONDITIONS.WMC_MED_LEV_EASY, CONDITIONS.WMC_MED_LEV_MED,
-                         CONDITIONS.WMC_MED_LEV_HARD, CONDITIONS.MED_WMC_CORR, CONDITIONS.MED_WMC_ERR]:
+                         CONDITIONS.WMC_MED_LEV_HARD, CONDITIONS.MED_WMC_CORR, CONDITIONS.MED_WMC_ERR,
+                         CONDITIONS.CORR_WMC_MED_LEV_EASY, CONDITIONS.CORR_WMC_MED_LEV_MED, CONDITIONS.CORR_WMC_MED_LEV_HARD,
+                         CONDITIONS.ERR_WMC_MED_LEV_EASY, CONDITIONS.ERR_WMC_MED_LEV_MED, CONDITIONS.ERR_WMC_MED_LEV_HARD]:
             if int(part_id) not in med_wmc:
                 continue
         if CONDITION in [CONDITIONS.HIGH_WMC_FULL, CONDITIONS.WMC_HIGH_LEV_EASY, CONDITIONS.WMC_HIGH_LEV_MED,
-                         CONDITIONS.WMC_HIGH_LEV_HARD, CONDITIONS.HIGH_WMC_CORR, CONDITIONS.HIGH_WMC_ERR]:
+                         CONDITIONS.WMC_HIGH_LEV_HARD, CONDITIONS.HIGH_WMC_CORR, CONDITIONS.HIGH_WMC_ERR,
+                         CONDITIONS.CORR_WMC_HIGH_LEV_EASY, CONDITIONS.CORR_WMC_HIGH_LEV_MED, CONDITIONS.CORR_WMC_HIGH_LEV_HARD,
+                         CONDITIONS.ERR_WMC_HIGH_LEV_EASY, CONDITIONS.ERR_WMC_HIGH_LEV_MED, CONDITIONS.ERR_WMC_HIGH_LEV_HARD]:
             if int(part_id) not in high_wmc:
                 continue
 
@@ -290,7 +337,7 @@ with tqdm(total=len(sacc_files)) as pbar:
                 continue
 
             raw_item = raw_data[raw_data.block == idx]
-            beh_item = beh_data.ix[beh_idx]
+            beh_item = beh_data.loc[beh_idx]
 
             start_stamp = int(raw_item.head(1).time.values[0])
             end_stamp = int(raw_item.tail(1).time.values[0])
@@ -321,22 +368,37 @@ with tqdm(total=len(sacc_files)) as pbar:
                 if not beh_item.ans_accept:
                     continue
             if CONDITION in [CONDITIONS.CORR, CONDITIONS.LOW_WMC_CORR, CONDITIONS.MED_WMC_CORR,
-                             CONDITIONS.HIGH_WMC_CORR]:
+                             CONDITIONS.HIGH_WMC_CORR, CONDITIONS.CORR_WMC_LOW_LEV_EASY, CONDITIONS.CORR_WMC_LOW_LEV_MED,
+                             CONDITIONS.CORR_WMC_LOW_LEV_HARD, CONDITIONS.CORR_WMC_MED_LEV_EASY, CONDITIONS.CORR_WMC_MED_LEV_MED,
+                             CONDITIONS.CORR_WMC_MED_LEV_HARD, CONDITIONS.CORR_WMC_HIGH_LEV_EASY, CONDITIONS.CORR_WMC_HIGH_LEV_MED,
+                             CONDITIONS.CORR_WMC_HIGH_LEV_HARD]:
                 if (not beh_item['corr']) or (not beh_item['ans_accept']):
                     continue
-            if CONDITION in [CONDITIONS.ERR, CONDITIONS.LOW_WMC_ERR, CONDITIONS.MED_WMC_ERR, CONDITIONS.HIGH_WMC_ERR]:
+            if CONDITION in [CONDITIONS.ERR, CONDITIONS.LOW_WMC_ERR, CONDITIONS.MED_WMC_ERR,    CONDITIONS.HIGH_WMC_ERR, 
+                             CONDITIONS.ERR_WMC_LOW_LEV_EASY,  CONDITIONS.ERR_WMC_LOW_LEV_MED,  CONDITIONS.ERR_WMC_LOW_LEV_HARD, 
+                             CONDITIONS.ERR_WMC_MED_LEV_EASY,  CONDITIONS.ERR_WMC_MED_LEV_MED,  CONDITIONS.ERR_WMC_MED_LEV_HARD, 
+                             CONDITIONS.ERR_WMC_HIGH_LEV_EASY, CONDITIONS.ERR_WMC_HIGH_LEV_MED, CONDITIONS.ERR_WMC_HIGH_LEV_HARD]:
                 if beh_item['corr'] and beh_item['ans_accept']:
                     continue
+
+
+
             if CONDITION in [CONDITIONS.LEV_EASY_FULL, CONDITIONS.WMC_LOW_LEV_EASY, CONDITIONS.WMC_MED_LEV_EASY,
-                             CONDITIONS.WMC_HIGH_LEV_EASY]:
+                             CONDITIONS.WMC_HIGH_LEV_EASY,
+                             CONDITIONS.CORR_WMC_LOW_LEV_EASY, CONDITIONS.CORR_WMC_MED_LEV_EASY, CONDITIONS.CORR_WMC_HIGH_LEV_EASY,
+                             CONDITIONS.ERR_WMC_LOW_LEV_EASY,  CONDITIONS.ERR_WMC_MED_LEV_EASY,  CONDITIONS.ERR_WMC_HIGH_LEV_EASY]:
                 if LEV_TO_LAB[beh_item.answers] != 'EASY':
                     continue
             if CONDITION in [CONDITIONS.LEV_MED_FULL, CONDITIONS.WMC_LOW_LEV_MED, CONDITIONS.WMC_MED_LEV_MED,
-                             CONDITIONS.WMC_HIGH_LEV_MED]:
+                             CONDITIONS.WMC_HIGH_LEV_MED,
+                             CONDITIONS.CORR_WMC_LOW_LEV_MED, CONDITIONS.CORR_WMC_MED_LEV_MED, CONDITIONS.CORR_WMC_HIGH_LEV_MED,
+                             CONDITIONS.ERR_WMC_LOW_LEV_MED,  CONDITIONS.ERR_WMC_MED_LEV_MED,  CONDITIONS.ERR_WMC_HIGH_LEV_MED]:
                 if LEV_TO_LAB[beh_item.answers] != 'MEDIUM':
                     continue
             if CONDITION in [CONDITIONS.LEV_HARD_FULL, CONDITIONS.WMC_LOW_LEV_HARD, CONDITIONS.WMC_MED_LEV_HARD,
-                             CONDITIONS.WMC_HIGH_LEV_HARD]:
+                             CONDITIONS.WMC_HIGH_LEV_HARD,
+                             CONDITIONS.CORR_WMC_LOW_LEV_HARD, CONDITIONS.CORR_WMC_MED_LEV_HARD, CONDITIONS.CORR_WMC_HIGH_LEV_HARD,
+                             CONDITIONS.ERR_WMC_LOW_LEV_HARD,  CONDITIONS.ERR_WMC_MED_LEV_HARD,  CONDITIONS.ERR_WMC_HIGH_LEV_HARD]:
                 if LEV_TO_LAB[beh_item.answers] != 'HARD':
                     continue
 
